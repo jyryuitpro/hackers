@@ -34,6 +34,16 @@
 <script type="text/javascript" src="http://q.hackershrd.com/worksheet/js/ui.js"></script>
 <!--[if lte IE 9]> <script src="/js/common/place_holder.js"></script> <![endif]-->
 <script type="text/javascript">
+    $(document).ready(function(){
+        $(".f_moblie").keyup (function () {
+            var charLimit = $(this).attr("maxlength");
+            if (this.value.length >= charLimit) {
+                $(this).next('.f_moblie').focus();
+                return false;
+            }
+        });
+    });
+
     function get_verification_number() {
         const f_mobile_0 = document.getElementById('f_mobile_0').value;
         const f_mobile_1 = document.getElementById('f_mobile_1').value;
@@ -110,9 +120,9 @@
 
 						<br />
                         <input type="text" class="input-text" style="width:50px" name="f_mobile" id="f_mobile"/>
-						<input type="text" class="input-text" style="width:50px" name="f_mobile_0" id="f_mobile_0"/> -
-						<input type="text" class="input-text" style="width:50px" name="f_mobile_1" id="f_mobile_1"/> -
-						<input type="text" class="input-text" style="width:50px" name="f_mobile_2" id="f_mobile_2"/>
+						<input type="text" class="input-text f_moblie" style="width:50px" name="f_mobile_0" id="f_mobile_0" maxlength='3' /> -
+						<input type="text" class="input-text f_moblie" style="width:50px" name="f_mobile_1" id="f_mobile_1" maxlength='4' /> -
+						<input type="text" class="input-text f_moblie" style="width:50px" name="f_mobile_2" id="f_mobile_2" maxlength='4' />
 						<a href="#" class="btn-s-line" onclick="get_verification_number();" name="get_verification_number" id="get_verification_number">인증번호 받기</a>
 
 						<br /><br />
