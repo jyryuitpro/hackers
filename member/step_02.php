@@ -34,6 +34,35 @@
 <script type="text/javascript" src="http://q.hackershrd.com/worksheet/js/ui.js"></script>
 <!--[if lte IE 9]> <script src="/js/common/place_holder.js"></script> <![endif]-->
 <script type="text/javascript">
+    function get_verification_number() {
+        const f_mobile_0 = document.getElementById('f_mobile_0').value;
+        const f_mobile_1 = document.getElementById('f_mobile_1').value;
+        const f_mobile_2 = document.getElementById('f_mobile_2').value;
+
+        document.getElementById("f_mobile").value = f_mobile_0 + f_mobile_1 + f_mobile_2;
+        alert("인증번호가 전송되었습니다.");
+
+        document.getElementById("verification_number").value = 123456;
+
+/*
+        $.ajax({
+            url: "/member/session.php",
+            dataType: "json",
+            data:'verification_number='+verification_number,
+            type: "POST",
+            success:function(data){
+                if (data.res == 'success') {
+                    alert("인증되었습니다. 정보입력 페이지로 이동합니다.");
+                    location.href="/member/index.php?mode=step_03";
+                }
+            },
+            error:function (){
+
+            }
+        });
+*/
+    }
+
     function confirm_verification_number() {
         const verification_number = document.getElementById('verification_number').value;
         $.ajax({
@@ -84,18 +113,18 @@
 			<div class="tit-box-h4">
 				<h3 class="tit-h4">본인인증</h3>
 			</div>
-
 			<div class="section-content after">
 				<div class="identify-box" style="width:100%;height:190px;">
 					<div class="identify-inner">
 						<strong>휴대폰 인증</strong>
-						<p>주민번호 없이 메시지 수신가능한 휴대폰으로 1개 아이디만 회원가입이 가능합니다. </p>
+						<p id="parent">주민번호 없이 메시지 수신가능한 휴대폰으로 1개 아이디만 회원가입이 가능합니다. </p>
 
 						<br />
-						<input type="text" class="input-text" style="width:50px"/> - 
-						<input type="text" class="input-text" style="width:50px"/> - 
-						<input type="text" class="input-text" style="width:50px"/>
-						<a href="#" class="btn-s-line" >인증번호 받기</a>
+                        <input type="text" class="input-text" style="width:50px" name="f_mobile" id="f_mobile"/>
+						<input type="text" class="input-text" style="width:50px" name="f_mobile_0" id="f_mobile_0"/> -
+						<input type="text" class="input-text" style="width:50px" name="f_mobile_1" id="f_mobile_1"/> -
+						<input type="text" class="input-text" style="width:50px" name="f_mobile_2" id="f_mobile_2"/>
+						<a href="#" class="btn-s-line" onclick="get_verification_number();" name="get_verification_number" id="get_verification_number">인증번호 받기</a>
 
 						<br /><br />
 						<input type="text" class="input-text" style="width:200px" name="verification_number" id="verification_number"/>
