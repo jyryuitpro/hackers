@@ -1,3 +1,12 @@
+<?php
+$conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
+$sql = "SELECT * FROM MEMBER WHERE F_MOBILE='{$f_mobile}'";
+$result = mysqli_query($conn, $sql);
+$exist = mysqli_num_rows($result);
+$row = mysqli_fetch_row($result);
+var_dump($row[0]);
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
 <!--[if (IE 7)]><html class="no-js ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko"><![endif]-->

@@ -39,28 +39,29 @@
         const f_mobile_1 = document.getElementById('f_mobile_1').value;
         const f_mobile_2 = document.getElementById('f_mobile_2').value;
 
+        if (!f_mobile_0 || !f_mobile_1 || !f_mobile_2) {
+            alert("휴대폰 번호를 입력해주세요");
+            return false;
+        }
+
         document.getElementById("f_mobile").value = f_mobile_0 + f_mobile_1 + f_mobile_2;
-        alert("인증번호가 전송되었습니다.");
 
         document.getElementById("verification_number").value = 123456;
 
-/*
         $.ajax({
-            url: "/member/session.php",
+            url: "/member/identification.php",
             dataType: "json",
-            data:'verification_number='+verification_number,
+            data:'f_mobile='+document.getElementById("f_mobile").value,
             type: "POST",
             success:function(data){
-                if (data.res == 'success') {
-                    alert("인증되었습니다. 정보입력 페이지로 이동합니다.");
-                    location.href="/member/index.php?mode=step_03";
+                if (data.res == "success") {
+                    alert("인증번호가 전송되었습니다.");
                 }
             },
             error:function (){
 
             }
         });
-*/
     }
 
     function confirm_verification_number() {
@@ -71,10 +72,7 @@
             data:'verification_number='+verification_number,
             type: "POST",
             success:function(data){
-                if (data.res == 'success') {
-                    alert("인증되었습니다. 정보입력 페이지로 이동합니다.");
-                    location.href="/member/index.php?mode=step_03";
-                }
+
             },
             error:function (){
 
