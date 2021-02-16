@@ -48,35 +48,26 @@
 
         document.getElementById("verification_number").value = 123456;
 
-        $.ajax({
-            url: "/member/identification.php",
-            dataType: "json",
-            data:'f_mobile='+document.getElementById("f_mobile").value,
-            type: "POST",
-            success:function(data){
-                if (data.res == "success") {
-                    alert("인증번호가 전송되었습니다.");
-                }
-            },
-            error:function (){
-
-            }
-        });
+        alert("인증번호가 전송되었습니다.");
     }
 
     function confirm_verification_number() {
-        const verification_number = document.getElementById('verification_number').value;
+        const verification_number = document.getElementById("verification_number").value
+        const f_mobile = document.getElementById("f_mobile").value
         $.ajax({
             url: "/member/session.php",
             dataType: "json",
-            data:'verification_number='+verification_number,
+            data: {'verification_number': verification_number, 'f_mobile': f_mobile},
             type: "POST",
             success:function(data){
+                if (data.res == "success") {
+                    alert("인증번호가 확인되었습니다.");
+                    window.location.href='/member/index.php?mode=step_03';
+                }
+            },
+            error:function () {
 
             },
-            error:function (){
-
-            }
         });
     }
 </script>

@@ -1,5 +1,4 @@
 <?php
-echo('<pre>'); print_r($_POST); echo('</pre>');
 
 if ($_GET['mode'] == "step_01") {
     Header("Location: /member/step_01.php");

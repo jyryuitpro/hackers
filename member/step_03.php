@@ -1,10 +1,10 @@
 <?php
-$conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
-$sql = "SELECT * FROM MEMBER WHERE F_MOBILE='{$f_mobile}'";
-$result = mysqli_query($conn, $sql);
-$exist = mysqli_num_rows($result);
-$row = mysqli_fetch_row($result);
-var_dump($row[0]);
+    session_start();
+    $f_mobile = $_SESSION['f_mobile'];
+    // 01012345678
+    $f_mobile_0 = substr($f_mobile, 0, 3);
+    $f_mobile_1 = substr($f_mobile, 3, 4);
+    $f_mobile_2 = substr($f_mobile, 7);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -108,9 +108,9 @@ var_dump($row[0]);
 						<tr>
 							<th scope="col"><span class="icons">*</span>휴대폰 번호</th>
 							<td>
-								<input type="text" class="input-text" style="width:50px"/> - 
-								<input type="text" class="input-text" style="width:50px"/> - 
-								<input type="text" class="input-text" style="width:50px"/>
+								<input type="text" class="input-text" style="width:50px" value="<?php echo $f_mobile_0 ?>" readonly /> -
+								<input type="text" class="input-text" style="width:50px" value="<?php echo $f_mobile_1 ?>" readonly /> -
+								<input type="text" class="input-text" style="width:50px" value="<?php echo $f_mobile_2 ?>" readonly />
 							</td>
 						</tr>
 						<tr>
