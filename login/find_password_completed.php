@@ -58,7 +58,7 @@ session_start();
         const f_password = document.getElementById("f_password_0").value
 
         $.ajax({
-            url: "/login/edit_password.php",
+            url: "/login/modify_password.php",
             dataType: "json",
             data: 'f_password='+f_password,
             type: "POST",

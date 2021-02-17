@@ -119,7 +119,7 @@ session_start();
                 ?>
                 <!-- 로그인후 -->
                 <a href="/member/index.php?mode=logout">로그아웃</a>
-                <a href="#">내정보</a>
+                <a href="/member/index.php?mode=modify">내정보</a>
                 <a href="#">상담/고객센터</a>
                 <?php
                 }

@@ -44,8 +44,8 @@ if ($_GET['mode'] == "find_pass_completed") {
     Header("Location: ../login/find_password_completed.php");
 }
 
-if ($_GET['mode'] == "edit_myinfo") {
-    Header("Location: ../login/edit_myinfo.php");
+if ($_GET['mode'] == "modify") {
+    Header("Location: /member/modify_myinfo.php");
 }
 
 
