@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
 <!--[if (IE 7)]><html class="no-js ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko"><![endif]-->
@@ -30,21 +29,53 @@
 <script type="text/javascript" src="http://q.hackershrd.com/worksheet/js/plugins/bxslider/bxslider.js"></script>
 <script type="text/javascript" src="http://q.hackershrd.com/worksheet/js/ui.js"></script>
 <!--[if lte IE 9]> <script src="/js/common/place_holder.js"></script> <![endif]-->
+<script type="text/javascript">
+    function login_submit() {
+        const f_id = document.getElementById("f_id").value
+        const f_password = document.getElementById("f_password").value
 
+        $.ajax({
+            url: "/login/login.php",
+            dataType: "json",
+            data: {'f_id': f_id, 'f_password': f_password},
+            type: "POST",
+            success:function(data){
+                if (data.res == "success") {
+                    alert("로그인이 되었습니다. 메인 페이지로 이동합니다.");
+                    window.location.href='/index.php';
+                } else if (data.res == "fail_f_id") {
+                    alert("아이디를 확인해주세요.");
+                } else if (data.res == "fail_f_password") {
+                    alert("비밀번호를 확인해주세요.");
+                } else if (data.res == "fail") {
+                    alert("아이디와 비밀번호를 확인해주세요.");
+                }
+            },
+            error:function () {
+
+            },
+        });
+    }
+
+    function home() {
+        location.href = '../index.php';
+    }
+</script>
 </head><body>
 <div class="login-section">
 	<div class="bg"></div>
 	<div class="login-inner">
 		<h1><a href="/"><img src="http://img.hackershrd.com/common/logo.png" alt="해커스 HRD LOGO" width="142" height="31"/></a></h1>
 		<div class="box-login">
-			
-			<div class="login-input">
-				<div class="input-text-box">
-					<input type="text" class="input-text mb5" placeholder="아이디" style="width:190px"/>
-					<input type="text" class="input-text" placeholder="비밀번호" style="width:190px"/>
-				</div>
-				<button type="submit" class="btn-login">로그인</button>
-			</div>
+            <form name="login" id="login" method="post" action="/login/login.php">
+                <div class="login-input">
+                    <div class="input-text-box">
+                        <input type="text" class="input-text mb5" name="f_id" id="f_id" placeholder="아이디" style="width:190px"/>
+                        <input type="password" class="input-text" name="f_password" id="f_password" placeholder="비밀번호" style="width:190px"/>
+                    </div>
+                    <button type="button" onclick="login_submit();" class="btn-login">로그인</button>
+                </div>
+            </form>
 			
 			<div class="login-chk">
 				<label class="input-sp">
@@ -85,7 +116,7 @@
 			</div>
 		</div>
 	</div>
-	<span class="login-close"><button type="button" class="icon-layer-close"><span class="hidden">닫기</span></button></span>
+	<span class="login-close"><button type="button" onclick="home();" class="icon-layer-close"><span class="hidden">닫기</span></button></span>
 </div>
 </body>
 </html>

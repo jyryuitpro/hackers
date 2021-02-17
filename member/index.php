@@ -24,4 +24,8 @@ if ($_GET['mode'] == "login") {
     Header("Location: /member/login.php");
 }
 
+if ($_GET['mode'] == "logout") {
+    Header("Location: ../login/logout.php");
+}
+
 

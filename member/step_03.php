@@ -155,7 +155,7 @@
 			</div>
 
 			<div class="section-content">
-                <form name="regist" name="regist" id="regist" method="post" action="/member/regist.php">
+                <form name="regist" id="regist" method="post" action="/member/regist.php">
                     <table border="0" cellpadding="0" cellspacing="0" class="tbl-col-join">
                         <caption class="hidden">강의정보</caption>
                         <colgroup>

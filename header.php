@@ -1,3 +1,7 @@
+<?php
+session_start();
+//var_dump($_SESSION['f_id']);
+?>
 <div id="header" class="header">
     <div class="nav-section">
         <div class="inner p-r">
@@ -103,14 +107,23 @@
     <div class="top-section">
         <div class="inner">
             <div class="link-box">
+                <?php
+                if (!$_SESSION['f_id']){
+                ?>
                 <!-- 로그인전 -->
-                <a href="#">로그인</a>
+                <a href="/member/index.php?mode=login">로그인</a>
                 <a href="/member/index.php?mode=step_01">회원가입</a>
                 <a href="#">상담/고객센터</a>
+                <?php
+                } else {
+                ?>
                 <!-- 로그인후 -->
-                <!-- <a href="#">로그아웃</a>
+                <a href="/member/index.php?mode=logout">로그아웃</a>
                 <a href="#">내정보</a>
-                <a href="#">상담/고객센터</a> -->
+                <a href="#">상담/고객센터</a>
+                <?php
+                }
+                ?>
             </div>
         </div>
     </div>
