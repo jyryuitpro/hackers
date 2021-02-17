@@ -3,13 +3,13 @@ $conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
 
 $f_id = $_POST['f_id'];
 $f_password = base64_encode(hash('sha256', $_POST['f_password'], true));
+//var_dump($_POST['f_password']);
 
 $sql = "SELECT * FROM MEMBER WHERE F_ID='{$f_id}' and F_PASSWORD='{$f_password}'";
 $result = mysqli_query($conn, $sql);
 $exist = mysqli_num_rows($result);
 
 $refer = $_SERVER['HTTP_REFERER'];
-//var_dump($refer);
 
 if ($exist > 0 && $refer) {
     echo json_encode(array('res'=>'success'));

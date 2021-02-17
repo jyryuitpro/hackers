@@ -82,12 +82,11 @@ $_SESSION['verification_number'] = 123456;
     function get_verification_number(f_gubun) {
         if (f_gubun == 'M') {
             const f_name = document.getElementById('f_name').value;
-
+            const f_birthday = document.getElementById('f_birthday').value;
             const f_mobile_0 = document.getElementById('f_mobile_0').value;
             const f_mobile_1 = document.getElementById('f_mobile_1').value;
             const f_mobile_2 = document.getElementById('f_mobile_2').value;
 
-            const f_birthday = document.getElementById('f_birthday').value;
 
             if (!f_name) {
                 alert("이름을 입력해주세요.");
@@ -105,15 +104,46 @@ $_SESSION['verification_number'] = 123456;
             document.getElementById("verification_number").value = 123456;
 
             alert("인증번호가 전송되었습니다.");
+        } else {
+            const f_name = document.getElementById('f_name').value;
+            const f_birthday = document.getElementById('f_birthday').value;
+
+            if (!f_name) {
+                alert("이름을 입력해주세요.");
+                return false;
+            }
+
+            if ($("#f_email_0").val() != "" && $("#f_email_1").val() != "") {
+                $("#f_email").val($("#f_email_0").val() + '@' + $("#f_email_1").val());
+                var emailCheck = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+
+                if(!emailCheck.test($("#f_email").val())) {
+                    alert("이메일 주소가 유효하지 않습니다");
+                    $("#f_email_0").focus();
+                    return false;
+                }
+            } else {
+                alert("이메일 주소를 입력해주세요.");
+                return false;
+            }
+
+            if (f_birthday.length != 8) {
+                alert("생년월일을 확인해주세요.");
+                return false;
+            }
+
+            document.getElementById("verification_number").value = 123456;
+
+            alert("인증번호가 전송되었습니다.");
         }
     }
 
     function confirm_verification_number(f_gubun) {
         if (f_gubun == 'M') {
             const verification_number = document.getElementById("verification_number").value;
-            const f_mobile = document.getElementById("f_mobile").value
             const f_name = document.getElementById('f_name').value;
             const f_birthday = document.getElementById('f_birthday').value;
+            const f_mobile = document.getElementById("f_mobile").value
             $.ajax({
                 url: "/member/session.php",
                 dataType: "json",
@@ -132,7 +162,27 @@ $_SESSION['verification_number'] = 123456;
                 },
             });
         } else {
+            const verification_number = document.getElementById("verification_number").value;
+            const f_name = document.getElementById('f_name').value;
+            const f_birthday = document.getElementById('f_birthday').value;
+            const f_email = document.getElementById("f_email").value
+            $.ajax({
+                url: "/member/session.php",
+                dataType: "json",
+                data: {'verification_number': verification_number, 'f_email': f_email, 'f_gubun': f_gubun, 'f_name': f_name, 'f_birthday': f_birthday},
+                type: "POST",
+                success:function(data){
+                    if (data.res == "success") {
+                        alert("인증번호가 확인되었습니다.");
+                        window.location.href='/member/index.php?mode=find_id_completed';
+                    } else {
+                        alert("등록된 가입정보가 없습니다.");
+                    }
+                },
+                error:function () {
 
+                },
+            });
         }
     }
 
@@ -189,8 +239,8 @@ $_SESSION['verification_number'] = 123456;
 			</div>
 
 			<ul class="tab-list">
-				<li class="on"><a href="#">아이디 찾기</a></li>
-				<li><a href="#">비밀번호 찾기</a></li>
+				<li class="on"><a href="/member/index.php?mode=find_id">아이디 찾기</a></li>
+				<li><a href="/member/index.php?mode=find_pass">비밀번호 찾기</a></li>
 			</ul>
 
 			<div class="tit-box-h4">

@@ -1,5 +1,4 @@
 <?php
-
 $conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
 
 $f_name = $_POST['f_name'];
