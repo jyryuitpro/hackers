@@ -41,7 +41,7 @@ session_start();
 <!-- //skip nav -->
 
 <div id="wrap">
-	<?php include 'header.php'; ?>
+	<?php include './include/header.php'; ?>
 <div id="container">
 	<div class="main-slider-applyclass">
 		<div id="applyclass" class="slider-applyclass col4"><!-- 갯수 1개 class="col1" / 갯수 2개 class="col2"  -->
@@ -390,7 +390,7 @@ session_start();
 
 	</div>
 </div>
-	<?php include 'footer.php'; ?>
+	<?php include './include/footer.php'; ?>
 </div>
 </body>
 </html>

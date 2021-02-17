@@ -88,7 +88,7 @@
             data:'f_id='+$("#f_id_new").val(),
             type: "POST",
             success:function(data){
-                alert(data.res);
+                alert("사용 가능한 아이디입니다");
             },
             error:function (){
 
@@ -300,6 +300,7 @@
                 </form>
 				<div class="box-btn">
 					<a href="javascript:void(0);" class="btn-l" onclick="regist_submit();">회원가입</a>
+                    <a href="#" class="btn-l-line ml5">취소</a>
 				</div>
 			</div>
 		</div>

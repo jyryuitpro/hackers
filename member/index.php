@@ -9,7 +9,7 @@ if ($_GET['mode'] == "step_02") {
 }
 
 if ($_GET['mode'] == "step_03") {
-    Header("Location: /member/step_03.php");
+    Header("Location: /member/04_수강후기_수정.html");
 }
 
 if ($_GET['mode'] == "regist") {
@@ -17,7 +17,7 @@ if ($_GET['mode'] == "regist") {
 }
 
 if ($_GET['mode'] == "complete") {
-    Header("Location: /member/step_04.php");
+    Header("Location: /member/step_03.php");
 }
 
 if ($_GET['mode'] == "login") {
