@@ -41,32 +41,58 @@
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
+        $("#password_match").css("color", "red").hide();
+        $(".password").focusout(function () {
+            const f_password_0 = $("#f_password_0").val();
+            const f_password_1 = $("#f_password_1").val();
 
+            if ((f_password_0 != '' && f_password_1 == '')) {
+                null;
+            } else if (f_password_0 != "" || f_password_1 != "") {
+                if (f_password_0 != f_password_1) {
+                    $("#password_match").css("color", "red").show();
+                } else {
+                    $("#password_match").css("color", "red").hide();
+                }
+            } else {
+                $("#password_match").css("color", "red").hide();
+            }
+        });
+
+        $('#email_sel').change(function(){
+            $("#email_sel option:selected").each(function () {
+                if($(this).val()== '1'){ //직접입력일 경우
+                    $("#f_email_1").val('');                        //값 초기화
+                    $("#f_email_1").attr("disabled",false); //활성화
+                }else{ //직접입력이 아닐경우
+                    $("#f_email_1").val($(this).text());      //선택값 입력
+                    $("#f_email_1").attr("disabled",true); //비활성화
+                }
+            });
+        });
     });
 
     function idDuplicationCheck() {
         $("#f_id_old").val($("#f_id_new").val());
 
-        var idCheck = /^[A-Za-z0-9]{4,10}$/;
-        if(!idCheck.test($('#f_id').val())){
-            alert("아이디는 4~10자 영문, 숫자만 가능합니다.");
+        var idCheck = /^[a-z]+[a-z0-9]{3,14}$/g;
+        if(!idCheck.test($('#f_id_new').val())){
+            alert("아이디는 영문자로 시작하는 4~15자의 영문소문자,숫자만 가능합니다.");
             return false;
         }
 
         $.ajax({
-            url: "/member/id_duplication_check.php",
+            url: "/member/duplication_check.php",
             dataType: "json",
-            data:'f_id='+$("#f_id").val(),
+            data:'f_id='+$("#f_id_new").val(),
             type: "POST",
             success:function(data){
-                if (data.res == 'duplication') {
-                    alert("이미 사용중인 아이디입니다.");
-                    $("#f_id").val('').focus();
-                } else {
-                    alert("사용가능한 아이디입니다.");
-                }
+                alert(data.res);
             },
             error:function (){
+
+            },
+            complete:function () {
 
             }
         });
@@ -81,10 +107,23 @@
         }).open();
     }
 
-    function form_sumit() {
-        if ($("#f_id_old").val() != $("#f_id_new").val()) {
-            alert("아이디 중복확인해주세요.");
+    function regist_submit() {
+        // 이메일 유효성 검사
+        if ($("#f_email_0").val() != "" && $("#f_email_1").val() != "") {
+            $("#f_email").val($("#f_email_0").val() + '@' + $("#f_email_1").val());
+            var emailCheck = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+
+            if(!emailCheck.test($("#f_email").val())) {
+                alert("이메일 주소가 유효하지 않습니다");
+                $("#f_email_0").focus();
+                return false;
+            }
         }
+
+        $("#f_tel").val($("#f_tel_0").val() + $("#f_tel_1").val() + $("#f_tel_2").val());
+
+
+        regist.submit();
     }
 </script>
 </head><body>
@@ -116,7 +155,7 @@
 			</div>
 
 			<div class="section-content">
-                <form name="regist" id="regist">
+                <form name="regist" name="regist" id="regist" method="post" action="/member/regist.php">
                     <table border="0" cellpadding="0" cellspacing="0" class="tbl-col-join">
                         <caption class="hidden">강의정보</caption>
                         <colgroup>
@@ -131,22 +170,23 @@
                             </tr>
                             <tr>
                                 <th scope="col"><span class="icons">*</span>아이디</th>
-                                <td><input type="text" class="input-text" style="width:302px" name="f_id_old" id="f_id_old"/><input type="text" class="input-text" style="width:302px" name="f_id_new" id="f_id_new" placeholder="영문자로 시작하는 4~15자의 영문소문자, 숫자"/><a href="#" onclick="idDuplicationCheck();" class="btn-s-tin ml10">중복확인</a></td>
+                                <td><input type="text" class="input-text" style="width:302px" name="f_id_old" id="f_id_old"/><input type="text" class="input-text" style="width:302px" name="f_id_new" id="f_id_new" placeholder="영문자로 시작하는 4~15자의 영문소문자, 숫자"/><a href="javascript:void(0);" onclick="idDuplicationCheck();" class="btn-s-tin ml10">중복확인</a></td>
                             </tr>
                             <tr>
                                 <th scope="col"><span class="icons">*</span>비밀번호</th>
-                                <td><input type="password" class="input-text" style="width:302px" name="f_password_0" id="f_password_0" placeholder="8-15자의 영문자/숫자 혼합"/></td>
+                                <td><input type="password" class="input-text password" style="width:302px" name="f_password_0" id="f_password_0" placeholder="8-15자의 영문자/숫자 혼합"/></td>
                             </tr>
                             <tr>
                                 <th scope="col"><span class="icons">*</span>비밀번호 확인</th>
-                                <td><input type="password" class="input-text" style="width:302px" name="f_password_1" id="f_password_1"/></td>
+                                <td><input type="password" class="input-text password" style="width:302px" name="f_password_1" id="f_password_1"/><p id="password_match">* 비밀번호가 일치하지 않습니다.</p></td>
                             </tr>
                             <tr>
                                 <th scope="col"><span class="icons">*</span>이메일주소</th>
                                 <td>
+                                    <input type="text" class="input-text" style="width:302px" name="f_email" id="f_email"/>
                                     <input type="text" class="input-text" style="width:138px" name="f_email_0" id="f_email_0"/> @ <input type="text" class="input-text" style="width:138px" name="f_email_1" id="f_email_1"/>
-                                    <select class="input-sel" style="width:160px">
-                                        <option value="">직접입력</option>
+                                    <select class="input-sel email_sel" style="width:160px" name="email_sel" id="email_sel">
+                                        <option value="1">직접입력</option>
                                         <option value="gmail.com">gmail.com</option>
                                         <option value="naver.com">naver.com</option>
                                         <option value="daum.net">daum.net</option>
@@ -158,14 +198,15 @@
                             <tr>
                                 <th scope="col"><span class="icons">*</span>휴대폰 번호</th>
                                 <td>
-                                    <input type="text" class="input-text" style="width:50px" value="<?php echo $f_mobile_0 ?>" readonly /> -
-                                    <input type="text" class="input-text" style="width:50px" value="<?php echo $f_mobile_1 ?>" readonly /> -
-                                    <input type="text" class="input-text" style="width:50px" value="<?php echo $f_mobile_2 ?>" readonly />
+                                    <input type="text" class="input-text" style="width:50px" name="f_mobile" id="f_mobile" value="<?php echo $f_mobile ?>" readonly /> -
+                                    <input type="text" class="input-text" style="width:50px" name="f_mobile_0" id="f_mobile_0" value="<?php echo $f_mobile_0 ?>" readonly /> -
+                                    <input type="text" class="input-text" style="width:50px" name="f_mobile_1" id="f_mobile_1" value="<?php echo $f_mobile_1 ?>" readonly /> -
+                                    <input type="text" class="input-text" style="width:50px" name="f_mobile_2" id="f_mobile_2" value="<?php echo $f_mobile_2 ?>" readonly />
                                 </td>
                             </tr>
                             <tr>
                                 <th scope="col"><span class="icons"></span>일반전화 번호</th>
-                                <td><input type="text" class="input-text" style="width:88px"/> - <input type="text" class="input-text" style="width:88px"/> - <input type="text" class="input-text" style="width:88px"/></td>
+                                <td><input type="text" class="input-text" style="width:88px" name="f_tel" id="f_tel" /><input type="text" class="input-text" style="width:88px" name="f_tel_0" id="f_tel_0" /> - <input type="text" class="input-text" style="width:88px" name="f_tel_1" id="f_tel_1" /> - <input type="text" class="input-text" style="width:88px" name="f_tel_2" id="f_tel_2" /></td>
                             </tr>
                             <tr>
                                 <th scope="col"><span class="icons">*</span>주소</th>
@@ -186,11 +227,11 @@
                                 <td>
                                     <div class="box-input">
                                         <label class="input-sp">
-                                            <input type="radio" name="radio" id="" checked="checked"/>
+                                            <input type="radio" name="radio" value="Y" id="f_mobile_agree_y" checked="checked"/>
                                             <span class="input-txt">수신함</span>
                                         </label>
                                         <label class="input-sp">
-                                            <input type="radio" name="radio" id="" />
+                                            <input type="radio" name="radio" value="N" id="f_mobile_agree_n" />
                                             <span class="input-txt">미수신</span>
                                         </label>
                                     </div>
@@ -202,11 +243,11 @@
                                 <td>
                                     <div class="box-input">
                                         <label class="input-sp">
-                                            <input type="radio" name="radio2" id="" checked="checked"/>
+                                            <input type="radio" name="radio2" value="Y" id="f_email_agree_y" checked="checked"/>
                                             <span class="input-txt">수신함</span>
                                         </label>
                                         <label class="input-sp">
-                                            <input type="radio" name="radio2" id="" />
+                                            <input type="radio" name="radio2" value="N" id="f_email_agree_n" />
                                             <span class="input-txt">미수신</span>
                                         </label>
                                     </div>
@@ -217,7 +258,7 @@
                     </table>
                 </form>
 				<div class="box-btn">
-					<a href="#" class="btn-l" onclick="form_sumit();">회원가입</a>
+					<a href="javascript:void(0);" class="btn-l" onclick="regist_submit();">회원가입</a>
 				</div>
 			</div>
 		</div>

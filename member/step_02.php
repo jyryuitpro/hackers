@@ -127,7 +127,7 @@
 
 						<br /><br />
 						<input type="text" class="input-text" style="width:200px" name="verification_number" id="verification_number"/>
-						<a href="#" class="btn-s-line" onclick="confirm_verification_number();">인증번호 확인</a>
+						<a href="javascript:void(0);" class="btn-s-line" onclick="confirm_verification_number();">인증번호 확인</a>
 					</div>
 					<i class="graphic-phon"><span>휴대폰 인증</span></i>
 				</div>

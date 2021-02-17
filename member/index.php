@@ -12,4 +12,16 @@ if ($_GET['mode'] == "step_03") {
     Header("Location: /member/step_03.php");
 }
 
+if ($_GET['mode'] == "regist") {
+    Header("Location: /member/regist.php");
+}
+
+if ($_GET['mode'] == "complete") {
+    Header("Location: /member/step_04.php");
+}
+
+if ($_GET['mode'] == "login") {
+    Header("Location: /member/login.php");
+}
+
 
