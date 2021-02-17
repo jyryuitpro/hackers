@@ -28,4 +28,16 @@ if ($_GET['mode'] == "logout") {
     Header("Location: ../login/logout.php");
 }
 
+if ($_GET['mode'] == "find_id") {
+    Header("Location: ../login/find_id.php");
+}
+
+if ($_GET['mode'] == "find_id_completed") {
+    Header("Location: ../login/find_id_completed.php");
+}
+
+if ($_GET['mode'] == "find_password") {
+    Header("Location: ../login/find_password.php");
+}
+
 

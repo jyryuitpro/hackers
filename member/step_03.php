@@ -198,7 +198,7 @@
                             <tr>
                                 <th scope="col"><span class="icons">*</span>휴대폰 번호</th>
                                 <td>
-                                    <input type="text" class="input-text" style="width:50px" name="f_mobile" id="f_mobile" value="<?php echo $f_mobile ?>" readonly /> -
+                                    <input type="text" class="input-text" style="width:50px" name="f_mobile" id="f_mobile" value="<?php echo $f_mobile ?>" readonly />
                                     <input type="text" class="input-text" style="width:50px" name="f_mobile_0" id="f_mobile_0" value="<?php echo $f_mobile_0 ?>" readonly /> -
                                     <input type="text" class="input-text" style="width:50px" name="f_mobile_1" id="f_mobile_1" value="<?php echo $f_mobile_1 ?>" readonly /> -
                                     <input type="text" class="input-text" style="width:50px" name="f_mobile_2" id="f_mobile_2" value="<?php echo $f_mobile_2 ?>" readonly />
@@ -243,11 +243,11 @@
                                 <td>
                                     <div class="box-input">
                                         <label class="input-sp">
-                                            <input type="radio" name="radio2" value="Y" id="f_email_agree_y" checked="checked"/>
+                                            <input type="radio" name="radio2" id="f_email_agree_y" value="Y" checked="checked"/>
                                             <span class="input-txt">수신함</span>
                                         </label>
                                         <label class="input-sp">
-                                            <input type="radio" name="radio2" value="N" id="f_email_agree_n" />
+                                            <input type="radio" name="radio2" id="f_email_agree_n" value="N" />
                                             <span class="input-txt">미수신</span>
                                         </label>
                                     </div>
