@@ -30,6 +30,20 @@
 <script type="text/javascript" src="http://q.hackershrd.com/worksheet/js/ui.js"></script>
 <!--[if lte IE 9]> <script src="/js/common/place_holder.js"></script> <![endif]-->
 <script type="text/javascript">
+    $(document).ready(function() {
+        $("#f_id").keydown(function(key) {
+            if (key.keyCode == 13 && $("#f_id").val()) {
+                login_submit();
+            }
+        });
+
+        $("#f_password").keydown(function(key) {
+            if (key.keyCode == 13 && $("#f_password").val()) {
+                login_submit();
+            }
+        });
+    });
+
     function login_submit() {
         const f_id = document.getElementById("f_id").value
         const f_password = document.getElementById("f_password").value

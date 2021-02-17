@@ -73,12 +73,13 @@
     });
 
     function idDuplicationCheck() {
-        $("#f_id_old").val($("#f_id_new").val());
-
         var idCheck = /^[a-z]+[a-z0-9]{3,14}$/g;
         if(!idCheck.test($('#f_id_new').val())){
             alert("아이디는 영문자로 시작하는 4~15자의 영문소문자,숫자만 가능합니다.");
+            $("#f_id_old").val('');
             return false;
+        } else {
+            $("#f_id_old").val($("#f_id_new").val());
         }
 
         $.ajax({
@@ -108,6 +109,39 @@
     }
 
     function regist_submit() {
+        // 이름 유효성 검사
+        if ($("#f_name").val() == "") {
+            alert("이름을 입력해주세요.");
+            $("#f_name").focus();
+            return false;
+        } else {
+            var nameCheck = /^[가-힣a-zA-Z]+$/;
+            if(!nameCheck.test($('#f_name').val())){
+                alert("이름은 한글 영문자만 가능합니다.");
+                return false;
+            }
+        }
+
+        // 아이디 유효성 검사
+        if ($("#f_id_new").val() == "") {
+            alert("아이디를 입력해주세요.");
+            $("#f_id_new").focus();
+            return false;
+        }
+
+        if ($("#f_id_old").val() != $("#f_id_new").val()) {
+            alert("아이디 중복체크를 해주세요.");
+        }
+
+        // 비밀번호 유효성 검사
+        if ($("#f_password_0").val() != "") {
+            var passwordCheck = /^[a-zA-Z0-9]{8,15}$/;
+            if(!passwordCheck.test($('#f_password_0').val())){
+                alert("비밀번호는 8-15자의 영문자/숫자 혼합만 가능합니다.");
+                return false;
+            }
+        }
+
         // 이메일 유효성 검사
         if ($("#f_email_0").val() != "" && $("#f_email_1").val() != "") {
             $("#f_email").val($("#f_email_0").val() + '@' + $("#f_email_1").val());
@@ -118,6 +152,13 @@
                 $("#f_email_0").focus();
                 return false;
             }
+        }
+
+        // 상세주소 유효성 검사
+        if ($("#f_zipcode").val() == "" || $("#f_address").val() == "" || $("#f_address_detail").val() == "") {
+            alert("상세주소를 입력해주세요.");
+            $("#f_address_detail").focus();
+            return false;
         }
 
         $("#f_tel").val($("#f_tel_0").val() + $("#f_tel_1").val() + $("#f_tel_2").val());

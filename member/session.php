@@ -2,6 +2,9 @@
 session_start();
 $_SESSION['f_mobile'] = $_POST['f_mobile'];
 //var_dump($_SESSION);
+//var_dump($_POST);
+
+
 $conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
 
 if(!$_POST['f_gubun']) {

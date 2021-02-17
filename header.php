@@ -1,6 +1,5 @@
 <?php
 session_start();
-//var_dump($_SESSION['f_id']);
 ?>
 <div id="header" class="header">
     <div class="nav-section">
