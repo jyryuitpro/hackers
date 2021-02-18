@@ -7,6 +7,8 @@ $f_password = base64_encode(hash('sha256', $_POST['f_password'], true));
 
 $sql = "SELECT * FROM MEMBER WHERE F_ID='{$f_id}' and F_PASSWORD='{$f_password}'";
 $result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_row($result);
+//var_dump($row);
 $exist = mysqli_num_rows($result);
 
 $refer = $_SERVER['HTTP_REFERER'];
@@ -37,5 +39,6 @@ if ($exist > 0 && $refer) {
 /* If success */
 session_start();
 //session_destroy();
+$_SESSION['f_name'] = $row[0];
 $_SESSION['f_id'] = $f_id;
 $_SESSION['f_password'] = $f_password;
