@@ -2,6 +2,23 @@
 session_start();
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
+
+$db = new mysqli('192.168.56.108', 'root', '', 'hackers');
+if ($db->connect_error) {
+    die('데이터베이스 연결 문제');
+}
+$db->set_charset("utf-8");
+
+if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
+    $f_num = $_GET['f_num'];
+
+    // 일반 게시글
+    $sql = 'SELECT * FROM BOARD WHERE F_NUM = ' . $f_num;
+    $result_normal = $db->query($sql);
+    $row = $result_normal->fetch_assoc();
+    var_dump($row);
+}
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
@@ -37,9 +54,34 @@ $f_id = $_SESSION['f_id'];
     <link rel="stylesheet" href="./daumEditor/css/editor.css" type="text/css" charset="utf-8"/>
     <script src="./daumEditor/js/editor_loader.js?environment=development" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">
-        function saveContent() {
+        $(document).ready(function() {
+            // DB 글 내용 가져오기
+            loadContent();
+        });
 
+        // 글 내용 저장
+        function saveContent() {
             Editor.save(); // 이 함수를 호출하여 글을 등록하면 된다.
+        }
+
+        // 글 내용 수정
+        function editContent() {
+            Editor.save(); // 이 함수를 호출하여 글을 등록하면 된다.
+        }
+
+        // DB 글 내용 가져오기
+        function loadContent() {
+            var attachments = {};
+            Editor.modify({
+                "attachments": function () { /* 저장된 첨부가 있을 경우 배열로 넘김, 위의 부분을 수정하고 아래 부분은 수정없이 사용 */
+                    var allattachments = [];
+                    for (var i in attachments) {
+                        allattachments = allattachments.concat(attachments[i]);
+                    }
+                    return allattachments;
+                }(),
+                "content": document.getElementById("sample_contents_source") /* 내용 문자열, 주어진 필드(textarea) 엘리먼트 */
+            });
         }
     </script>
 </head><body>
@@ -72,9 +114,20 @@ $f_id = $_SESSION['f_id'];
                 </ul>
             </div>
         <!-- form 시작 -->
-        <form name="tx_editor_form" id="tx_editor_form" action="/lecture_board/regist.php" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+        <?php
+        if ($_GET['f_gubun'] != "modify") {
+            ?>
+            <form name="tx_editor_form" id="tx_editor_form" action="/lecture_board/regist.php" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+            <?php
+        } else {
+            ?>
+                <form name="tx_editor_form" id="tx_editor_form" action="/lecture_board/modify.php" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+        <?php
+        }
+        ?>
             <input type="text" class="input-text" style="width:611px" name="f_name" id="f_name" value="<?php echo $f_name ?>"/>
             <input type="text" class="input-text" style="width:611px" name="f_id" id="f_id" value="<?php echo $f_id ?>"/>
+            <input type="text" class="input-text" style="width:611px" name="f_num" id="f_num" value="<?php echo @$f_num ?>"/>
             <table border="0" cellpadding="0" cellspacing="0" class="tbl-col">
                 <caption class="hidden">강의정보</caption>
                 <colgroup>
@@ -88,76 +141,71 @@ $f_id = $_SESSION['f_id'];
                     <td>
                         <select class="input-sel" style="width:160px" name="f_category" id="f_category">
                             <option value="">분류</option>
-                            <option value="language and certification">어학 및 자격증</option>
-                            <option value="industrial job">산업직무</option>
+                            <option value="어학 및 자격증" <? if(@$row['F_CATEGORY']=="어학 및 자격증") { echo "selected"; } ?> >어학 및 자격증</option>
+                            <option value="산업직무" <? if(@$row['F_CATEGORY']=="산업직무") { echo "selected"; } ?> >산업직무</option>
                         </select>
-                        <select class="input-sel ml5" style="width:454px" name="f_lecture" id="f_lecture">
+                        <select class="input-sel ml5" style="width:454px" name="f_lecture" id="f_lecture" ">
                             <option value="">강의명</option>
-                            <option value="toeic">토익</option>
-                            <option value="it/communication">IT/통신</option>
-                            <option value="finance/insurance">금융/보험</option>
+                            <option value="토익" <? if(@$row['F_LECTURE']=="토익") { echo "selected"; } ?>>토익</option>
+                            <option value="IT/통신" <? if(@$row['F_LECTURE']=="IT/통신") { echo "selected"; } ?>>IT/통신</option>
+                            <option value="금융/보험" <? if(@$row['F_LECTURE']=="금융/보험") { echo "selected"; } ?>>금융/보험</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <th scope="col">제목</th>
-                    <td><input type="text" class="input-text" style="width:611px" name="f_title" id="f_title"/></td>
+                    <td><input type="text" class="input-text" style="width:611px" name="f_title" id="f_title" value="<?php echo @$row['F_TITLE'] ?>"/></td>
                 </tr>
                 <tr>
                     <th scope="col">강의만족도</th>
                     <td>
                         <ul class="list-rating-choice">
+                            <?php
+                            for ($i = 5; $i > 0; $i--) {
+                            ?>
                             <li>
                                 <label class="input-sp ico">
-                                    <input type="radio" name="radio" id="f_grade_5" value="5" checked="checked"/>
+                                    <input type="radio" name="radio" id="f_grade_<?php echo $i; ?>" value="<?php echo $i; ?>" <?php if($row['F_GRADE'] == $i) echo 'checked'?> />
                                     <span class="input-txt">만점</span>
                                 </label>
                                 <span class="star-rating">
-									<span class="star-inner" style="width:100%"></span>
+									 <?php
+                                     if ($i == 5) {
+                                         ?>
+                                         <span class="star-inner" style="width:100%"></span>
+                                         <?php
+                                     } else if ($i == 4) {
+                                         ?>
+                                         <span class="star-inner" style="width:80%"></span>
+                                         <?php
+                                     } else if ($i == 3) {
+                                         ?>
+                                         <span class="star-inner" style="width:60%"></span>
+                                         <?php
+                                     } else if ($i == 2) {
+                                         ?>
+                                         <span class="star-inner" style="width:40%"></span>
+                                         <?php
+                                     } else if ($i == 1) {
+                                         ?>
+                                         <span class="star-inner" style="width:20%"></span>
+                                         <?php
+                                     }
+                                     ?>
 								</span>
                             </li>
-                            <li>
-                                <label class="input-sp ico">
-                                    <input type="radio" name="radio" id="f_grade_4" value="4" />
-                                    <span class="input-txt">만점</span>
-                                </label>
-                                <span class="star-rating">
-									<span class="star-inner" style="width:80%"></span>
-								</span>
-                            </li>
-                            <li>
-                                <label class="input-sp ico">
-                                    <input type="radio" name="radio" id="f_grade_3" value="3" />
-                                    <span class="input-txt">만점</span>
-                                </label>
-                                <span class="star-rating">
-									<span class="star-inner" style="width:60%"></span>
-								</span>
-                            </li>
-                            <li>
-                                <label class="input-sp ico">
-                                    <input type="radio" name="radio" id="f_grade_2" value="2" />
-                                    <span class="input-txt">만점</span>
-                                </label>
-                                <span class="star-rating">
-									<span class="star-inner" style="width:40%"></span>
-								</span>
-                            </li>
-                            <li>
-                                <label class="input-sp ico">
-                                    <input type="radio" name="radio" id="f_grade_1" value="1" />
-                                    <span class="input-txt">만점</span>
-                                </label>
-                                <span class="star-rating">
-									<span class="star-inner" style="width:20%"></span>
-								</span>
-                            </li>
+                            <?php
+                            }
+                            ?>
                         </ul>
                     </td>
                 </tr>
                 </tbody>
             </table>
-
+            <!-- 글 수정을 위한 글 내용 데이터 가져오기 -->
+            <textarea id="sample_contents_source" style="display:none;">
+                <?php echo @$row['F_CONTENTS'];?>
+            </textarea>
             <div class="editor-wrap">
                 <!-- 에디터 컨테이너 시작 -->
                 <div id="tx_trex_container" class="tx-editor-container">
@@ -532,7 +580,9 @@ $f_id = $_SESSION['f_id'];
                     <div id="tx_canvas" class="tx-canvas">
                         <div id="tx_loading" class="tx-loading"><div><img src="./daumeditor/images/icon/editor/loading2.png" width="113" height="21" align="absmiddle"/></div></div>
                         <div id="tx_canvas_wysiwyg_holder" class="tx-holder" style="display:block;">
-                            <iframe id="tx_canvas_wysiwyg" name="tx_canvas_wysiwyg" allowtransparency="true" frameborder="0"></iframe>
+                            <iframe id="tx_canvas_wysiwyg" name="tx_canvas_wysiwyg" allowtransparency="true" frameborder="0">
+
+                            </iframe>
                         </div>
                         <div class="tx-source-deco">
                             <div id="tx_canvas_source_holder" class="tx-holder">
@@ -578,7 +628,17 @@ $f_id = $_SESSION['f_id'];
                 </div>
                 <div class="box-btn t-r">
                     <a href="#" class="btn-m-gray">목록</a>
-                    <a href="#" class="btn-m ml5" onClick="saveContent();">저장</a>
+                    <?php
+                    if ($_GET['f_gubun'] != "modify") {
+                    ?>
+                        <a href="#" class="btn-m ml5" onClick="saveContent();">저장</a>
+                    <?php
+                    } else {
+                    ?>
+                        <a href="#" class="btn-m ml5" onClick="editContent();">수정</a>
+                    <?php
+                    }
+                    ?>
                 </div>
             </div>
         </form>

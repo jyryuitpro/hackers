@@ -1,7 +1,7 @@
 <?php
 $db = new mysqli('192.168.56.108', 'root', '', 'hackers');
 if($db->connect_error) {
-    die('데이터베이스 연결에 문제');
+    die('데이터베이스 연결 문제');
 }
 $db->set_charset("utf-8");
 
@@ -206,7 +206,7 @@ $result_normal = $db->query($sql);
                         <td><?php echo $row['F_NUM'] ?></td>
                         <td><?php echo $row['F_CATEGORY'] ?></td>
                         <td>
-                            <a href="/lecture_board/index.php?mode=view">
+                            <a href="/lecture_board/index.php?mode=view&f_num=<?php echo $row['F_NUM'] ?>">
                                 <span class="tc-gray ellipsis_line">수강 강의명 : <?php echo $row['F_LECTURE'] ?></span>
                                 <strong class="ellipsis_line"><?php echo $row['F_TITLE'] ?></strong>
                             </a>

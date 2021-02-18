@@ -14,8 +14,6 @@ $sql = $sql." VALUES('$f_category','$f_lecture','$f_title','$f_grade','$f_conten
 $result = mysqli_query($conn, $sql);
 
 if($result){
-
-
     Header("Location: /lecture_board/index.php?mode=list");
 }else{
     echo 'fail to insert sql '.$sql;
