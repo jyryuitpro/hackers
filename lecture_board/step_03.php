@@ -15,6 +15,10 @@ $f_num = $_GET['f_num'];
 $sql = 'SELECT * FROM BOARD WHERE F_NUM = '. $f_num;
 $result_normal = $db->query($sql);
 $row = $result_normal->fetch_assoc();
+
+$sql = 'UPDATE BOARD SET F_COUNT = F_COUNT + 1 WHERE F_NUM = '. $f_num;
+$result_normal = $db->query($sql);
+
 //var_dump($row);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -176,7 +180,7 @@ $row = $result_normal->fetch_assoc();
         if ($page < 1 || ($page > $allPage)) {
             echo "존재하지 않는 페이지입니다.";
         } else {
-            echo "존재하는 페이지입니다.";
+//            echo "존재하는 페이지입니다.";
         }
 
         $oneSection = 6; // 한번에 보여줄 총 페이지 개수

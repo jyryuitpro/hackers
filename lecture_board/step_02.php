@@ -16,7 +16,7 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
     $sql = 'SELECT * FROM BOARD WHERE F_NUM = ' . $f_num;
     $result_normal = $db->query($sql);
     $row = $result_normal->fetch_assoc();
-    var_dump($row);
+//    var_dump($row);
 }
 
 ?>
@@ -121,7 +121,7 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
             <?php
         } else {
             ?>
-                <form name="tx_editor_form" id="tx_editor_form" action="/lecture_board/modify.php" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+            <form name="tx_editor_form" id="tx_editor_form" action="/lecture_board/modify.php" method="post" enctype="multipart/form-data" accept-charset="utf-8">
         <?php
         }
         ?>
