@@ -94,7 +94,7 @@ $f_name = $_SESSION['f_name'];
                 <a href="/member/index.php?mode=login">로그인</a>
                 <a href="/member/index.php?mode=step_01">회원가입</a>
                 <a href="#">상담/고객센터</a>
-                <a href="#">관리자</a>
+                <a href="/admin/index.php?mode=list">관리자</a>
                 <?php
                 } else {
                 ?>
