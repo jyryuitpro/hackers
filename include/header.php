@@ -1,5 +1,6 @@
 <?php
 session_start();
+$f_name = $_SESSION['f_name'];
 ?>
 <div id="header" class="header">
     <div class="nav-section">
@@ -98,6 +99,7 @@ session_start();
                 } else {
                 ?>
                 <!-- 로그인후 -->
+                <a><?php echo $f_name.'님 로그인 중입니다.'?></a>
                 <a href="/member/index.php?mode=logout">로그아웃</a>
                 <a href="/member/index.php?mode=modify">내정보</a>
                 <a href="#">상담/고객센터</a>

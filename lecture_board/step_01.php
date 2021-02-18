@@ -54,7 +54,7 @@ $allPage = ceil($allPost / $onePage); // 전체 페이지의 수
 if ($page < 1 || ($page > $allPage)) {
     echo "존재하지 않는 페이지입니다.";
 } else {
-    echo "존재하는 페이지입니다.";
+//    echo "존재하는 페이지입니다.";
 }
 
 $oneSection = 6; // 한번에 보여줄 총 페이지 개수
