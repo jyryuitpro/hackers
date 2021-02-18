@@ -252,7 +252,7 @@ $result_normal = $db->query($sql);
                         <td><?php echo $row['F_NUM'] ?></td>
                         <td><?php echo $row['F_CATEGORY'] ?></td>
                         <td>
-                            <a href="/lecture_board/index.php?mode=view&f_num=<?php echo $row['F_NUM'] ?>">
+                            <a href="/lecture_board/index.php?mode=view&f_num=<?php echo $row['F_NUM'] ?><?php echo $query_string_add ?>">
                                 <span class="tc-gray ellipsis_line">수강 강의명 : <?php echo $row['F_LECTURE'] ?></span>
                                 <strong class="ellipsis_line"><?php echo $row['F_TITLE'] ?></strong>
                             </a>
