@@ -1,8 +1,7 @@
 <?php
-//var_dump($_GET['f_category_id']);
-//var_dump($_GET['f_lecture']);
-
-//echo _param_get();
+session_start();
+$f_name = $_SESSION['f_name'];
+$f_id = $_SESSION['f_id'];
 
 $data = array( 'f_category_id' => $_GET['f_category_id'],
     'f_lecture' => $_GET['f_search_content']
@@ -316,10 +315,15 @@ $result_normal = $db->query($sql);
 <!--			<a href="#"><i class="icon-next"><span class="hidden">다음페이지</span></i></a>-->
 <!--			<a href="#"><i class="icon-last"><span class="hidden">마지막페이지</span></i></a>-->
 <!--		</div>-->
-
+        <?php
+        if (isset($_SESSION['f_name'])) {
+        ?>
 		<div class="box-btn t-r">
 			<a href="/lecture_board/index.php?mode=write" class="btn-m">후기 작성</a>
 		</div>
+        <?php
+        }
+        ?>
 	</div>
 </div>
     <?php include '../include/footer.php'; ?>

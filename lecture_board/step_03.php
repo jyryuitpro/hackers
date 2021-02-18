@@ -149,11 +149,18 @@ $result_normal = $db->query($sql);
 			</tbody>
 		</table>
 
-		<div class="box-btn t-r">
-			<a href="/lecture_board/index.php?mode=list" class="btn-m-gray">목록</a>
-			<a href="/lecture_board/index.php?mode=write&f_gubun=modify&f_num=<?php echo $row['F_NUM'] ?>" class="btn-m ml5">수정</a>
-			<a href="#" class="btn-m-dark">삭제</a>
-		</div>
+        <div class="box-btn t-r">
+            <a href="/lecture_board/index.php?mode=list" class="btn-m-gray">목록</a>
+            <?php
+            if (isset($_SESSION['f_name'])) {
+            ?>
+            <a href="/lecture_board/index.php?mode=write&f_gubun=modify&f_num=<?php echo $row['F_NUM'] ?>" class="btn-m ml5">수정</a>
+            <a href="#" class="btn-m-dark">삭제</a>
+            <?php
+            }
+            ?>
+        </div>
+
 
         <?php
         $db = new mysqli('192.168.56.108', 'root', '', 'hackers');
