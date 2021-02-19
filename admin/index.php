@@ -13,7 +13,7 @@ if ($_GET['mode'] == "write") {
         $f_num = $_GET['f_num'];
         Header("Location: /lecture_board/step_02.php?f_gubun=modify&f_num=".$f_num);
     } else {
-        Header("Location: /lecture_board/step_02.php");
+        Header("Location: /admin/step_02.php");
     }
 }
 

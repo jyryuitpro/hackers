@@ -5,7 +5,8 @@ $f_id = $_SESSION['f_id'];
 
 $_GET['f_gubun'];
 
-$db = new mysqli('192.168.56.108', 'root', '', 'hackers');
+//$db = new mysqli('192.168.56.108', 'root', '', 'hackers');
+$db = new mysqli('localhost:3307', 'root', 'root', 'hackers');
 if ($db->connect_error) {
     die('데이터베이스 연결 문제');
 }
@@ -19,11 +20,10 @@ $result_normal = $db->query($sql);
 $row = $result_normal->fetch_assoc();
 //var_dump($row);
 
-$sql_thumbnail = 'SELECT F_FILE_NAME_CP FROM LECTURE a JOIN THUMBNAIL b ON a.F_FIEL_ID = b.F_FIEL_ID WHERE a.F_NUM = ' . $f_num;
+$sql_thumbnail = 'SELECT F_THUMBNAIL_NAME_CRYPTO FROM LECTURE a JOIN THUMBNAIL b ON a.F_THUMBNAIL_ID = b.F_THUMBNAIL_ID WHERE a.F_NUM = ' . $f_num;
 $result_thumbnail = $db->query($sql_thumbnail);
 $row_thumbnail = $result_thumbnail->fetch_assoc();
 //var_dump($row_thumbnail);
-
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -60,50 +60,13 @@ $row_thumbnail = $result_thumbnail->fetch_assoc();
 <script type="text/javascript">
     $(document).ready(function () {
         // 이벤트를 바인딩해서 input에 파일이 올라올때 위의 함수를 this context로 실행합니다.
-        $("#upfile").change(function(){
+        $("#thumbnail").change(function(){
             readURL(this);
         });
     });
 
-    function formSubmit(f) {
-        // 업로드 할 수 있는 파일 확장자를 제한합니다.
-        var extArray = new Array('hwp','xls','doc','xlsx','docx','pdf','jpg','gif','png','txt','ppt','pptx');
-        var path = document.getElementById("upfile").value;
-
-        if(path == "") {
-            alert("썸네일 파일을 선택해 주세요.");
-            return false;
-        }
-
-        var pos = path.indexOf(".");
-
-        if(pos < 0) {
-            alert("확장자가 없는파일 입니다.");
-            return false;
-        }
-
-        var ext = path.slice(path.indexOf(".") + 1).toLowerCase();
-
-
-        var checkExt = false;
-
-        for(var i = 0; i < extArray.length; i++) {
-            if(ext == extArray[i]) {
-                checkExt = true;
-                break;
-            }
-        }
-
-        if(checkExt == false) {
-            alert("업로드 할 수 없는 파일 확장자 입니다.");
-            return false;
-        }
-
-        return true;
-    }
-
-    function upfile() {
-        $("#upfile").click();
+    function upload_thumbnail() {
+        $("#thumbnail").click();
     }
 
     function readURL(input) {
@@ -111,7 +74,7 @@ $row_thumbnail = $result_thumbnail->fetch_assoc();
             var reader = new FileReader();
 
             reader.onload = function (e) {
-                $('#image_section').attr('src', e.target.result);
+                $('#thumbnail_section').attr('src', e.target.result);
             }
 
             reader.readAsDataURL(input.files[0]);
@@ -119,46 +82,50 @@ $row_thumbnail = $result_thumbnail->fetch_assoc();
     }
 
     function regist_submit() {
-        if ($("#f_category").val() == "") {
-            alert("분류를 선택해주세요.");
-            $("#f_category").focus();
+        // if ($("#f_category").val() == "") {
+        //     alert("분류를 선택해주세요.");
+        //     $("#f_category").focus();
+        //     return false;
+        // }
+        //
+        // if ($("#f_lecture").val() == "") {
+        //     alert("강의명을 입력해주세요.");
+        //     $("#f_category").focus();
+        //     return false;
+        // }
+        //
+        // if ($("#f_instructor").val() == "") {
+        //     alert("강사명을 입력해주세요.");
+        //     $("#f_category").focus();
+        //     return false;
+        // }
+        //
+        // if ($("#f_learning_time").val() == "") {
+        //     alert("학습시간을 입력해주세요.");
+        //     $("#f_category").focus();
+        //     return false;
+        // }
+        //
+        // if ($("#f_lecture_count").val() == "") {
+        //     alert("강의수를 입력해주세요.");
+        //     $("#f_category").focus();
+        //     return false;
+        // }
+        //
+        // if (!$('input:radio[name=radio]').is(':checked')) {
+        //     alert("학습난이도를 선택해주세요.");
+        //     $("#f_category").focus();
+        //     return false;
+        // }
+
+        var path = document.getElementById("thumbnail").value;
+        if(path == "") {
+            alert("썸네일 파일을 선택해 주세요!");
             return false;
         }
 
-        if ($("#f_lecture").val() == "") {
-            alert("강의명을 입력해주세요.");
-            $("#f_category").focus();
-            return false;
-        }
-
-        if ($("#f_instructor").val() == "") {
-            alert("강사명을 입력해주세요.");
-            $("#f_category").focus();
-            return false;
-        }
-
-        if ($("#f_learning_time").val() == "") {
-            alert("학습시간을 입력해주세요.");
-            $("#f_category").focus();
-            return false;
-        }
-
-        if ($("#f_lecture_count").val() == "") {
-            alert("강의수를 입력해주세요.");
-            $("#f_category").focus();
-            return false;
-        }
-
-        if (!$('input:radio[name=radio]').is(':checked')) {
-            alert("학습난이도를 선택해주세요.");
-            $("#f_category").focus();
-            return false;
-        }
-
-        document.getElementById('regist').submit();
+        $("#regist").submit();
     }
-
-
 </script>
 </head><body>
 <!-- skip nav -->
@@ -205,20 +172,20 @@ $row_thumbnail = $result_thumbnail->fetch_assoc();
 
 		<p class="mb15"><strong class="tc-brand fs16">강의 등록 정보</strong></p>
         <?php
-        if ($_GET['f_gubun'] != "modify") {
+        if (!isset($_GET['f_gubun'])) {
         ?>
-        <form name="regist" id="regist" method="post" action="/admin/regist.php" enctype="multipart/form-data" onsubmit="return formSubmit(this);">
+        <form name="regist" id="regist" method="post" action="/admin/regist.php" enctype="multipart/form-data" >
         <?php
         } else {
         ?>
-        <form name="regist" id="regist" method="post" action="/admin/regist.php" enctype="multipart/form-data" onsubmit="return formSubmit(this);">
+        <form name="regist" id="regist" method="post" action="/admin/modify.php" enctype="multipart/form-data" >
         <?php
         }
         ?>
             <input type="hidden" class="input-text" style="width:611px" name="f_name" id="f_name" value="<?php echo $f_name ?>"/>
             <input type="hidden" class="input-text" style="width:611px" name="f_id" id="f_id" value="<?php echo $f_id ?>"/>
             <input type="hidden" class="input-text" style="width:611px" name="f_category_id" id="f_category_id" value=""/>
-            <input type="hidden" class="input-text" style="width:611px" name="f_num" id="f_num" value="<?php echo @$f_num ?>"/>
+<!--            <input type="hidden" class="input-text" style="width:611px" name="f_num" id="f_num" value="--><?php //echo $f_num ?><!--"/>-->
             <table border="0" cellpadding="0" cellspacing="0" class="tbl-col">
                 <caption class="hidden">강의정보</caption>
                 <colgroup>
@@ -232,10 +199,10 @@ $row_thumbnail = $result_thumbnail->fetch_assoc();
                     <td>
                         <select class="input-sel" style="width:160px" name="f_category" id="f_category">
                             <option value="">선택</option>
-                            <option value="어학 및 자격증" <? if(@$row['F_CATEGORY']=="어학 및 자격증") { echo "selected"; } ?> >어학 및 자격증</option>
-                            <option value="공통역량" <? if(@$row['F_CATEGORY']=="공통역량") { echo "selected"; } ?> >공통역량</option>
-                            <option value="일반직무" <? if(@$row['F_CATEGORY']=="일반직무") { echo "selected"; } ?> >일반직무</option>
-                            <option value="산업직무" <? if(@$row['F_CATEGORY']=="산업직무") { echo "selected"; } ?> >산업직무</option>
+                            <option value="어학 및 자격증" <? if($row['F_CATEGORY']=="어학 및 자격증") { echo "selected"; } ?> >어학 및 자격증</option>
+                            <option value="공통역량" <? if($row['F_CATEGORY']=="공통역량") { echo "selected"; } ?> >공통역량</option>
+                            <option value="일반직무" <? if($row['F_CATEGORY']=="일반직무") { echo "selected"; } ?> >일반직무</option>
+                            <option value="산업직무" <? if($row['F_CATEGORY']=="산업직무") { echo "selected"; } ?> >산업직무</option>
                         </select>
                     </td>
                 </tr>
@@ -264,7 +231,7 @@ $row_thumbnail = $result_thumbnail->fetch_assoc();
                                 ?>
                                 <li>
                                     <label class="input-sp ico">
-                                        <input type="radio" name="radio" id="f_grade_<?php echo $i; ?>" value="<?php echo $i; ?>" <?php if($row['F_GRADE'] == $i) echo 'checked'?> />
+                                        <input type="radio" name="radio" id="f_grade_<?php echo $i; ?>" value="<?php echo $i; ?>" <?php if(@$row['F_GRADE'] == $i) echo 'checked'?> />
                                         <span class="input-txt">만점</span>
                                     </label>
                                     <span class="star-rating">
@@ -300,27 +267,24 @@ $row_thumbnail = $result_thumbnail->fetch_assoc();
                     </td>
                 </tr>
                 <tr>
-                    <th scope="col">
-                        썸네일
-                    </th>
-                        <td>
-                            <a href="#" class="sample-lecture">
-                                <?php
-                                if (isset($row_thumbnail)) {
-                                ?>
-                                <img src="./thumbnail/<?php echo $row_thumbnail['F_FILE_NAME_CP']; ?>" alt="" id="image_section" width="144" height="101" />
-                                <?php
-                                } else {
-                                ?>
-                                <img src="http://via.placeholder.com/144x101" alt="" id="image_section" width="144" height="101" />
-                                <?php
-                                }
-                                ?>
-                                <input type="file" name="upfile" id="upfile" style="display: none"/>
-                                <span class="tc-brand" onclick="upfile();">썸네일 선택</span>
-<!--                                <input type="submit" class="btn-m ml5" value="썸네일 업로드" />-->
-                            </a>
-                        </td>
+                    <th scope="col">썸네일</th>
+                    <td>
+                        <a href="javascript:void(0);" class="sample-lecture">
+                            <?php
+                            if (isset($row_thumbnail)) {
+                            ?>
+                            <img src="./thumbnail/<?php echo @$row_thumbnail['F_THUMBNAIL_NAME_CRYPTO']; ?>" alt="" id="image_section" width="144" height="101" />
+                            <?php
+                            } else {
+                            ?>
+                            <img src="http://via.placeholder.com/144x101" alt="" name="thumbnail_section" id="thumbnail_section" width="144" height="101" />
+                            <?php
+                            }
+                            ?>
+                            <input type="file" name="thumbnail" id="thumbnail" style="display: none"/>
+                            <span class="tc-brand" onclick="upload_thumbnail();">썸네일 선택</span>
+                        </a>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -329,11 +293,10 @@ $row_thumbnail = $result_thumbnail->fetch_assoc();
                 <?php
                 if ($_GET['f_gubun'] != "modify") {
                 ?>
-                    <a href="#" onclick="regist_submit();" class="btn-m ml5">등록</a>
-                    <input type="submit" class="btn-m ml5" value="등록" />
+                    <a href="javascript:void(0);" onclick="regist_submit();" class="btn-m ml5">등록</a>
                 <?php
                 } else {
-                    ?>
+                ?>
                     <a href="#" class="btn-m ml5" onclick="regist_submit();">수정</a>
                     <a href="#" class="btn-m-dark">삭제</a>
                 <?php

@@ -97,7 +97,11 @@
             data:'f_id='+$("#f_id_new").val(),
             type: "POST",
             success:function(data){
-                alert("사용 가능한 아이디입니다");
+                if (data.res != "duplication") {
+                    alert("사용 가능한 아이디입니다");
+                } else {
+                    alert("이미 사용중인 아이디입니다");
+                }
             },
             error:function (){
 
@@ -238,6 +242,7 @@
 
 			<div class="section-content">
                 <form name="regist" id="regist" method="post" action="/member/regist.php">
+                    <input type="text" class="input-text" style="width:302px" name="f_authority" id="f_authority" value="1"/>
                     <table border="0" cellpadding="0" cellspacing="0" class="tbl-col-join">
                         <caption class="hidden">강의정보</caption>
                         <colgroup>

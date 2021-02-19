@@ -1,6 +1,6 @@
 <?php
-$conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
-//$conn = mysqli_connect('localhost', 'root', '123456', 'hackers');
+//$conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
+$conn = mysqli_connect('localhost:3307', 'root', 'root', 'hackers');
 
 $f_id = $_POST['f_id'];
 $sql = "SELECT * FROM MEMBER WHERE F_ID='{$f_id}'";

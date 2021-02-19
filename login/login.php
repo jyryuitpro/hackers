@@ -1,5 +1,6 @@
 <?php
-$conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
+//$conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
+$conn = mysqli_connect('localhost:3307', 'root', 'root', 'hackers');
 
 $f_id = $_POST['f_id'];
 $f_password = base64_encode(hash('sha256', $_POST['f_password'], true));
@@ -40,6 +41,6 @@ if ($exist > 0 && $refer) {
 /* If success */
 session_start();
 //session_destroy();
-$_SESSION['f_name'] = $row[0];
+$_SESSION['f_name'] = $row[1];
 $_SESSION['f_id'] = $f_id;
-$_SESSION['f_authority'] = $row[12];
+$_SESSION['f_authority'] = $row[13];

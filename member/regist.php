@@ -1,5 +1,8 @@
 <?php
-$conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
+//$conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
+$conn = mysqli_connect('localhost:3307', 'root', 'root', 'hackers');
+
+var_dump($_POST);
 
 $f_name = $_POST['f_name'];
 $f_id = $_POST['f_id_new'];
@@ -17,9 +20,10 @@ $f_mobile_agree = $_POST['radio'];
 $f_email_agree = $_POST['radio2'];
 
 $f_birthday = $_POST['f_birthday'];
+$f_authority = $_POST['f_authority'];
 
 $sql = "INSERT INTO MEMBER (F_NAME, F_ID, F_PASSWORD, F_EMAIL, F_MOBILE, F_TEL, F_ZIPCODE, F_ADDRESS, F_ADDRESS_DETAIL, F_MOBILE_AGREE, F_EMAIL_AGREE, F_BIRTHDAY, F_AUTHORITY)";
-$sql = $sql." VALUES('$f_name','$f_id','$f_password','$f_email','$f_mobile','$f_tel','$f_zipcode','$f_address','$f_address_detail','$f_mobile_agree','$f_email_agree', '$f_birthday', '1')";
+$sql = $sql." VALUES('$f_name','$f_id','$f_password','$f_email','$f_mobile','$f_tel','$f_zipcode','$f_address','$f_address_detail','$f_mobile_agree','$f_email_agree', '$f_birthday', '$f_authority')";
 $result = mysqli_query($conn, $sql);
 
 if($result){

@@ -10,7 +10,9 @@ $query_string = http_build_query($data);
 
 $query_string_add = '&' . $query_string;
 
-$db = new mysqli('192.168.56.108', 'root', '', 'hackers');
+//$db = new mysqli('192.168.56.108', 'root', '', 'hackers');
+$db = new mysqli('localhost:3307', 'root', 'root', 'hackers');
+
 if($db->connect_error) {
     die('데이터베이스 연결 문제');
 }
