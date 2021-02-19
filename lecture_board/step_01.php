@@ -109,7 +109,7 @@ $currentLimit = ($onePage * $page) - $onePage; //몇 번째의 글부터 가져�
 $sqlLimit = ' LIMIT ' . $currentLimit . ', ' . $onePage; //limit sql 구문
 
 // 일반 게시글
-$sql = "SELECT * FROM BOARD ".$search_category." ORDER BY F_NUM DESC". $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지
+$sql = "SELECT * FROM BOARD ".$search_category." ORDER BY F_NUM DESC". $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지)
 $result_normal = $db->query($sql);
 //var_dump($sql);
 ?>

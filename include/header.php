@@ -1,6 +1,10 @@
 <?php
 session_start();
 $f_name = $_SESSION['f_name'];
+$f_id = $_SESSION['f_id'];
+$f_authority = $_SESSION['f_authority'];
+
+var_dump($f_authority);
 ?>
 <div id="header" class="header">
     <div class="nav-section">
@@ -94,7 +98,6 @@ $f_name = $_SESSION['f_name'];
                 <a href="/member/index.php?mode=login">로그인</a>
                 <a href="/member/index.php?mode=step_01">회원가입</a>
                 <a href="#">상담/고객센터</a>
-                <a href="/admin/index.php?mode=list">관리자</a>
                 <?php
                 } else {
                 ?>
@@ -103,7 +106,13 @@ $f_name = $_SESSION['f_name'];
                 <a href="/member/index.php?mode=logout">로그아웃</a>
                 <a href="/member/index.php?mode=modify">내정보</a>
                 <a href="#">상담/고객센터</a>
-                <a href="#">관리자</a>
+                    <?php
+                    if ($_SESSION['f_authority'] == '0') {
+                    ?>
+                        <a href="/admin/index.php?mode=list">관리자</a>
+                    <?php
+                    }
+                    ?>
                 <?php
                 }
                 ?>

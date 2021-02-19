@@ -125,9 +125,9 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
         <?php
         }
         ?>
-            <input type="text" class="input-text" style="width:611px" name="f_name" id="f_name" value="<?php echo $f_name ?>"/>
-            <input type="text" class="input-text" style="width:611px" name="f_id" id="f_id" value="<?php echo $f_id ?>"/>
-            <input type="text" class="input-text" style="width:611px" name="f_num" id="f_num" value="<?php echo @$f_num ?>"/>
+            <input type="hidden" class="input-text" style="width:611px" name="f_name" id="f_name" value="<?php echo $f_name ?>"/>
+            <input type="hidden" class="input-text" style="width:611px" name="f_id" id="f_id" value="<?php echo $f_id ?>"/>
+            <input type="hidden" class="input-text" style="width:611px" name="f_num" id="f_num" value="<?php echo @$f_num ?>"/>
             <table border="0" cellpadding="0" cellspacing="0" class="tbl-col">
                 <caption class="hidden">강의정보</caption>
                 <colgroup>
@@ -144,7 +144,7 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
                             <option value="어학 및 자격증" <? if(@$row['F_CATEGORY']=="어학 및 자격증") { echo "selected"; } ?> >어학 및 자격증</option>
                             <option value="산업직무" <? if(@$row['F_CATEGORY']=="산업직무") { echo "selected"; } ?> >산업직무</option>
                         </select>
-                        <select class="input-sel ml5" style="width:454px" name="f_lecture" id="f_lecture" ">
+                        <select class="input-sel ml5" style="width:454px" name="f_lecture" id="f_lecture">
                             <option value="">강의명</option>
                             <option value="토익" <? if(@$row['F_LECTURE']=="토익") { echo "selected"; } ?>>토익</option>
                             <option value="IT/통신" <? if(@$row['F_LECTURE']=="IT/통신") { echo "selected"; } ?>>IT/통신</option>

@@ -9,6 +9,7 @@ $sql = "SELECT * FROM MEMBER WHERE F_ID='{$f_id}' and F_PASSWORD='{$f_password}'
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_row($result);
 //var_dump($row);
+//exit;
 $exist = mysqli_num_rows($result);
 
 $refer = $_SERVER['HTTP_REFERER'];
@@ -41,4 +42,4 @@ session_start();
 //session_destroy();
 $_SESSION['f_name'] = $row[0];
 $_SESSION['f_id'] = $f_id;
-$_SESSION['f_password'] = $f_password;
+$_SESSION['f_authority'] = $row[12];

@@ -2,9 +2,11 @@
 
 $db_conn = mysqli_connect("localhost", "root", "123456", "hackers");
 
+$f_name = $_POST['f_name'];
+$f_id = $_POST['f_id'];
+
 if (isset($_FILES['upfile']) && $_FILES['upfile']['name'] != "") {
     $file = $_FILES['upfile'];
-
     $upload_directory = './thumbnail/';
     $ext_str = "hwp,xls,doc,xlsx,docx,pdf,jpg,gif,png,txt,ppt,pptx";
     $allowed_extensions = explode(',', $ext_str);

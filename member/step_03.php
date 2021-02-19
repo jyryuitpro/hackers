@@ -41,6 +41,7 @@
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
+        setDateBox();
         $("#password_match").css("color", "red").hide();
         $(".password").focusout(function () {
             const f_password_0 = $("#f_password_0").val();
@@ -69,6 +70,14 @@
                     $("#f_email_1").attr("disabled",true); //비활성화
                 }
             });
+        });
+
+        $('.birthday_sel').change(function () {
+            const f_year = document.getElementById('f_year').value;
+            const f_month = document.getElementById('f_month').value;
+            const f_day = document.getElementById('f_day').value;
+
+            document.getElementById('f_birthday').value = f_year + f_month + f_day;
         });
     });
 
@@ -166,6 +175,38 @@
 
         regist.submit();
     }
+
+    function setDateBox(){
+        var dt = new Date();
+        var year = "";
+        var com_year = dt.getFullYear();
+        // 발행 뿌려주기
+        $("#f_year").append("<option value=''>선택</option>");
+        // 올해 기준으로 -1년부터 +5년을 보여준다.
+        for(var y = 1950; y <= com_year; y++){
+            $("#f_year").append("<option value='"+ y +"'>"+ y +"</option>");
+        }
+        // 월 뿌려주기
+        var month;
+        $("#f_month").append("<option value=''>선택</option>");
+        for(var m = 1; m <= 12; m++){
+            if (m < 10) {
+                $("#f_month").append("<option value='0"+ m +"'>"+ "0" + m +"</option>");
+            } else {
+                $("#f_month").append("<option value='"+ m +"'>"+ m +"</option>");
+            }
+        }
+        // 일 뿌려주기
+        var day;
+        $("#f_day").append("<option value=''>선택</option>");
+        for(var d = 1; d <= 31; d++){
+            if (d < 10) {
+                $("#f_day").append("<option value='0"+ d +"'>"+ "0" + d +"</option>");
+            } else {
+                $("#f_day").append("<option value='"+ d +"'>"+ d +"</option>");
+            }
+        }
+    }
 </script>
 </head><body>
 <!-- skip nav -->
@@ -208,6 +249,24 @@
                             <tr>
                                 <th scope="col"><span class="icons">*</span>이름</th>
                                 <td><input type="text" class="input-text" style="width:302px" name="f_name" id="f_name"/></td>
+                            </tr>
+                            <tr>
+                                <th scope="col"><span class="icons">*</span>생년월일</th>
+                                <td>
+                                    <input type="text" class="input-text" style="width:100px" name="f_birthday" id="f_birthday"/>
+                                    <select class="input-sel birthday_sel" style="width:100px" name="f_year" id="f_year">
+                                        <!--									<option value="">선택</option>-->
+                                    </select>
+                                    년
+                                    <select class="input-sel birthday_sel" style="width:100px" name="f_month" id="f_month">
+                                        <!--									<option value="">선택</option>-->
+                                    </select>
+                                    월
+                                    <select class="input-sel birthday_sel" style="width:100px" name="f_day" id="f_day">
+                                        <!--									<option value="">선택</option>-->
+                                    </select>
+                                    일
+                                </td>
                             </tr>
                             <tr>
                                 <th scope="col"><span class="icons">*</span>아이디</th>
