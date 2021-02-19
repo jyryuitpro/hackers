@@ -2,8 +2,6 @@
 
 // 수강후기 리스트 페이지
 if ($_GET['mode'] == "list" && isset($_GET['f_category_id'])) {
-
-
     $f_category_id = $_GET['f_category_id'];
     Header("Location: /lecture_board/step_01.php?f_category_id=".$f_category_id);
 } else {

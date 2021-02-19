@@ -3,11 +3,26 @@ session_start();
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
 
+$_GET['f_gubun'];
+
 $db = new mysqli('192.168.56.108', 'root', '', 'hackers');
 if ($db->connect_error) {
     die('데이터베이스 연결 문제');
 }
 $db->set_charset("utf-8");
+
+$f_num = $_GET['f_num'];
+
+// 일반 게시글
+$sql = 'SELECT * FROM LECTURE WHERE F_NUM = ' . $f_num;
+$result_normal = $db->query($sql);
+$row = $result_normal->fetch_assoc();
+//var_dump($row);
+
+$sql_thumbnail = 'SELECT F_FILE_NAME_CP FROM LECTURE a JOIN THUMBNAIL b ON a.F_FIEL_ID = b.F_FIEL_ID WHERE a.F_NUM = ' . $f_num;
+$result_thumbnail = $db->query($sql_thumbnail);
+$row_thumbnail = $result_thumbnail->fetch_assoc();
+//var_dump($row_thumbnail);
 
 
 ?>
@@ -189,7 +204,17 @@ $db->set_charset("utf-8");
         </ul>
 
 		<p class="mb15"><strong class="tc-brand fs16">강의 등록 정보</strong></p>
+        <?php
+        if ($_GET['f_gubun'] != "modify") {
+        ?>
         <form name="regist" id="regist" method="post" action="/admin/regist.php" enctype="multipart/form-data" onsubmit="return formSubmit(this);">
+        <?php
+        } else {
+        ?>
+        <form name="regist" id="regist" method="post" action="/admin/regist.php" enctype="multipart/form-data" onsubmit="return formSubmit(this);">
+        <?php
+        }
+        ?>
             <input type="hidden" class="input-text" style="width:611px" name="f_name" id="f_name" value="<?php echo $f_name ?>"/>
             <input type="hidden" class="input-text" style="width:611px" name="f_id" id="f_id" value="<?php echo $f_id ?>"/>
             <input type="hidden" class="input-text" style="width:611px" name="f_category_id" id="f_category_id" value=""/>
@@ -207,28 +232,28 @@ $db->set_charset("utf-8");
                     <td>
                         <select class="input-sel" style="width:160px" name="f_category" id="f_category">
                             <option value="">선택</option>
-                            <option value="어학 및 자격증">어학 및 자격증</option>
-                            <option value="공통역량">공통역량</option>
-                            <option value="일반직무">일반직무</option>
-                            <option value="산업직무">산업직무</option>
+                            <option value="어학 및 자격증" <? if(@$row['F_CATEGORY']=="어학 및 자격증") { echo "selected"; } ?> >어학 및 자격증</option>
+                            <option value="공통역량" <? if(@$row['F_CATEGORY']=="공통역량") { echo "selected"; } ?> >공통역량</option>
+                            <option value="일반직무" <? if(@$row['F_CATEGORY']=="일반직무") { echo "selected"; } ?> >일반직무</option>
+                            <option value="산업직무" <? if(@$row['F_CATEGORY']=="산업직무") { echo "selected"; } ?> >산업직무</option>
                         </select>
                     </td>
                 </tr>
                 <tr>
                     <th scope="col">강의명</th>
-                    <td><input type="text" class="input-text" style="width:580px" name="f_lecture" id="f_lecture"/></td>
+                    <td><input type="text" class="input-text" style="width:580px" name="f_lecture" id="f_lecture" value="<?php echo @$row['F_LECTURE'] ?>"/></td>
                 </tr>
                 <tr>
                     <th scope="col">강사명</th>
-                    <td><input type="text" class="input-text" style="width:160px" name="f_instructor" id="f_instructor"/></td>
+                    <td><input type="text" class="input-text" style="width:160px" name="f_instructor" id="f_instructor" value="<?php echo @$row['F_INSTRUCTOR'] ?>"/></td>
                 </tr>
                 <tr>
                     <th scope="col">학습시간</th>
-                    <td><input type="number" class="input-text" style="width:160px" name="f_learning_time" id="f_learning_time"/> 시간</td>
+                    <td><input type="number" class="input-text" style="width:160px" name="f_learning_time" id="f_learning_time" value="<?php echo @$row['F_LEARNING_TIME'] ?>"/> 시간</td>
                 </tr>
                 <tr>
                     <th scope="col">강의수</th>
-                    <td><input type="number" class="input-text" style="width:160px" name="f_lecture_count" id="f_lecture_count"/> 강</td>
+                    <td><input type="number" class="input-text" style="width:160px" name="f_lecture_count" id="f_lecture_count" value="<?php echo @$row['F_LECTURE_COUNT'] ?>"/> 강</td>
                 </tr>
                 <tr>
                     <th scope="col">학습난이도</th>
@@ -280,7 +305,17 @@ $db->set_charset("utf-8");
                     </th>
                         <td>
                             <a href="#" class="sample-lecture">
+                                <?php
+                                if (isset($row_thumbnail)) {
+                                ?>
+                                <img src="./thumbnail/<?php echo $row_thumbnail['F_FILE_NAME_CP']; ?>" alt="" id="image_section" width="144" height="101" />
+                                <?php
+                                } else {
+                                ?>
                                 <img src="http://via.placeholder.com/144x101" alt="" id="image_section" width="144" height="101" />
+                                <?php
+                                }
+                                ?>
                                 <input type="file" name="upfile" id="upfile" style="display: none"/>
                                 <span class="tc-brand" onclick="upfile();">썸네일 선택</span>
 <!--                                <input type="submit" class="btn-m ml5" value="썸네일 업로드" />-->
@@ -299,7 +334,7 @@ $db->set_charset("utf-8");
                 <?php
                 } else {
                     ?>
-                    <a href="#" class="btn-m ml5" onClick="editContent();">수정</a>
+                    <a href="#" class="btn-m ml5" onclick="regist_submit();">수정</a>
                     <a href="#" class="btn-m-dark">삭제</a>
                 <?php
                 }

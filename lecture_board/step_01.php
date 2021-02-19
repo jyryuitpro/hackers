@@ -243,8 +243,6 @@ $result_normal = $db->query($sql);
                 }
                 ?>
 				<!-- set -->
-				<!-- //set -->
-				<!-- set -->
                 <?php
                     while ($row = $result_normal->fetch_assoc()) {
                 ?>
