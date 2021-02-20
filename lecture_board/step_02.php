@@ -3,7 +3,6 @@ require_once("../database/dbconfig.php");
 //error_reporting(E_ALL);
 //ini_set("display_errors", 1);
 
-session_start();
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
 $f_category_id = $_GET['f_category_id'];
@@ -15,7 +14,7 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
     $sql = 'SELECT * FROM BOARD WHERE F_NUM = ' . $f_num;
     $result_normal = $conn->query($sql);
     $row = $result_normal->fetch_assoc();
-//    var_dump($row);
+    var_dump($row);
 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -171,7 +170,7 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
                                 }
                                 ?>
                             </select>
-                            <select class="input-sel ml5" style="width:454px" name="f_lecture" id="f_lecture">
+                            <select class="input-sel ml5" style="width:454px" name="f_lecture" id="f_lecture" >
                                 <option value="">강의명</option>
                             </select>
                         </td>
@@ -179,6 +178,28 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
                 <?php
                 } else { // 수정
                 ?>
+
+                    <tr>
+                        <th scope="col">강의</th>
+                        <td>
+                            <select class="input-sel" style="width:160px" name="f_category_id" id="f_category_id" >
+                                <option value="">분류</option>
+                                <?php
+                                $sql = "SELECT * FROM CATEGORY ORDER BY F_CATEGORY_ID";
+                                $result_category = $conn->query($sql);
+                                while ($row_category = $result_category->fetch_assoc()) {
+                                    ?>
+                                    <option value="<?php echo $row_category['F_CATEGORY_ID']; ?>" <? if($row['F_CATEGORY_ID'] == $row['F_CATEGORY_ID']) { echo "selected"; } ?>><?php echo $row_category['F_CATEGORY']; ?></option>
+                                    <?php
+                                }
+                                ?>
+                            </select>
+                            <select class="input-sel ml5" style="width:454px" name="f_lecture" id="f_lecture" value="<?php echo $row['F_LECTURE']; ?>">
+                                <option value="">강의명</option>
+                            </select>
+                        </td>
+                    </tr>
+
                     <tr>
                         <th scope="col">강의</th>
                         <td>
@@ -187,7 +208,7 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
                                 <option value="어학 및 자격증" <? if(@$row['F_CATEGORY']=="어학 및 자격증") { echo "selected"; } ?> >어학 및 자격증</option>
                                 <option value="산업직무" <? if(@$row['F_CATEGORY']=="산업직무") { echo "selected"; } ?> >산업직무</option>
                             </select>
-                            <select class="input-sel ml5" style="width:454px" name="f_lecture" id="f_lecture">
+                            <select class="input-sel ml5" style="width:454px" name="f_lecture" id="f_lecture" >
                                 <option value="">강의명</option>
                                 <option value="토익" <? if(@$row['F_LECTURE']=="토익") { echo "selected"; } ?>>토익</option>
                                 <option value="IT/통신" <? if(@$row['F_LECTURE']=="IT/통신") { echo "selected"; } ?>>IT/통신</option>
@@ -250,7 +271,7 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
             </table>
             <!-- 글 수정을 위한 글 내용 데이터 가져오기 -->
             <textarea id="sample_contents_source" style="display:none;">
-                <?php echo @$row['F_CONTENTS'];?>
+                <?php echo stripslashes(@$row['F_CONTENTS']);?>
             </textarea>
             <div class="editor-wrap">
                 <!-- 에디터 컨테이너 시작 -->

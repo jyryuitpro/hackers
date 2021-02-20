@@ -7,9 +7,6 @@ if (isset($_GET['f_category_id'])) {
     $f_category_id = $_GET['f_category_id'];
     $data = array();
     $sql = "SELECT F_LECTURE FROM LECTURE WHERE F_CATEGORY_ID = '$f_category_id' ORDER BY F_NUM";
-//
-//    var_dump($sql);
-//    exit;
 
     $result_normal = $conn->query($sql);
     while ($row = $result_normal->fetch_assoc()) {

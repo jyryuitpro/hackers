@@ -3,7 +3,6 @@ require_once("../database/dbconfig.php");
 //error_reporting(E_ALL);
 //ini_set("display_errors", 1);
 
-session_start();
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
 
@@ -53,7 +52,6 @@ if (isset($_GET['f_name'])) {
 }
 
 $sql = "SELECT count(*) as cnt FROM BOARD ".$search_category." ORDER BY F_NUM DESC";
-var_dump($sql);
 
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
@@ -123,7 +121,6 @@ $sqlLimit = ' LIMIT ' . $currentLimit . ', ' . $onePage; //limit sql 구문
 // 일반 게시글
 $sql = "SELECT * FROM BOARD ".$search_category." ORDER BY F_NUM DESC". $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지)
 $result_normal = $conn->query($sql);
-var_dump($sql);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

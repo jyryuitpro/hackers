@@ -1,23 +1,20 @@
 <?php
-session_start();
+require_once("../database/dbconfig.php");
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
+
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
-
-$db = new mysqli('192.168.56.108', 'root', '', 'hackers');
-if($db->connect_error) {
-    die('데이터베이스 연결 문제');
-}
-$db->set_charset("utf-8");
 
 $f_num = $_GET['f_num'];
 
 // 일반 게시글
 $sql = 'SELECT * FROM BOARD WHERE F_NUM = '. $f_num;
-$result_normal = $db->query($sql);
+$result_normal = $conn->query($sql);
 $row = $result_normal->fetch_assoc();
 
 $sql = 'UPDATE BOARD SET F_COUNT = F_COUNT + 1 WHERE F_NUM = '. $f_num;
-$result_normal = $db->query($sql);
+$result_normal = $conn->query($sql);
 
 //var_dump($row);
 ?>
@@ -121,7 +118,13 @@ $result_normal = $db->query($sql);
 				</tr>
 			</tbody>
 		</table>
-		
+		<?php
+        $sql = "SELECT a.F_LECTURE as F_LECTURE,  a.F_INSTRUCTOR as F_INSTRUCTOR, a.F_LEARNING_TIME as F_LEARNING_TIME, a.F_LECTURE_COUNT as F_LECTURE_COUNT, a.F_GRADE as F_GRADE, b.F_THUMBNAIL_NAME_CRYPTO as F_THUMBNAIL_NAME_CRYPTO";
+        $sql = $sql .= " FROM LECTURE a join THUMBNAIL b on a.F_THUMBNAIL_ID = b.F_THUMBNAIL_ID where a.F_LECTURE = (SELECT F_LECTURE FROM BOARD WHERE F_NUM = '$f_num')";
+        $result_lecture = $conn->query($sql);
+        $row_lecture = $result_lecture->fetch_assoc();
+//        var_dump($sql);
+        ?>
 		
 		<p class="mb15"><strong class="tc-brand fs16"><?php echo $row['F_ID'] ?>님의 수강하신 강의 정보</strong></p>
 		
@@ -136,13 +139,40 @@ $result_normal = $db->query($sql);
 				<tr>
 					<td>
 						<a href="#" class="sample-lecture">
-							<img src="http://via.placeholder.com/144x101" alt="" width="144" height="101" />
+							<img src="../admin/thumbnail/<?php echo $row_lecture['F_THUMBNAIL_NAME_CRYPTO'] ?>" alt="" width="144" height="101" />
 							<span class="tc-brand">샘플강의 ▶</span>
 						</a>
 					</td>
 					<td class="lecture-txt">
-						<em class="tit mt10"><?php echo $row['F_LECTURE'] ?></em>
-						<p class="tc-gray mt20">강사: 최환규 | 학습난이도 : 하 | 교육시간: 18시간 (18강)</p>
+						<em class="tit mt10"><?php echo $row_lecture['F_LECTURE'] ?></em>
+						<p class="tc-gray mt20">강사: <?php echo $row_lecture['F_INSTRUCTOR'] ?> |
+                            학습난이도 :
+                            <span class="star-rating">
+                            <?php
+                            if ($row_lecture['F_GRADE'] == 5) {
+                                ?>
+                                <span class="star-inner" style="width:100%"></span>
+                                <?php
+                            } else if ($row_lecture['F_GRADE'] == 4) {
+                                ?>
+                                <span class="star-inner" style="width:80%"></span>
+                                <?php
+                            } else if ($row_lecture['F_GRADE'] == 3) {
+                                ?>
+                                <span class="star-inner" style="width:60%"></span>
+                                <?php
+                            } else if ($row_lecture['F_GRADE'] == 2) {
+                                ?>
+                                <span class="star-inner" style="width:40%"></span>
+                                <?php
+                            } else if ($row_lecture['F_GRADE'] == 1) {
+                                ?>
+                                <span class="star-inner" style="width:20%"></span>
+                                <?php
+                            }
+                            ?>
+                            </span> |
+                            교육시간: <?php echo $row_lecture['F_LEARNING_TIME'] ?>시간 (<?php echo $row_lecture['F_LECTURE_COUNT'] ?>강)</p>
 					</td>
 					<td class="t-r"><a href="#" class="btn-square-line">강의<br />상세</a></td>
 				</tr>
@@ -160,15 +190,7 @@ $result_normal = $db->query($sql);
             }
             ?>
         </div>
-
-
         <?php
-        $db = new mysqli('192.168.56.108', 'root', '', 'hackers');
-        if($db->connect_error) {
-            die('데이터베이스 연결에 문제');
-        }
-        $db->set_charset("utf-8");
-
         // paging
         if (isset($_GET['page'])) {
             $page = $_GET['page'];
@@ -177,7 +199,7 @@ $result_normal = $db->query($sql);
         }
 
         $sql = "SELECT count(*) as cnt FROM BOARD ORDER BY F_NUM DESC";
-        $result = $db->query($sql);
+        $result = $conn->query($sql);
         $row = $result->fetch_assoc();
 
         $allPost = $row['cnt']; //전체 게시글의 수
@@ -243,7 +265,7 @@ $result_normal = $db->query($sql);
 
         // 일반 게시글
         $sql = 'SELECT * FROM BOARD ORDER BY F_NUM DESC'. $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지
-        $result_normal = $db->query($sql);
+        $result_normal = $conn->query($sql);
         ?>
 		<div class="search-info">
 			<div class="search-form f-r">

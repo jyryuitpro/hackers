@@ -23,8 +23,7 @@ $f_title = $_POST['f_title'];
 $f_grade = $_POST['radio'];
 
 // 수강후기 내용
-$f_contents = trim($_POST['content']);
-
+$f_contents = addslashes(trim($_POST['content']));
 // 수강후기 작성자 이름
 $f_name = $_POST['f_name'];
 
@@ -33,6 +32,7 @@ $f_id = $_POST['f_id'];
 
 $sql = "INSERT INTO BOARD (F_CATEGORY_ID, F_CATEGORY, F_LECTURE, F_TITLE, F_GRADE, F_CONTENTS, F_ID, F_NAME)";
 $sql = $sql." VALUES('$f_category_id','$f_category','$f_lecture','$f_title','$f_grade','$f_contents','$f_id','$f_name')";
+
 $result = mysqli_query($conn, $sql);
 $conn->close();
 
