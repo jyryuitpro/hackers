@@ -1,20 +1,32 @@
 <?php
+require_once("../database/dbconfig.php");
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
+
 session_start();
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
 
-$data = array( 'f_category_id' => $_GET['f_category_id'],
-    'f_lecture' => $_GET['f_search_content']
-);
-$query_string = http_build_query($data);
+$data = array();
 
-$query_string_add = '&' . $query_string;
+//$data = array( 'f_category_id' => $_GET['f_category_id'],
+//    'f_lecture' => $_GET['f_search_content']
+//);
 
-$db = new mysqli('192.168.56.108', 'root', '', 'hackers');
-if($db->connect_error) {
-    die('데이터베이스 연결 문제');
+if (isset($_GET['f_category_id'])) {
+    $data["f_category_id"] = $_GET['f_category_id'];
 }
-$db->set_charset("utf-8");
+
+if (isset($_GET['f_lecture'])) {
+    $data["f_lecture"] = $_GET['f_lecture'];
+}
+
+if (isset($_GET['f_name'])) {
+    $data["f_name"] = $_GET['f_name'];
+}
+
+$query_string = http_build_query($data);
+$query_string_add = '&' . $query_string;
 
 // paging
 if (isset($_GET['page'])) {
@@ -41,9 +53,9 @@ if (isset($_GET['f_name'])) {
 }
 
 $sql = "SELECT count(*) as cnt FROM BOARD ".$search_category." ORDER BY F_NUM DESC";
-//var_dump($sql);
+var_dump($sql);
 
-$result = $db->query($sql);
+$result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
 $allPost = $row['cnt']; //전체 게시글의 수
@@ -110,8 +122,8 @@ $sqlLimit = ' LIMIT ' . $currentLimit . ', ' . $onePage; //limit sql 구문
 
 // 일반 게시글
 $sql = "SELECT * FROM BOARD ".$search_category." ORDER BY F_NUM DESC". $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지)
-$result_normal = $db->query($sql);
-//var_dump($sql);
+$result_normal = $conn->query($sql);
+var_dump($sql);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -219,7 +231,7 @@ $result_normal = $db->query($sql);
 			<tbody>
                 <?php
                 $sql = "SELECT * FROM BOARD ORDER BY F_COUNT DESC, F_NUM DESC LIMIT 3"; //원하는 개수만큼 가져온다. (0번째부터 20번째까지
-                $result_best = $db->query($sql);
+                $result_best = $conn->query($sql);
 
                 while ($row = $result_best->fetch_assoc()) {
                 ?>
@@ -234,7 +246,29 @@ $result_normal = $db->query($sql);
                     </td>
                     <td>
                     <span class="star-rating">
+                    <?php
+                    if ($row['F_GRADE'] == 5) {
+                        ?>
+                        <span class="star-inner" style="width:100%"></span>
+                        <?php
+                    } else if ($row['F_GRADE'] == 4) {
+                        ?>
                         <span class="star-inner" style="width:80%"></span>
+                        <?php
+                    } else if ($row['F_GRADE'] == 3) {
+                        ?>
+                        <span class="star-inner" style="width:60%"></span>
+                        <?php
+                    } else if ($row['F_GRADE'] == 2) {
+                        ?>
+                        <span class="star-inner" style="width:40%"></span>
+                        <?php
+                    } else if ($row['F_GRADE'] == 1) {
+                        ?>
+                        <span class="star-inner" style="width:20%"></span>
+                        <?php
+                    }
+                    ?>
                     </span>
                     </td>
                     <td class="last"><?php echo $row['F_NAME'] ?></td>

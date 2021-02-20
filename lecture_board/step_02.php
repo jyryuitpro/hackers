@@ -1,24 +1,22 @@
 <?php
+require_once("../database/dbconfig.php");
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
+
 session_start();
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
-
-$db = new mysqli('192.168.56.108', 'root', '', 'hackers');
-if ($db->connect_error) {
-    die('데이터베이스 연결 문제');
-}
-$db->set_charset("utf-8");
+$f_category_id = $_GET['f_category_id'];
 
 if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
     $f_num = $_GET['f_num'];
 
     // 일반 게시글
     $sql = 'SELECT * FROM BOARD WHERE F_NUM = ' . $f_num;
-    $result_normal = $db->query($sql);
+    $result_normal = $conn->query($sql);
     $row = $result_normal->fetch_assoc();
 //    var_dump($row);
 }
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
@@ -57,6 +55,25 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
         $(document).ready(function() {
             // DB 글 내용 가져오기
             loadContent();
+
+            $("#f_category_id").change(function(){
+                var f_category_id = $(this).val(); // 선택한 구분1
+                $.ajax({
+                    url  : "/lecture_board/search.php",
+                    type : "GET",
+                    data : "f_category_id="+f_category_id,
+                    error:function(){
+                    },
+                    success:function(data) {
+                        var data = $.parseJSON(data);
+                        $("#f_lecture").empty();
+                        $('#f_lecture').append('<option value="">강의명</option>');
+                        $.each(data, function(index, value){
+                            $('#f_lecture').append('<option value="' + value + '">' + value + '</option>');
+                        });
+                    }
+                });
+            });
         });
 
         // 글 내용 저장
@@ -136,70 +153,99 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
                 </colgroup>
 
                 <tbody>
-                <tr>
-                    <th scope="col">강의</th>
-                    <td>
-                        <select class="input-sel" style="width:160px" name="f_category" id="f_category">
-                            <option value="">분류</option>
-                            <option value="어학 및 자격증" <? if(@$row['F_CATEGORY']=="어학 및 자격증") { echo "selected"; } ?> >어학 및 자격증</option>
-                            <option value="산업직무" <? if(@$row['F_CATEGORY']=="산업직무") { echo "selected"; } ?> >산업직무</option>
-                        </select>
-                        <select class="input-sel ml5" style="width:454px" name="f_lecture" id="f_lecture">
-                            <option value="">강의명</option>
-                            <option value="토익" <? if(@$row['F_LECTURE']=="토익") { echo "selected"; } ?>>토익</option>
-                            <option value="IT/통신" <? if(@$row['F_LECTURE']=="IT/통신") { echo "selected"; } ?>>IT/통신</option>
-                            <option value="금융/보험" <? if(@$row['F_LECTURE']=="금융/보험") { echo "selected"; } ?>>금융/보험</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="col">제목</th>
-                    <td><input type="text" class="input-text" style="width:611px" name="f_title" id="f_title" value="<?php echo @$row['F_TITLE'] ?>"/></td>
-                </tr>
-                <tr>
-                    <th scope="col">강의만족도</th>
-                    <td>
-                        <ul class="list-rating-choice">
-                            <?php
-                            for ($i = 5; $i > 0; $i--) {
-                            ?>
-                            <li>
-                                <label class="input-sp ico">
-                                    <input type="radio" name="radio" id="f_grade_<?php echo $i; ?>" value="<?php echo $i; ?>" <?php if($row['F_GRADE'] == $i) echo 'checked'?> />
-                                    <span class="input-txt">만점</span>
-                                </label>
-                                <span class="star-rating">
-									 <?php
-                                     if ($i == 5) {
-                                         ?>
-                                         <span class="star-inner" style="width:100%"></span>
+                <?php
+                if ($_GET['f_gubun'] != "modify") { // 등록
+                ?>
+                    <tr>
+                        <th scope="col">강의</th>
+                        <td>
+                            <select class="input-sel" style="width:160px" name="f_category_id" id="f_category_id" >
+                                <option value="">분류</option>
+                                <?php
+                                $sql = "SELECT * FROM CATEGORY ORDER BY F_CATEGORY_ID";
+                                $result_normal = $conn->query($sql);
+                                while ($row = $result_normal->fetch_assoc()) {
+                                ?>
+                                <option value="<?php echo $row['F_CATEGORY_ID']; ?>"><?php echo $row['F_CATEGORY']; ?></option>
+                                <?php
+                                }
+                                ?>
+                            </select>
+                            <select class="input-sel ml5" style="width:454px" name="f_lecture" id="f_lecture">
+                                <option value="">강의명</option>
+                            </select>
+                        </td>
+                    </tr>
+                <?php
+                } else { // 수정
+                ?>
+                    <tr>
+                        <th scope="col">강의</th>
+                        <td>
+                            <select class="input-sel" style="width:160px" name="f_category" id="f_category">
+                                <option value="">분류</option>
+                                <option value="어학 및 자격증" <? if(@$row['F_CATEGORY']=="어학 및 자격증") { echo "selected"; } ?> >어학 및 자격증</option>
+                                <option value="산업직무" <? if(@$row['F_CATEGORY']=="산업직무") { echo "selected"; } ?> >산업직무</option>
+                            </select>
+                            <select class="input-sel ml5" style="width:454px" name="f_lecture" id="f_lecture">
+                                <option value="">강의명</option>
+                                <option value="토익" <? if(@$row['F_LECTURE']=="토익") { echo "selected"; } ?>>토익</option>
+                                <option value="IT/통신" <? if(@$row['F_LECTURE']=="IT/통신") { echo "selected"; } ?>>IT/통신</option>
+                                <option value="금융/보험" <? if(@$row['F_LECTURE']=="금융/보험") { echo "selected"; } ?>>금융/보험</option>
+                            </select>
+                        </td>
+                    </tr>
+                <?php
+                }
+                ?>
+                    <tr>
+                        <th scope="col">제목</th>
+                        <td><input type="text" class="input-text" style="width:611px" name="f_title" id="f_title" value="<?php echo @$row['F_TITLE'] ?>"/></td>
+                    </tr>
+                    <tr>
+                        <th scope="col">강의만족도</th>
+                        <td>
+                            <ul class="list-rating-choice">
+                                <?php
+                                for ($i = 5; $i > 0; $i--) {
+                                ?>
+                                <li>
+                                    <label class="input-sp ico">
+                                        <input type="radio" name="radio" id="f_grade_<?php echo $i; ?>" value="<?php echo $i; ?>" <?php if($row['F_GRADE'] == $i) echo 'checked'?> />
+                                        <span class="input-txt">만점</span>
+                                    </label>
+                                    <span class="star-rating">
                                          <?php
-                                     } else if ($i == 4) {
+                                         if ($i == 5) {
+                                             ?>
+                                             <span class="star-inner" style="width:100%"></span>
+                                             <?php
+                                         } else if ($i == 4) {
+                                             ?>
+                                             <span class="star-inner" style="width:80%"></span>
+                                             <?php
+                                         } else if ($i == 3) {
+                                             ?>
+                                             <span class="star-inner" style="width:60%"></span>
+                                             <?php
+                                         } else if ($i == 2) {
+                                             ?>
+                                             <span class="star-inner" style="width:40%"></span>
+                                             <?php
+                                         } else if ($i == 1) {
+                                             ?>
+                                             <span class="star-inner" style="width:20%"></span>
+                                             <?php
+                                         }
                                          ?>
-                                         <span class="star-inner" style="width:80%"></span>
-                                         <?php
-                                     } else if ($i == 3) {
-                                         ?>
-                                         <span class="star-inner" style="width:60%"></span>
-                                         <?php
-                                     } else if ($i == 2) {
-                                         ?>
-                                         <span class="star-inner" style="width:40%"></span>
-                                         <?php
-                                     } else if ($i == 1) {
-                                         ?>
-                                         <span class="star-inner" style="width:20%"></span>
-                                         <?php
-                                     }
-                                     ?>
-								</span>
-                            </li>
-                            <?php
-                            }
-                            ?>
-                        </ul>
-                    </td>
-                </tr>
+                                    </span>
+                                </li>
+                                <?php
+                                }
+                                ?>
+                            </ul>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <!-- 글 수정을 위한 글 내용 데이터 가져오기 -->
@@ -627,7 +673,7 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
 <!--                    <div align="right"><input type="button" value="등록" onClick="saveContent();"/></div>-->
                 </div>
                 <div class="box-btn t-r">
-                    <a href="#" class="btn-m-gray">목록</a>
+                    <a href="/lecture_board/index.php?mode=list" class="btn-m-gray">목록</a>
                     <?php
                     if ($_GET['f_gubun'] != "modify") {
                     ?>

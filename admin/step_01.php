@@ -177,7 +177,6 @@ $result_normal = $conn->query($sql);
 			<li <?php if($_GET['f_category_id'] == 2) echo 'class="on" '; ?> ><a href="/admin/index.php?mode=list&f_category_id=2">공통역량</a></li>
 			<li <?php if($_GET['f_category_id'] == 3) echo 'class="on" '; ?> ><a href="/admin/index.php?mode=list&f_category_id=3">일반직무</a></li>
 			<li <?php if($_GET['f_category_id'] == 4) echo 'class="on" '; ?> ><a href="/admin/index.php?mode=list&f_category_id=4">산업직무</a></li>
-			<li <?php if($_GET['f_category_id'] == 'R') echo 'class="on" '; ?> ><a href="/admin/index.php?mode=list&f_category_id=R">수강후기</a></li>
 		</ul>
 	</div>
 
@@ -197,8 +196,6 @@ $result_normal = $conn->query($sql);
                     echo '일반직무';
                 } else if ($_GET['f_category_id'] == 4) {
                     echo '산업직무';
-                } else if ($_GET['f_category_id'] == 'R') {
-                    echo '수강후기';
                 } else {
                     echo '전체';
                 }
@@ -207,13 +204,12 @@ $result_normal = $conn->query($sql);
 			</div>
 		</div>
 
-		<ul class="tab-list tab5" style="display: table">
-			<li <?php if($_GET['f_category_id'] == 'all' || !isset($_GET['f_category_id'])) echo 'class="on" '; ?> style="width:129px;"><a href="/admin/index.php?mode=list">전체</a></li>
-			<li <?php if($_GET['f_category_id'] == 1) echo 'class="on" '; ?> style="width:129px;"><a href="/admin/index.php?mode=list&f_category_id=1">어학 및 자격증</a></li>
-			<li <?php if($_GET['f_category_id'] == 2) echo 'class="on" '; ?> style="width:129px;"><a href="/admin/index.php?mode=list&f_category_id=2">공통역량</a></li>
-			<li <?php if($_GET['f_category_id'] == 3) echo 'class="on" '; ?> style="width:129px;"><a href="/admin/index.php?mode=list&f_category_id=3">일반직무</a></li>
-			<li <?php if($_GET['f_category_id'] == 4) echo 'class="on" '; ?> style="width:129px;"><a href="/admin/index.php?mode=list&f_category_id=4">산업직무</a></li>
-			<li <?php if($_GET['f_category_id'] == 'R') echo 'class="on" '; ?> style="width:129px;"><a href="/admin/index.php?mode=list&f_category_id=R">수강후기</a></li>
+		<ul class="tab-list tab5">
+			<li <?php if($_GET['f_category_id'] == 'all' || !isset($_GET['f_category_id'])) echo 'class="on" '; ?> ><a href="/admin/index.php?mode=list">전체</a></li>
+			<li <?php if($_GET['f_category_id'] == 1) echo 'class="on" '; ?> ><a href="/admin/index.php?mode=list&f_category_id=1">어학 및 자격증</a></li>
+			<li <?php if($_GET['f_category_id'] == 2) echo 'class="on" '; ?> ><a href="/admin/index.php?mode=list&f_category_id=2">공통역량</a></li>
+			<li <?php if($_GET['f_category_id'] == 3) echo 'class="on" '; ?> ><a href="/admin/index.php?mode=list&f_category_id=3">일반직무</a></li>
+			<li <?php if($_GET['f_category_id'] == 4) echo 'class="on" '; ?> ><a href="/admin/index.php?mode=list&f_category_id=4">산업직무</a></li>
 		</ul>
         <form name="search" method="post" action="/admin/search.php">
             <div class="search-info">

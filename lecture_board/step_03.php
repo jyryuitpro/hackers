@@ -244,9 +244,7 @@ $result_normal = $db->query($sql);
         // 일반 게시글
         $sql = 'SELECT * FROM BOARD ORDER BY F_NUM DESC'. $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지
         $result_normal = $db->query($sql);
-
         ?>
-
 		<div class="search-info">
 			<div class="search-form f-r">
 				<select class="input-sel" style="width:158px">
@@ -345,9 +343,6 @@ $result_normal = $db->query($sql);
                 <?php
             }
             ?>
-
-
-
             <!-- //set -->
             </tbody>
         </table>
