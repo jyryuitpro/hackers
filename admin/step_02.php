@@ -1,29 +1,26 @@
 <?php
+require_once("../database/dbconfig.php");
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
+
 session_start();
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
+$f_gubun = $_GET['f_gubun'];
 
-$_GET['f_gubun'];
+if (isset($_GET['f_gubun'])) {
+    $f_num = $_GET['f_num'];
 
-//$db = new mysqli('192.168.56.108', 'root', '', 'hackers');
-$db = new mysqli('localhost:3307', 'root', 'root', 'hackers');
-if ($db->connect_error) {
-    die('데이터베이스 연결 문제');
+    // 일반 게시글
+    $sql = 'SELECT * FROM LECTURE WHERE F_NUM = ' . $f_num;
+    $result_normal = $conn->query($sql);
+    $row = $result_normal->fetch_assoc();
+    //var_dump($row);
+
+    $sql_thumbnail = 'SELECT F_THUMBNAIL_NAME_CRYPTO FROM LECTURE a JOIN THUMBNAIL b ON a.F_THUMBNAIL_ID = b.F_THUMBNAIL_ID WHERE a.F_NUM = ' . $f_num;
+    $result_thumbnail = $conn->query($sql_thumbnail);
+    $row_thumbnail = $result_thumbnail->fetch_assoc();
 }
-$db->set_charset("utf-8");
-
-$f_num = $_GET['f_num'];
-
-// 일반 게시글
-$sql = 'SELECT * FROM LECTURE WHERE F_NUM = ' . $f_num;
-$result_normal = $db->query($sql);
-$row = $result_normal->fetch_assoc();
-//var_dump($row);
-
-$sql_thumbnail = 'SELECT F_THUMBNAIL_NAME_CRYPTO FROM LECTURE a JOIN THUMBNAIL b ON a.F_THUMBNAIL_ID = b.F_THUMBNAIL_ID WHERE a.F_NUM = ' . $f_num;
-$result_thumbnail = $db->query($sql_thumbnail);
-$row_thumbnail = $result_thumbnail->fetch_assoc();
-//var_dump($row_thumbnail);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -118,8 +115,20 @@ $row_thumbnail = $result_thumbnail->fetch_assoc();
         //     return false;
         // }
 
+        $.urlParam = function(name){
+            var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            if (results==null){
+                return null;
+            }
+            else{
+                return results[1] || 0;
+            }
+        }
+
+        var f_gubun = $.urlParam('f_gubun');
+
         var path = document.getElementById("thumbnail").value;
-        if(path == "") {
+        if((path == "") && (f_gubun == "")) {
             alert("썸네일 파일을 선택해 주세요!");
             return false;
         }
@@ -178,7 +187,7 @@ $row_thumbnail = $result_thumbnail->fetch_assoc();
         <?php
         } else {
         ?>
-        <form name="regist" id="regist" method="post" action="/admin/modify.php" enctype="multipart/form-data" >
+        <form name="regist" id="regist" method="post" action="/admin/modify.php?f_gubun=modify&f_num=<?php echo $f_num ?>" enctype="multipart/form-data" >
         <?php
         }
         ?>
@@ -199,10 +208,10 @@ $row_thumbnail = $result_thumbnail->fetch_assoc();
                     <td>
                         <select class="input-sel" style="width:160px" name="f_category" id="f_category">
                             <option value="">선택</option>
-                            <option value="어학 및 자격증" <? if($row['F_CATEGORY']=="어학 및 자격증") { echo "selected"; } ?> >어학 및 자격증</option>
-                            <option value="공통역량" <? if($row['F_CATEGORY']=="공통역량") { echo "selected"; } ?> >공통역량</option>
-                            <option value="일반직무" <? if($row['F_CATEGORY']=="일반직무") { echo "selected"; } ?> >일반직무</option>
-                            <option value="산업직무" <? if($row['F_CATEGORY']=="산업직무") { echo "selected"; } ?> >산업직무</option>
+                            <option value="어학 및 자격증" <? if(@$row['F_CATEGORY']=="어학 및 자격증") { echo "selected"; } ?> >어학 및 자격증</option>
+                            <option value="공통역량" <? if(@$row['F_CATEGORY']=="공통역량") { echo "selected"; } ?> >공통역량</option>
+                            <option value="일반직무" <? if(@$row['F_CATEGORY']=="일반직무") { echo "selected"; } ?> >일반직무</option>
+                            <option value="산업직무" <? if(@$row['F_CATEGORY']=="산업직무") { echo "selected"; } ?> >산업직무</option>
                         </select>
                     </td>
                 </tr>
@@ -273,7 +282,7 @@ $row_thumbnail = $result_thumbnail->fetch_assoc();
                             <?php
                             if (isset($row_thumbnail)) {
                             ?>
-                            <img src="./thumbnail/<?php echo @$row_thumbnail['F_THUMBNAIL_NAME_CRYPTO']; ?>" alt="" id="image_section" width="144" height="101" />
+                            <img src="./thumbnail/<?php echo @$row_thumbnail['F_THUMBNAIL_NAME_CRYPTO']; ?>" alt="" name="thumbnail_section" id="thumbnail_section" width="144" height="101" />
                             <?php
                             } else {
                             ?>
@@ -289,9 +298,9 @@ $row_thumbnail = $result_thumbnail->fetch_assoc();
                 </tbody>
             </table>
             <div class="box-btn t-r">
-                <a href="#" class="btn-m-gray">목록</a>
+                <a href="/admin/index.php?mode=list" class="btn-m-gray">목록</a>
                 <?php
-                if ($_GET['f_gubun'] != "modify") {
+                if (@$_GET['f_gubun'] != "modify") {
                 ?>
                     <a href="javascript:void(0);" onclick="regist_submit();" class="btn-m ml5">등록</a>
                 <?php

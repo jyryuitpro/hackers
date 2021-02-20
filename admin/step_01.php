@@ -42,7 +42,7 @@ if (isset($_GET['f_name'])) {
     $search_category .= "AND F_NAME = '$f_name'";
 }
 
-$sql = "SELECT count(*) as cnt FROM LECTURE ".$search_category." ORDER BY F_NUM DESC";
+$sql = "SELECT count(*) as cnt FROM LECTURE ".$search_category." ORDER BY F_NUM";
 //var_dump($sql);
 
 $result = $db->query($sql);
@@ -50,7 +50,7 @@ $row = $result->fetch_assoc();
 
 $allPost = $row['cnt']; //전체 게시글의 수
 
-$onePage = 5; // 한 페이지에 보여줄 게시글의 수
+$onePage = 20; // 한 페이지에 보여줄 게시글의 수
 $allPage = ceil($allPost / $onePage); // 전체 페이지의 수
 
 if ($page < 1 || ($page > $allPage)) {
@@ -111,7 +111,7 @@ $currentLimit = ($onePage * $page) - $onePage; //몇 번째의 글부터 가져�
 $sqlLimit = ' LIMIT ' . $currentLimit . ', ' . $onePage; //limit sql 구문
 
 // 일반 게시글
-$sql = "SELECT * FROM LECTURE ".$search_category." ORDER BY F_NUM DESC". $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지)
+$sql = "SELECT * FROM LECTURE ".$search_category." ORDER BY F_NUM ". $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지)
 $result_normal = $db->query($sql);
 //var_dump($sql);
 ?>
