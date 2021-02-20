@@ -168,7 +168,7 @@ if ($_GET['f_gubun'] != 'modify' && $_GET['f_gubun'] != 'delete') { // 등록
     $result = $conn->query($sql);
 
     $sql = "DELETE FROM LECTURE WHERE F_NUM = '$f_num'";
-    $result = mysqli_query($conn, $sql);
+    $result = $conn->query($sql);
     $conn->close();
 
     if($result){

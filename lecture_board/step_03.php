@@ -185,7 +185,7 @@ $result_normal = $conn->query($sql);
             if (isset($_SESSION['f_name']) && ($_SESSION['f_id'] == $row['F_ID'])) {
             ?>
             <a href="/lecture_board/index.php?mode=write&f_gubun=modify&f_num=<?php echo $row['F_NUM'] ?>" class="btn-m ml5">수정</a>
-            <a href="#" class="btn-m-dark">삭제</a>
+            <a href="/lecture_board/modify.php?f_gubun=delete&f_num=<?php echo $f_num ?>" class="btn-m-dark">삭제</a>
             <?php
             }
             ?>
