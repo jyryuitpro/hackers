@@ -4,6 +4,15 @@ $conn = mysqli_connect('localhost:3307', 'root', 'root', 'hackers');
 
 // 분류
 $f_category = $_POST['f_category'];
+
+// 분류 ID
+
+$f_category_id = "";
+if ($f_category == "어학 및 자격증") $f_category_id = '1';
+if ($f_category == "공통역량") $f_category_id = '2';
+if ($f_category == "일반직무") $f_category_id = '3';
+if ($f_category == "산업직무") $f_category_id = '4';
+
 // 강의명
 $f_lecture = $_POST['f_lecture'];
 // 강사
@@ -60,8 +69,8 @@ if(!$result){
     move_uploaded_file($thumbnail_info['tmp_name'], $thumbnail_directory.$f_thumbnail_name_crypto);
 }
 
-$sql = "INSERT INTO LECTURE (F_CATEGORY, F_LECTURE, F_INSTRUCTOR, F_LEARNING_TIME, F_LECTURE_COUNT, F_GRADE, F_ADMIN_ID, F_ADMIN_NAME, F_THUMBNAIL_ID, F_REG_TIME)";
-$sql = $sql." VALUES('$f_category','$f_lecture','$f_instructor','$f_learning_time','$f_lecture_count', '$f_grade','$f_id','$f_name', '$f_thumbnail_id', now())";
+$sql = "INSERT INTO LECTURE (F_CATEGORY_ID, F_CATEGORY, F_LECTURE, F_INSTRUCTOR, F_LEARNING_TIME, F_LECTURE_COUNT, F_GRADE, F_ADMIN_ID, F_ADMIN_NAME, F_THUMBNAIL_ID, F_REG_TIME)";
+$sql = $sql." VALUES('$f_category_id','$f_category','$f_lecture','$f_instructor','$f_learning_time','$f_lecture_count', '$f_grade','$f_id','$f_name', '$f_thumbnail_id', now())";
 $result = mysqli_query($conn, $sql);
 
 if($result){

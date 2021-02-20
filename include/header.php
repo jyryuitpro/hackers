@@ -3,8 +3,6 @@ session_start();
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
 $f_authority = $_SESSION['f_authority'];
-
-var_dump($f_authority);
 ?>
 <div id="header" class="header">
     <div class="nav-section">

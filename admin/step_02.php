@@ -166,20 +166,41 @@ if (isset($_GET['f_gubun'])) {
             <div class="sub-depth">
                 <span><i class="icon-home"><span>홈</span></i></span>
                 <span>관리자</span>
-                <strong>전체</strong>
+                <?php
+                if ($_GET['f_gubun'] != 'modify') {
+                ?>
+                    <strong>강의 등록</strong>
+                <?php
+                } else {
+                ?>
+                    <strong>강의 수정</strong>
+                <?php
+                }
+                ?>
             </div>
         </div>
 
-        <ul class="tab-list tab5" style="display: table">
-            <li class="on" style="width:129px;"><a href="#">전체</a></li>
-            <li style="width:129px;"><a href="#">어학 및 자격증</a></li>
-            <li style="width:129px;"><a href="#">공통역량</a></li>
-            <li style="width:129px;"><a href="#">일반직무</a></li>
-            <li style="width:129px;"><a href="#">산업직무</a></li>
-            <li style="width:129px;"><a href="#">수강후기</a></li>
-        </ul>
+<!--        <ul class="tab-list tab5" style="display: table">-->
+<!--            <li class="on" style="width:129px;"><a href="#">전체</a></li>-->
+<!--            <li style="width:129px;"><a href="#">어학 및 자격증</a></li>-->
+<!--            <li style="width:129px;"><a href="#">공통역량</a></li>-->
+<!--            <li style="width:129px;"><a href="#">일반직무</a></li>-->
+<!--            <li style="width:129px;"><a href="#">산업직무</a></li>-->
+<!--            <li style="width:129px;"><a href="#">수강후기</a></li>-->
+<!--        </ul>-->
 
-		<p class="mb15"><strong class="tc-brand fs16">강의 등록 정보</strong></p>
+        <?php
+        if ($_GET['f_gubun'] != 'modify') {
+        ?>
+        <p class="mb15"><strong class="tc-brand fs16">강의 등록</strong></p>
+        <?php
+        } else {
+        ?>
+        <p class="mb15"><strong class="tc-brand fs16">강의 수정</strong></p>
+        <?php
+        }
+        ?>
+
         <?php
         if (!isset($_GET['f_gubun'])) {
         ?>
@@ -298,7 +319,7 @@ if (isset($_GET['f_gubun'])) {
                 </tbody>
             </table>
             <div class="box-btn t-r">
-                <a href="/admin/index.php?mode=list" class="btn-m-gray">목록</a>
+                <a href="javascript:history.back();" class="btn-m-gray">목록</a>
                 <?php
                 if (@$_GET['f_gubun'] != "modify") {
                 ?>
@@ -307,7 +328,7 @@ if (isset($_GET['f_gubun'])) {
                 } else {
                 ?>
                     <a href="#" class="btn-m ml5" onclick="regist_submit();">수정</a>
-                    <a href="#" class="btn-m-dark">삭제</a>
+                    <a href="/admin/modify.php?f_gubun=delete&f_num=<?php echo $f_num ?>" class="btn-m-dark">삭제</a>
                 <?php
                 }
                 ?>
