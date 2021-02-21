@@ -9,11 +9,6 @@ $f_id = $_SESSION['f_id'];
 
 $data = array();
 
-//$data = array( 'f_category_id' => $_GET['f_category_id'],
-//    'f_lecture' => $_GET['f_lecture'],
-//    'f_admin_name' => $_GET['f_admin_name'],
-//);
-
 if (isset($_GET['f_category_id'])) {
     $data["f_category_id"] = $_GET['f_category_id'];
 }
@@ -123,7 +118,7 @@ $sqlLimit = ' LIMIT ' . $currentLimit . ', ' . $onePage; //limit sql 구문
 
 $sql = "SELECT * FROM LECTURE ".$search_category." ORDER BY F_NUM DESC ". $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지)
 $result_normal = $conn->query($sql);
-
+$row = $result_normal->fetch_assoc()
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
@@ -214,13 +209,12 @@ $result_normal = $conn->query($sql);
         <form name="search" method="post" action="/admin/search.php">
             <div class="search-info">
                 <div class="search-form f-r">
-                    <select class="input-sel" style="width:158px" name="f_category_id" id="f_category_id" ?> >
+                    <select class="input-sel" style="width:158px" name="f_category_id" id="f_category_id">
                         <option value="all">전체</option>
                         <option value="1" <? if($_GET['f_category_id'] == 1) { echo "selected"; } ?> >어학 및 자격증</option>
                         <option value="2" <? if($_GET['f_category_id'] == 2) { echo "selected"; } ?> >공통역량</option>
                         <option value="3" <? if($_GET['f_category_id'] == 3) { echo "selected"; } ?> >일반직무</option>
                         <option value="4" <? if($_GET['f_category_id'] == 4) { echo "selected"; } ?> >산업직무</option>
-                        <option value="R">수강후기</option>
                     </select>
                     <select class="input-sel" style="width:158px" name="f_search_detatil" id="f_search_detatil">
                         <option value="f_lecture" <? if(isset($_GET['f_lecture'])) { echo "selected"; } ?>>강의명</option>
@@ -263,7 +257,7 @@ $result_normal = $conn->query($sql);
                     <td><?php echo $row['F_NUM'] ?></td>
                     <td><?php echo $row['F_CATEGORY'] ?></td>
                     <td>
-                        <a href="/admin/index.php?mode=view&f_gubun=modify&f_num=<?php echo $row['F_NUM'] ?><?php echo $query_string_add ?>">
+                        <a href="/admin/index.php?mode=view&f_gubun=modify&f_category_id=<?php echo $row['F_CATEGORY_ID'] ?>&f_num=<?php echo $row['F_NUM'] ?><?php echo $query_string_add ?>">
                             <span class="tc-gray ellipsis_line">강의명 : <?php echo $row['F_LECTURE'] ?></span>
                             <strong class="ellipsis_line">강사명 : <?php echo $row['F_INSTRUCTOR'] ?></strong>
                         </a>

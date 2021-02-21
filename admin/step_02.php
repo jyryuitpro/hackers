@@ -11,13 +11,11 @@ $f_gubun = $_GET['f_gubun'];
 if (isset($_GET['f_gubun'])) {
     $f_num = $_GET['f_num'];
 
-    // 일반 게시글
-    $sql = 'SELECT * FROM LECTURE WHERE F_NUM = ' . $f_num;
+    $sql = "SELECT * FROM LECTURE WHERE F_NUM = " . $f_num;
     $result_normal = $conn->query($sql);
     $row = $result_normal->fetch_assoc();
-    //var_dump($row);
 
-    $sql_thumbnail = 'SELECT F_THUMBNAIL_NAME_CRYPTO FROM LECTURE a JOIN THUMBNAIL b ON a.F_THUMBNAIL_ID = b.F_THUMBNAIL_ID WHERE a.F_NUM = ' . $f_num;
+    $sql_thumbnail = "SELECT F_THUMBNAIL_NAME_CRYPTO FROM LECTURE a JOIN THUMBNAIL b ON a.F_THUMBNAIL_ID = b.F_THUMBNAIL_ID WHERE a.F_NUM = " . $f_num;
     $result_thumbnail = $conn->query($sql_thumbnail);
     $row_thumbnail = $result_thumbnail->fetch_assoc();
 }
@@ -78,61 +76,59 @@ if (isset($_GET['f_gubun'])) {
         }
     }
 
-    function regist_submit() {
-        // if ($("#f_category").val() == "") {
-        //     alert("분류를 선택해주세요.");
-        //     $("#f_category").focus();
-        //     return false;
-        // }
-        //
-        // if ($("#f_lecture").val() == "") {
-        //     alert("강의명을 입력해주세요.");
-        //     $("#f_category").focus();
-        //     return false;
-        // }
-        //
-        // if ($("#f_instructor").val() == "") {
-        //     alert("강사명을 입력해주세요.");
-        //     $("#f_category").focus();
-        //     return false;
-        // }
-        //
-        // if ($("#f_learning_time").val() == "") {
-        //     alert("학습시간을 입력해주세요.");
-        //     $("#f_category").focus();
-        //     return false;
-        // }
-        //
-        // if ($("#f_lecture_count").val() == "") {
-        //     alert("강의수를 입력해주세요.");
-        //     $("#f_category").focus();
-        //     return false;
-        // }
-        //
-        // if (!$('input:radio[name=radio]').is(':checked')) {
-        //     alert("학습난이도를 선택해주세요.");
-        //     $("#f_category").focus();
-        //     return false;
-        // }
+    function regist_modify_submit() {
+        if ($("[id=f_category_id] :selected").val() =="") {
+            alert("분류를 선택해주세요.");
+            $("#f_category_id").focus();
+            return false;
+        }
+
+        if ($("#f_lecture").val() == "") {
+            alert("강의명을 입력해주세요.");
+            $("#f_lecture").focus();
+            return false;
+        }
+
+        if ($("#f_instructor").val() == "") {
+            alert("강사명을 입력해주세요.");
+            $("#f_instructor").focus();
+            return false;
+        }
+
+        if ($("#f_learning_time").val() == "") {
+            alert("학습시간을 입력해주세요.");
+            $("#f_learning_time").focus();
+            return false;
+        }
+
+        if ($("#f_lecture_count").val() == "") {
+            alert("강의수를 입력해주세요.");
+            $("#f_lecture_count").focus();
+            return false;
+        }
+
+        if (!$('input:radio[name=radio]').is(':checked')) {
+            alert("학습난이도를 선택해주세요.");
+            $("#f_category").focus();
+            return false;
+        }
 
         $.urlParam = function(name){
             var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
-            if (results==null){
+            if (results == null){
                 return null;
             }
             else{
                 return results[1] || 0;
             }
         }
-
         var f_gubun = $.urlParam('f_gubun');
 
         var path = document.getElementById("thumbnail").value;
-        if((path == "") && (f_gubun == "")) {
-            alert("썸네일 파일을 선택해 주세요!");
+        if(path == "" && f_gubun != "modify") {
+            alert("썸네일 파일을 선택해 주세요.");
             return false;
         }
-
         $("#regist").submit();
     }
 </script>
@@ -227,12 +223,18 @@ if (isset($_GET['f_gubun'])) {
                 <tr>
                     <th scope="col">분류</th>
                     <td>
-                        <select class="input-sel" style="width:160px" name="f_category" id="f_category">
+                        <select class="input-sel" style="width:160px" name="f_category_id" id="f_category_id">
                             <option value="">선택</option>
-                            <option value="어학 및 자격증" <? if(@$row['F_CATEGORY']=="어학 및 자격증") { echo "selected"; } ?> >어학 및 자격증</option>
-                            <option value="공통역량" <? if(@$row['F_CATEGORY']=="공통역량") { echo "selected"; } ?> >공통역량</option>
-                            <option value="일반직무" <? if(@$row['F_CATEGORY']=="일반직무") { echo "selected"; } ?> >일반직무</option>
-                            <option value="산업직무" <? if(@$row['F_CATEGORY']=="산업직무") { echo "selected"; } ?> >산업직무</option>
+                        <?php
+                        $sql = "SELECT * FROM CATEGORY";
+                        $result_category = $conn->query($sql);
+                        $i = 1;
+                        while ($row_category = $result_category->fetch_assoc()) {
+                        ?>
+                            <option value="<?php echo $row_category['F_CATEGORY_ID']?>" <? if($_GET['f_category_id'] == $i++) { echo "selected"; } ?> ><?php echo $row_category['F_CATEGORY']?></option>
+                        <?php
+                        }
+                        ?>
                         </select>
                     </td>
                 </tr>
@@ -323,11 +325,11 @@ if (isset($_GET['f_gubun'])) {
                 <?php
                 if (@$_GET['f_gubun'] != "modify") {
                 ?>
-                    <a href="javascript:void(0);" onclick="regist_submit();" class="btn-m ml5">등록</a>
+                    <a href="javascript:void(0);" onclick="regist_modify_submit();" class="btn-m ml5">등록</a>
                 <?php
                 } else {
                 ?>
-                    <a href="#" class="btn-m ml5" onclick="regist_submit();">수정</a>
+                    <a href="#" class="btn-m ml5" onclick="regist_modify_submit();">수정</a>
                     <a href="/admin/modify.php?f_gubun=delete&f_num=<?php echo $f_num ?>" class="btn-m-dark">삭제</a>
                 <?php
                 }

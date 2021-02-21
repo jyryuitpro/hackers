@@ -92,25 +92,35 @@ $f_authority = $_SESSION['f_authority'];
                 <?php
                 if (!$_SESSION['f_id']){
                 ?>
-                <!-- 로그인전 -->
+                <!-- 로그인 전 -->
                 <a href="/member/index.php?mode=login">로그인</a>
                 <a href="/member/index.php?mode=step_01">회원가입</a>
                 <a href="#">상담/고객센터</a>
                 <?php
                 } else {
                 ?>
-                <!-- 로그인후 -->
-                <a><?php echo $f_name.'님 로그인 중입니다.'?></a>
+                <!-- 로그인 후 -->
+                <?php
+                if ($_SESSION['f_authority'] != '0') {
+                ?>
+                    <a><?php echo '안녕하세요. '.$f_name.'님'?></a>
+                <?php
+                } else {
+                ?>
+                    <a><?php echo '안녕하세요. '.$f_name.' 관리자님'?></a>
+                <?php
+                }
+                ?>
                 <a href="/member/index.php?mode=logout">로그아웃</a>
                 <a href="/member/index.php?mode=modify">내정보</a>
                 <a href="#">상담/고객센터</a>
-                    <?php
-                    if ($_SESSION['f_authority'] == '0') {
-                    ?>
-                        <a href="/admin/index.php?mode=list">관리자</a>
-                    <?php
-                    }
-                    ?>
+                <?php
+                if ($_SESSION['f_authority'] == '0') {
+                ?>
+                    <a href="/admin/index.php?mode=list"><img src="/admin/image/btn_hackershrd_inconve.png"> 관리자</a>
+                <?php
+                }
+                ?>
                 <?php
                 }
                 ?>
