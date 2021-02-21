@@ -36,7 +36,7 @@ if (isset($_GET['page'])) {
 
 $search_category = 'WHERE 1=1 ';
 
-if (isset($_GET['f_category_id'])) {
+if (isset($_GET['f_category_id']) && $_GET['f_category_id'] != "all") {
     $f_category_id = $_GET['f_category_id'];
     $search_category .= "AND F_CATEGORY_ID = '$f_category_id'";
 }
@@ -177,7 +177,7 @@ $result_normal = $conn->query($sql);
 		</div>
 
 		<ul class="tab-list tab5">
-			<li <?php if(!isset($_GET['f_category_id'])) echo 'class="on" '; ?>><a href="/lecture_board/index.php?mode=list">전체</a></li>
+            <li <?php if($_GET['f_category_id'] == 'all' || !isset($_GET['f_category_id'])) echo 'class="on" '; ?> ><a href="/lecture_board/index.php?mode=list">전체</a></li>
 			<li <?php if($_GET['f_category_id'] == 1) echo 'class="on" '; ?>><a href="/lecture_board/index.php?mode=list&f_category_id=1">어학 및 자격증</a></li>
 			<li <?php if($_GET['f_category_id'] == 2) echo 'class="on" '; ?>><a href="/lecture_board/index.php?mode=list&f_category_id=2">공통역량</a></li>
 			<li <?php if($_GET['f_category_id'] == 3) echo 'class="on" '; ?>><a href="/lecture_board/index.php?mode=list&f_category_id=3">일반직무</a></li>
@@ -188,18 +188,18 @@ $result_normal = $conn->query($sql);
             <div class="search-info">
                 <div class="search-form f-r">
                     <select class="input-sel" style="width:158px" name="f_category_id" id="f_category_id" ?> >
-                        <option value="" >분류 선택</option>
+                        <option value="all">전체</option>
                         <option value="1" <? if($_GET['f_category_id'] == 1) { echo "selected"; } ?> >어학 및 자격증</option>
                         <option value="2" <? if($_GET['f_category_id'] == 2) { echo "selected"; } ?> >공통역량</option>
                         <option value="3" <? if($_GET['f_category_id'] == 3) { echo "selected"; } ?> >일반직무</option>
                         <option value="4" <? if($_GET['f_category_id'] == 4) { echo "selected"; } ?> >산업직무</option>
                     </select>
                     <select class="input-sel" style="width:158px" name="f_search_detatil" id="f_search_detatil">
-                        <option value="">상세조건 선택</option>
-                        <option value="f_lecture">강의명</option>
-                        <option value="f_name">작성자</option>
+                        <option value="f_lecture" <? if(isset($_GET['f_lecture'])) { echo "selected"; } ?>>강의명</option>
+                        <option value="f_admin_name" <? if(isset($_GET['f_name'])) { echo "selected"; } ?>>작성자</option>
                     </select>
-                    <input type="text" class="input-text" placeholder="상세조건 입력하세요." style="width:158px" name="f_search_content" id="f_search_content"/>
+                    <input type="text" class="input-text" placeholder="상세조건 입력하세요." style="width:158px" name="f_search_content" id="f_search_content"\
+                           value="<?php if (isset($_GET['f_lecture'])) echo $_GET['f_lecture']; if (isset($_GET['f_name'])) echo $_GET['f_name'];?>"/>
                     <button type="submit" class="btn-s-dark">검색</button>
                 </div>
             </div>

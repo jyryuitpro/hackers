@@ -1,6 +1,6 @@
 <?php
 //var_dump($_POST);
-
+//exit;
 //array(3) {
 //    ["f_category_id"]=> string(3) "all"
 //    ["f_search_detatil"]=> string(12) "f_admin_name"
@@ -13,7 +13,7 @@ $data = array();
 //    $_POST['f_search_detatil'] => $_POST['f_search_content']
 //);
 
-if (isset($_POST['f_category_id'])) {
+if (isset($_POST['f_category_id']) && $_POST['f_category_id'] != "all") {
     $data["f_category_id"] = $_POST['f_category_id'];
 }
 
@@ -32,11 +32,6 @@ $query_string = http_build_query($data);
 //exit;
 
 Header("Location: /admin/step_01.php?$query_string");
-
-//http://local.pass.com/admin/step_01.php?f_category_id=&=
-//http://local.pass.com/admin/step_01.php?f_category_id=1&=
-//http://local.pass.com/admin/step_01.php?f_category_id=1&f_lecture=
-//http://local.pass.com/admin/step_01.php?f_category_id=1&f_admin_name=
 
 
 
