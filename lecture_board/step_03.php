@@ -192,34 +192,41 @@ $result_normal = $conn->query($sql);
             ?>
         </div>
         <?php
-        $data = array();
+        $data_list = array();
+        $data_page = array();
 
-        //$data = array( 'f_category_id' => $_GET['f_category_id'],
-        //    'f_lecture' => $_GET['f_search_content']
-        //);
+        if (isset($_GET['page'])) {
+            $data_list["page"] = $_GET['page'];
+        }
 
-//        if (isset($_GET['f_num'])) {
-//            $data["f_num"] = $_GET['f_num'];
-//        }
+        if (isset($_GET['f_num'])) {
+            $data_page["f_num"] = $_GET['f_num'];
+        }
 
         if (isset($_GET['f_category_id'])) {
-            $data["f_category_id"] = $_GET['f_category_id'];
+            $data_list["f_category_id"] = $_GET['f_category_id'];
+            $data_page["f_category_id"] = $_GET['f_category_id'];
         }
 
         if (isset($_GET['f_lecture'])) {
-            $data["f_lecture"] = $_GET['f_lecture'];
+            $data_list["f_lecture"] = $_GET['f_lecture'];
+            $data_page["f_lecture"] = $_GET['f_lecture'];
         }
 
         if (isset($_GET['f_name'])) {
-            $data["f_name"] = $_GET['f_name'];
+            $data_list["f_name"] = $_GET['f_name'];
+            $data_page["f_name"] = $_GET['f_name'];
         }
 
         if (isset($_GET['f_search_content'])) {
-            $data["f_search_content"] = $_GET['f_search_content'];
+            $data_list["f_search_content"] = $_GET['f_search_content'];
+            $data_page["f_search_content"] = $_GET['f_search_content'];
         }
 
-        $query_string = http_build_query($data);
-        $query_string_add = '&' . $query_string;
+        $query_string_list = http_build_query($data_list);
+        $query_string_page = http_build_query($data_page);
+        $query_string_list = '&' . $query_string_list;
+        $query_string_add = '&' . $query_string_page;
 
         // paging
         if (isset($_GET['page'])) {
@@ -374,7 +381,7 @@ $result_normal = $conn->query($sql);
                     <td><span class="txt-icon-line"><em>BEST</em></span></td>
                     <td><?php echo $row['F_CATEGORY'] ?></td>
                     <td>
-                        <a href="/lecture_board/index.php?mode=view&f_num=<?php echo $row['F_NUM'] ?>">
+                        <a href="/lecture_board/index.php?mode=view&f_num=<?php echo $row['F_NUM'] ?><?php echo $query_string_list ?>">
                             <span class="tc-gray ellipsis_line">수강 강의명 : <?php echo $row['F_LECTURE'] ?></span>
                             <strong class="ellipsis_line"><?php echo $row['F_TITLE'] ?></strong>
                         </a>
@@ -419,7 +426,7 @@ $result_normal = $conn->query($sql);
                     <td><?php echo $row['F_NUM'] ?></td>
                     <td><?php echo $row['F_CATEGORY'] ?></td>
                     <td>
-                        <a href="/lecture_board/index.php?mode=view&f_num=<?php echo $row['F_NUM'] ?><?php echo $query_string_add ?>">
+                        <a href="/lecture_board/index.php?mode=view&f_num=<?php echo $row['F_NUM'] ?><?php echo $query_string_list ?>">
                             <span class="tc-gray ellipsis_line">수강 강의명 : <?php echo $row['F_LECTURE'] ?></span>
                             <strong class="ellipsis_line"><?php echo $row['F_TITLE'] ?></strong>
                         </a>
