@@ -1,7 +1,7 @@
 <?php
 require_once("../database/dbconfig.php");
-//error_reporting(E_ALL);
-//ini_set("display_errors", 1);
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 session_start();
 //var_dump($_POST);
 //exit;
@@ -25,7 +25,7 @@ $f_name = $_POST['f_name'];
 $f_id = $_POST['f_id'];
 $f_num = $_POST['f_num'];
 
-if ($_GET['f_gubun'] == 'modify') {
+if ($_POST['f_gubun'] == 'modify') {
     $sql = "UPDATE BOARD SET F_CATEGORY = '$f_category', F_LECTURE = '$f_lecture', F_TITLE = '$f_title', F_GRADE = '$f_grade', F_CONTENTS = '$f_contents' ";
     $sql .= "WHERE F_NAME = '$f_name' AND F_ID = '$f_id' AND F_NUM = $f_num";
     $result = $conn->query($sql);

@@ -61,15 +61,15 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
                     url  : "/lecture_board/search.php",
                     type : "GET",
                     data : "f_category_id="+f_category_id,
-                    error:function(){
-                    },
                     success:function(data) {
-                        var data = $.parseJSON(data);
+                        var res = $.parseJSON(data);
                         $("#f_lecture").empty();
                         $('#f_lecture').append('<option value="">강의명</option>');
-                        $.each(data, function(index, value){
+                        $.each(res, function(index, value){
                             $('#f_lecture').append('<option value="' + value + '">' + value + '</option>');
                         });
+                    },
+                    error:function(){
                     }
                 });
             });
@@ -144,6 +144,7 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
             <input type="hidden" class="input-text" style="width:611px" name="f_name" id="f_name" value="<?php echo $f_name ?>"/>
             <input type="hidden" class="input-text" style="width:611px" name="f_id" id="f_id" value="<?php echo $f_id ?>"/>
             <input type="hidden" class="input-text" style="width:611px" name="f_num" id="f_num" value="<?php echo @$f_num ?>"/>
+            <input type="hidden" class="input-text" style="width:611px" name="f_gubun" id="f_gubun" value="<?php echo $_GET['f_gubun']; ?>"/>
             <table border="0" cellpadding="0" cellspacing="0" class="tbl-col">
                 <caption class="hidden">강의정보</caption>
                 <colgroup>

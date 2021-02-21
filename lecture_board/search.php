@@ -3,8 +3,6 @@ require_once("../database/dbconfig.php");
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
-var_dump($_POST);
-
 //array(3) {
 //    ["f_category_id"]=> string(0) ""
 //    ["f_search_detatil"]=> string(0) ""
@@ -21,6 +19,8 @@ if (isset($_GET['f_category_id'])) {
         array_push($data, $row['F_LECTURE']);
     }
 
+//    var_dump($data);
+//    exit;
     echo json_encode($data);
 } else if (isset($_POST['mode'])) {
     $data = array();
@@ -33,7 +33,7 @@ if (isset($_GET['f_category_id'])) {
         $data["f_num"] = $_POST['f_num'];
     }
 
-    if (isset($_POST['f_category_id'])) {
+    if (isset($_POST['f_category_id']) && $_POST['f_category_id'] != "all") {
         $data["f_category_id"] = $_POST['f_category_id'];
     }
 
@@ -67,7 +67,7 @@ if (isset($_GET['f_category_id'])) {
 //        ["f_search_content"]=> string(0) ""
 //    }
 
-    if ($_POST['f_category_id'] !="") {
+    if (isset($_POST['f_category_id']) && $_POST['f_category_id'] != "all") {
         $data["f_category_id"] = $_POST['f_category_id'];
     }
 

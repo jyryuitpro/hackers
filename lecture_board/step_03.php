@@ -1,8 +1,9 @@
 <?php
 require_once("../database/dbconfig.php");
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
-session_start();
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
+//session_start();
+
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
 $f_num = $_GET['f_num'];
@@ -197,9 +198,9 @@ $result_normal = $conn->query($sql);
         //    'f_lecture' => $_GET['f_search_content']
         //);
 
-        if (isset($_GET['f_num'])) {
-            $data["f_num"] = $_GET['f_num'];
-        }
+//        if (isset($_GET['f_num'])) {
+//            $data["f_num"] = $_GET['f_num'];
+//        }
 
         if (isset($_GET['f_category_id'])) {
             $data["f_category_id"] = $_GET['f_category_id'];
@@ -317,27 +318,26 @@ $result_normal = $conn->query($sql);
         // 일반 게시글
         $sql = "SELECT * FROM BOARD ".$search_category." ORDER BY F_NUM DESC". $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지)
         $result_normal = $conn->query($sql);
-
-        var_dump($sql);
+//        var_dump($sql);
         ?>
         <form name="search" method="post" action="/lecture_board/search.php">
             <div class="search-info">
-                <input type="text" class="input-text" style="width:611px" name="mode" id="mode" value="view"/>
-                <input type="text" class="input-text" style="width:611px" name="f_num" id="f_num" value="<?php echo @$_GET['f_num']?>"/>
+                <input type="hidden" class="input-text" style="width:611px" name="mode" id="mode" value="view"/>
+                <input type="hidden" class="input-text" style="width:611px" name="f_num" id="f_num" value="<?php echo @$_GET['f_num']?>"/>
                 <div class="search-form f-r">
                     <select class="input-sel" style="width:158px" name="f_category_id" id="f_category_id" ?> >
-                        <option value="" >분류 선택</option>
+                        <option value="all">전체</option>
                         <option value="1" <? if(@$_GET['f_category_id'] == 1) { echo "selected"; } ?> >어학 및 자격증</option>
                         <option value="2" <? if(@$_GET['f_category_id'] == 2) { echo "selected"; } ?> >공통역량</option>
                         <option value="3" <? if(@$_GET['f_category_id'] == 3) { echo "selected"; } ?> >일반직무</option>
                         <option value="4" <? if(@$_GET['f_category_id'] == 4) { echo "selected"; } ?> >산업직무</option>
                     </select>
                     <select class="input-sel" style="width:158px" name="f_search_detatil" id="f_search_detatil">
-                        <option value="">상세조건 선택</option>
                         <option value="f_lecture" <? if(isset($_GET['f_lecture'])) { echo "selected"; } ?>>강의명</option>
                         <option value="f_name" <? if(isset($_GET['f_name'])) { echo "selected"; } ?>>작성자</option>
                     </select>
-                    <input type="text" class="input-text" placeholder="상세조건 입력하세요." style="width:158px" name="f_search_content" id="f_search_content" value="<?php echo @$_GET['f_search_content']?>"/>
+                    <input type="text" class="input-text" placeholder="상세조건 입력하세요." style="width:158px" name="f_search_content" id="f_search_content"\
+                            value="<?php if (isset($_GET['f_lecture'])) echo $_GET['f_lecture']; if (isset($_GET['f_name'])) echo $_GET['f_name'];?>"/>
                     <button type="submit" class="btn-s-dark">검색</button>
                 </div>
             </div>

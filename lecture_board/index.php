@@ -4,7 +4,8 @@
 if ($_GET['mode'] == "list" && isset($_GET['f_category_id'])) {
     $f_category_id = $_GET['f_category_id'];
     Header("Location: /lecture_board/step_01.php?f_category_id=".$f_category_id);
-} else {
+} else if ($_GET['mode'] == "list") {
+    echo '2~';
     Header("Location: /lecture_board/step_01.php");
 }
 
@@ -14,17 +15,21 @@ if ($_GET['mode'] == "write") {
         $f_num = $_GET['f_num'];
         Header("Location: /lecture_board/step_02.php?f_gubun=modify&f_num=".$f_num);
     } else {
-        echo '3';
+        echo '4~';
         Header("Location: /lecture_board/step_02.php");
     }
 }
 
 // 수강후기 뷰(상세) 페이지
-if ($_GET['mode'] == "view" && isset($_GET['f_num']) && !isset($_GET['f_category_id'])) {
+if ($_GET['mode'] == "view" && isset($_GET['f_num']) && !isset($_GET['f_lecture'])) {
     $f_num = $_GET['f_num'];
     Header("Location: /lecture_board/step_03.php?f_num=".$f_num);
 } else if ($_GET['mode'] == "view" && isset($_GET['f_num']) && isset($_GET['f_category_id'])) {
     $f_num = $_GET['f_num'];
     $f_category_id = $_GET['f_category_id'];
     Header("Location: /lecture_board/step_03.php?f_num=".$f_num."&f_category_id=".$f_category_id);
+} else if ($_GET['mode'] == "view" && isset($_GET['f_num']) && isset($_GET['f_lecture'])) {
+    $f_num = $_GET['f_num'];
+    $f_lecture = $_GET['f_lecture'];
+    Header("Location: /lecture_board/step_03.php?f_num=".$f_num."&f_lecture=".$f_lecture);
 }
