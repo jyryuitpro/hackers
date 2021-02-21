@@ -25,8 +25,10 @@ if (isset($_POST['f_search_detatil']) && $_POST['f_search_content'] != "") {
     }
 }
 
+
 //$query_string = urldecode(http_build_query($data));
 $query_string = http_build_query($data);
+//var_dump($query_string);
 //exit;
 
 Header("Location: /admin/step_01.php?$query_string");
