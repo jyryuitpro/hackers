@@ -31,7 +31,13 @@
                 <a href="#"><strong class="tc-brand">개인정보취급방침</strong></a>
                 <a href="#">CONTACT US</a>
                 <a href="#">상담/고객센터</a>
-                <a href="#">관리자</a>
+                <?php
+                if ($_SESSION['f_authority'] == '0') {
+                ?>
+                <a href="/admin/index.php?mode=list"><img src="/admin/image/btn_hackershrd_inconve.png"> 관리자</a>
+                <?php
+                }
+                ?>
             </div>
             <div class="address">
                 ㈜챔프스터디 | 사업자등록번호 [120-87-09984] | TEL : 02)537-5000<br />

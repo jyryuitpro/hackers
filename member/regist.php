@@ -1,8 +1,5 @@
 <?php
-//$conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
-$conn = mysqli_connect('localhost:3307', 'root', 'root', 'hackers');
-
-var_dump($_POST);
+require_once("../database/dbconfig.php");
 
 $f_name = $_POST['f_name'];
 $f_id = $_POST['f_id_new'];
@@ -24,10 +21,11 @@ $f_authority = $_POST['f_authority'];
 
 $sql = "INSERT INTO MEMBER (F_NAME, F_ID, F_PASSWORD, F_EMAIL, F_MOBILE, F_TEL, F_ZIPCODE, F_ADDRESS, F_ADDRESS_DETAIL, F_MOBILE_AGREE, F_EMAIL_AGREE, F_BIRTHDAY, F_AUTHORITY)";
 $sql = $sql." VALUES('$f_name','$f_id','$f_password','$f_email','$f_mobile','$f_tel','$f_zipcode','$f_address','$f_address_detail','$f_mobile_agree','$f_email_agree', '$f_birthday', '$f_authority')";
-$result = mysqli_query($conn, $sql);
+$result = $conn->query($sql);
+$conn->close();
 
 if($result){
-    Header("Location: /member/index.php?mode=complete");
+    echo "<script> alert('회원가입이 완료되었습니다.'); window.location.href='/member/index.php?mode=complete'</script>";
 }else{
-    echo 'fail to insert sql '.$sql;
+    echo "<script> alert('실패'); history.back();</script>";
 }

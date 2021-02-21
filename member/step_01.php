@@ -31,12 +31,13 @@
 <!--[if lte IE 9]> <script src="/js/common/place_holder.js"></script> <![endif]-->
 <script type="text/javascript">
     $(document).ready(function(){
+        // 이용약관, 개인정보 취급방침 동의 여부 확인
         $("#step_02").click(function(){
             if ($("#check_1").is(":checked") == false) {
-                alert("이용약관에 동의 하셔야 다음 단계로 진행 가능합니다.");
+                alert("이용약관에 동의하셔야 다음 단계로 진행 가능합니다.");
                 return false;
             } else if ($("#check_2").is(":checked") == false) {
-                alert("개인정보 취급방침에 동의 하셔야 다음 단계로 진행 가능합니다.");
+                alert("개인정보 취급방침에 동의하셔야 다음 단계로 진행 가능합니다.");
                 return false;
             }
         });
@@ -69,7 +70,7 @@
 <!-- //skip nav -->
 
 <div id="wrap">
-	<?php include 'header.php'; ?>
+    <?php include '../include/header.php'; ?>
 <div id="container" class="container-full">
 	<div id="content" class="content">
 		<div class="inner">
@@ -370,7 +371,7 @@ Aqua Auth 컨텐츠의 녹화차단 - Aqua Director 컨텐츠의 다운로드 DR
 					<div class="mt10">
 						<label class="input-sp">
 							<input type="checkbox" name="check" id="check_1"/>
-							<span class="input-txt">약관에 동의합니다.</span>
+							<span class="input-txt">이용약관에 동의합니다.(필수)</span>
 						</label>
 					</div>
 				</div>
@@ -537,7 +538,7 @@ Aqua Auth 컨텐츠의 녹화차단 - Aqua Director 컨텐츠의 다운로드 DR
 					<div class="mt10">
 						<label class="input-sp">
                             <input type="checkbox" name="check" id="check_2"/>
-							<span class="input-txt">약관에 동의합니다.</span>
+							<span class="input-txt">개인정보 취급방침에 동의합니다.(필수)</span>
 						</label>
 					</div>
 				</div>
@@ -557,7 +558,7 @@ Aqua Auth 컨텐츠의 녹화차단 - Aqua Director 컨텐츠의 다운로드 DR
 		</div>
 	</div>
 </div>
-	<?php include 'footer.php'; ?>
+    <?php include '../include/footer.php'; ?>
 </div>
 </body>
 </html>

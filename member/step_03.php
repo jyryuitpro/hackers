@@ -1,6 +1,7 @@
 <?php
     session_start();
     $f_mobile = $_SESSION['f_mobile'];
+//    var_dump($f_mobile);
     // 01012345678
     $f_mobile_0 = substr($f_mobile, 0, 3);
     $f_mobile_1 = substr($f_mobile, 3, 4);
@@ -81,6 +82,9 @@
         });
     });
 
+
+
+    // 아이디 유효성 검사 및 중복체크
     function idDuplicationCheck() {
         var idCheck = /^[a-z]+[a-z0-9]{3,14}$/g;
         if(!idCheck.test($('#f_id_new').val())){
@@ -176,7 +180,6 @@
 
         $("#f_tel").val($("#f_tel_0").val() + $("#f_tel_1").val() + $("#f_tel_2").val());
 
-
         regist.submit();
     }
 
@@ -220,7 +223,7 @@
 <!-- //skip nav -->
 
 <div id="wrap">
-    <?php include 'header.php'; ?>
+    <?php include '../include/header.php'; ?>
 <div id="container" class="container-full">
 	<div id="content" class="content">
 		<div class="inner">
@@ -242,7 +245,8 @@
 
 			<div class="section-content">
                 <form name="regist" id="regist" method="post" action="/member/regist.php">
-                    <input type="text" class="input-text" style="width:302px" name="f_authority" id="f_authority" value="1"/>
+                    <!-- 회원가입 기본권한 1-->
+                    <input type="hidden" class="input-text" style="width:302px" name="f_authority" id="f_authority" value="1"/>
                     <table border="0" cellpadding="0" cellspacing="0" class="tbl-col-join">
                         <caption class="hidden">강의정보</caption>
                         <colgroup>
@@ -275,7 +279,11 @@
                             </tr>
                             <tr>
                                 <th scope="col"><span class="icons">*</span>아이디</th>
-                                <td><input type="text" class="input-text" style="width:302px" name="f_id_old" id="f_id_old"/><input type="text" class="input-text" style="width:302px" name="f_id_new" id="f_id_new" placeholder="영문자로 시작하는 4~15자의 영문소문자, 숫자"/><a href="javascript:void(0);" onclick="idDuplicationCheck();" class="btn-s-tin ml10">중복확인</a></td>
+                                <td>
+                                    <input type="text" class="input-text" style="width:302px" name="f_id_old" id="f_id_old"/>
+                                    <input type="text" class="input-text" style="width:302px" name="f_id_new" id="f_id_new" placeholder="영문자로 시작하는 4~15자의 영문소문자, 숫자"/>
+                                    <a href="javascript:void(0);" onclick="idDuplicationCheck();" class="btn-s-tin ml10">중복확인</a>
+                                </td>
                             </tr>
                             <tr>
                                 <th scope="col"><span class="icons">*</span>비밀번호</th>
@@ -370,7 +378,7 @@
 		</div>
 	</div>
 </div>
-    <?php include 'footer.php'; ?>
+    <?php include '../include/footer.php'; ?>
 </div>
 </body>
 </html>

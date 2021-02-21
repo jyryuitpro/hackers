@@ -1,13 +1,16 @@
 <?php
 
+// 약관동의
 if ($_GET['mode'] == "step_01") {
     Header("Location: /member/step_01.php");
 }
 
+// 본인확인
 if ($_GET['mode'] == "step_02") {
     Header("Location: /member/step_02.php");
 }
 
+// 정보입력
 if ($_GET['mode'] == "step_03") {
     Header("Location: /member/step_03.php");
 }

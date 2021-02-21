@@ -55,19 +55,20 @@
         }
 
         document.getElementById("f_mobile").value = f_mobile_0 + f_mobile_1 + f_mobile_2;
-
         document.getElementById("verification_number").value = 123456;
 
         alert("인증번호가 전송되었습니다.");
     }
 
+    // 인증번호 확인
     function confirm_verification_number() {
         const verification_number = document.getElementById("verification_number").value
         const f_mobile = document.getElementById("f_mobile").value
+
         $.ajax({
             url: "/member/session.php",
             dataType: "json",
-            data: {'verification_number': verification_number, 'f_mobile': f_mobile},
+            data: {"verification_number": verification_number, "f_mobile": f_mobile},
             type: "POST",
             success:function(data){
                 if (data.res == "success") {
@@ -77,7 +78,7 @@
             },
             error:function () {
 
-            },
+            }
         });
     }
 </script>
@@ -89,7 +90,7 @@
 <!-- //skip nav -->
 
 <div id="wrap">
-	<?php include 'header.php'; ?>
+    <?php include '../include/header.php'; ?>
 <div id="container" class="container-full">
 	<div id="content" class="content">
 		<div class="inner">
@@ -136,7 +137,7 @@
 		</div>
 	</div>
 </div>
-	<?php include 'footer.php'; ?>
+    <?php include '../include/footer.php'; ?>
 </div>
 </body>
 </html>

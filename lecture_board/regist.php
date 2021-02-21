@@ -33,7 +33,7 @@ $f_id = $_POST['f_id'];
 $sql = "INSERT INTO BOARD (F_CATEGORY_ID, F_CATEGORY, F_LECTURE, F_TITLE, F_GRADE, F_CONTENTS, F_ID, F_NAME, F_REG_TIME)";
 $sql = $sql." VALUES('$f_category_id','$f_category','$f_lecture','$f_title','$f_grade','$f_contents','$f_id','$f_name', now())";
 
-$result = mysqli_query($conn, $sql);
+$result = $conn->query($sql);
 $conn->close();
 
 if($result){

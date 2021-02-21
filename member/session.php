@@ -1,11 +1,11 @@
 <?php
+require_once("../database/dbconfig.php");
+
 session_start();
 $_SESSION['f_mobile'] = $_POST['f_mobile'];
-//var_dump($_SESSION);
+
 //var_dump($_POST);
-
-
-$conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
+//exit;
 
 if(!$_POST['f_gubun']) {
     if ($_SESSION['verification_number'] == $_POST['verification_number']) {
@@ -52,7 +52,5 @@ if(!$_POST['f_gubun']) {
 }
 
 /* If success */
-session_start();
-//session_destroy();
 $_SESSION['find_name'] = $row[0];
 $_SESSION['find_id'] = $row[1];
