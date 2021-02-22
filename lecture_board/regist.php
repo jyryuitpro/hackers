@@ -9,7 +9,7 @@ require_once("../database/dbconfig.php");
 // 분류 아이디
 $f_category_id = $_POST['f_category_id'];
 
-// 분류
+// 분류명
 $f_category = "";
 if ($f_category_id == '1') $f_category = "어학 및 자격증";
 if ($f_category_id == '2') $f_category = "공통역량";

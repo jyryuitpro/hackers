@@ -188,7 +188,7 @@ $result_normal = $conn->query($sql);
 		</table>
 
         <div class="box-btn t-r">
-            <a href="#" onclick="history.back();" class="btn-m-gray">목록</a>
+            <a href="#" class="btn-m-gray">목록</a>
             <?php
             if (isset($_SESSION['f_name']) && ($_SESSION['f_id'] == $row['F_ID'])) {
             ?>

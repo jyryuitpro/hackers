@@ -186,6 +186,7 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
                     <tr>
                         <th scope="col">강의</th>
                         <td>
+                            <input type="hidden" class="input-text" style="width:140px" name="f_category_id" id="f_category_id" value="<?php echo $row['F_CATEGORY_ID']; ?>" readonly/>
                             <input type="text" class="input-text" style="width:140px" name="f_category" id="f_category" value="<?php echo $row['F_CATEGORY']; ?>" readonly/>
                             <input type="text" class="input-text" style="width:454px" name="f_lecture" id="f_lecture" value="<?php echo $row['F_LECTURE']; ?>" readonly/>
 <!--                            <select class="input-sel" style="width:160px" name="f_category" id="f_category" >-->
@@ -266,22 +267,22 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
                                     @decsription
                                     <li></li> 단위로 위치를 이동할 수 있다.
                                 -->
-                                <li class="tx-list">
-                                    <div unselectable="on" id="tx_image" class="tx-image tx-btn-trans">
-                                        <a href="javascript:;" title="사진" class="tx-text">사진</a>
-                                    </div>
-                                </li>
+<!--                                <li class="tx-list">-->
+<!--                                    <div unselectable="on" id="tx_image" class="tx-image tx-btn-trans">-->
+<!--                                        <a href="javascript:;" title="사진" class="tx-text">사진</a>-->
+<!--                                    </div>-->
+<!--                                </li>-->
                                 <!-- 이미지 첨부 버튼 끝 -->
                                 <li class="tx-list">
                                     <div unselectable="on" id="tx_file" class="tx-file tx-btn-trans">
                                         <a href="javascript:;" title="파일" class="tx-text">파일</a>
                                     </div>
                                 </li>
-                                <li class="tx-list">
-                                    <div unselectable="on" id="tx_media" class="tx-media tx-btn-trans">
-                                        <a href="javascript:;" title="외부컨텐츠" class="tx-text">외부컨텐츠</a>
-                                    </div>
-                                </li>
+<!--                                <li class="tx-list">-->
+<!--                                    <div unselectable="on" id="tx_media" class="tx-media tx-btn-trans">-->
+<!--                                        <a href="javascript:;" title="외부컨텐츠" class="tx-text">외부컨텐츠</a>-->
+<!--                                    </div>-->
+<!--                                </li>-->
                                 <li class="tx-list tx-list-extra">
                                     <div unselectable="on" class="tx-btn-nlrbg tx-extra">
                                         <a href="javascript:;" class="tx-icon" title="버튼 더보기">버튼 더보기</a>
