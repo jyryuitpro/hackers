@@ -118,7 +118,6 @@ $sqlLimit = ' LIMIT ' . $currentLimit . ', ' . $onePage; //limit sql 구문
 
 $sql = "SELECT * FROM LECTURE ".$search_category." ORDER BY F_NUM DESC ". $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지)
 $result_normal = $conn->query($sql);
-$row = $result_normal->fetch_assoc()
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
@@ -257,6 +256,7 @@ $row = $result_normal->fetch_assoc()
                     <td><?php echo $row['F_NUM'] ?></td>
                     <td><?php echo $row['F_CATEGORY'] ?></td>
                     <td>
+                        <!-- 강의명 또는 강사명 클릭 시, 강의 수정 페이지로 이동위한 구분 값 f_gunbun 설정 -->
                         <a href="/admin/index.php?mode=view&f_gubun=modify&f_category_id=<?php echo $row['F_CATEGORY_ID'] ?>&f_num=<?php echo $row['F_NUM'] ?><?php echo $query_string_add ?>">
                             <span class="tc-gray ellipsis_line">강의명 : <?php echo $row['F_LECTURE'] ?></span>
                             <strong class="ellipsis_line">강사명 : <?php echo $row['F_INSTRUCTOR'] ?></strong>

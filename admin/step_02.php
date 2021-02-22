@@ -4,12 +4,13 @@ require_once("../database/dbconfig.php");
 //ini_set("display_errors", 1);
 
 session_start();
-$f_name = $_SESSION['f_name'];
-$f_id = $_SESSION['f_id'];
-$f_gubun = $_GET['f_gubun'];
+$f_name = $_SESSION['f_name']; // 관리자 이름
+$f_id = $_SESSION['f_id']; // 관리자 아이디
+$f_gubun = $_GET['f_gubun']; // 강의 등록, 수정 구분 값
+$f_num = $_GET['f_num']; // 강의 등록 번호
 
-if (isset($_GET['f_gubun'])) {
-    $f_num = $_GET['f_num'];
+// 강의 수정 시, DB에 저장된 강의, 썸네일 정보 가져오기
+if ($_GET['f_gubun'] == "modify") {
 
     $sql = "SELECT * FROM LECTURE WHERE F_NUM = " . $f_num;
     $result_normal = $conn->query($sql);
@@ -54,28 +55,29 @@ if (isset($_GET['f_gubun'])) {
 <!--[if lte IE 9]> <script src="/js/common/place_holder.js"></script> <![endif]-->
 <script type="text/javascript">
     $(document).ready(function () {
-        // 이벤트를 바인딩해서 input에 파일이 올라올때 위의 함수를 this context로 실행합니다.
+        // 썸네일 파일 업로드 시, 미리보기 기능
         $("#thumbnail").change(function(){
             readURL(this);
         });
     });
 
+    // 썸네일 선택 클릭 시, 파일 업로드 팝업 실행
     function upload_thumbnail() {
         $("#thumbnail").click();
     }
 
+    // 썸네일 파일 업로드 시, 미리보기 기능
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
             reader.onload = function (e) {
                 $('#thumbnail_section').attr('src', e.target.result);
             }
-
             reader.readAsDataURL(input.files[0]);
         }
     }
 
+    // 강의 등록, 수정 공통 함수
     function regist_modify_submit() {
         if ($("[id=f_category_id] :selected").val() =="") {
             alert("분류를 선택해주세요.");
@@ -113,6 +115,7 @@ if (isset($_GET['f_gubun'])) {
             return false;
         }
 
+        // 썸네일 파일
         $.urlParam = function(name){
             var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
             if (results == null){
@@ -146,14 +149,13 @@ if (isset($_GET['f_gubun'])) {
         <div class="nav-left-tit">
             <span>HRD ADMIN</span>
         </div>
-        <ul class="nav-left-lst">
-            <li class="on"><a href="#">전체</a></li>
-            <li><a href="#">어학 및 자격증</a></li>
-            <li><a href="#">공통역량</a></li>
-            <li><a href="#">일반직무</a></li>
-            <li><a href="#">산업직무</a></li>
-            <li><a href="#">수강후기</a></li>
-        </ul>
+<!--        <ul class="nav-left-lst">-->
+<!--            <li class="on"><a href="#">전체</a></li>-->
+<!--            <li><a href="#">어학 및 자격증</a></li>-->
+<!--            <li><a href="#">공통역량</a></li>-->
+<!--            <li><a href="#">일반직무</a></li>-->
+<!--            <li><a href="#">산업직무</a></li>-->
+<!--        </ul>-->
     </div>
 
     <div id="content" class="content">
@@ -163,11 +165,11 @@ if (isset($_GET['f_gubun'])) {
                 <span><i class="icon-home"><span>홈</span></i></span>
                 <span>관리자</span>
                 <?php
-                if ($_GET['f_gubun'] != 'modify') {
+                if ($_GET['f_gubun'] != 'modify') { // 강의 등록
                 ?>
                     <strong>강의 등록</strong>
                 <?php
-                } else {
+                } else { // 강의 수정
                 ?>
                     <strong>강의 수정</strong>
                 <?php
@@ -186,11 +188,11 @@ if (isset($_GET['f_gubun'])) {
 <!--        </ul>-->
 
         <?php
-        if ($_GET['f_gubun'] != 'modify') {
+        if ($_GET['f_gubun'] != 'modify') { // 강의 등록
         ?>
         <p class="mb15"><strong class="tc-brand fs16">강의 등록</strong></p>
         <?php
-        } else {
+        } else { // 강의 수정
         ?>
         <p class="mb15"><strong class="tc-brand fs16">강의 수정</strong></p>
         <?php
@@ -198,11 +200,11 @@ if (isset($_GET['f_gubun'])) {
         ?>
 
         <?php
-        if (!isset($_GET['f_gubun'])) {
+        if ($_GET['f_gubun'] != 'modify') { // 강의 등록
         ?>
         <form name="regist" id="regist" method="post" action="/admin/regist.php" enctype="multipart/form-data" >
         <?php
-        } else {
+        } else { // 강의 수정
         ?>
         <form name="regist" id="regist" method="post" action="/admin/modify.php?f_gubun=modify&f_num=<?php echo $f_num ?>" enctype="multipart/form-data" >
         <?php
@@ -226,12 +228,12 @@ if (isset($_GET['f_gubun'])) {
                         <select class="input-sel" style="width:160px" name="f_category_id" id="f_category_id">
                             <option value="">선택</option>
                         <?php
+                        // 강의 분류 가져오기
                         $sql = "SELECT * FROM CATEGORY";
                         $result_category = $conn->query($sql);
-                        $i = 1;
                         while ($row_category = $result_category->fetch_assoc()) {
                         ?>
-                            <option value="<?php echo $row_category['F_CATEGORY_ID']?>" <? if($_GET['f_category_id'] == $i++) { echo "selected"; } ?> ><?php echo $row_category['F_CATEGORY']?></option>
+                            <option value="<?php echo @$row_category['F_CATEGORY_ID']?>" <? if(@$row_category['F_CATEGORY_ID'] == @$_GET['f_category_id']) { echo "selected"; } ?> ><?php echo @$row_category['F_CATEGORY']?></option>
                         <?php
                         }
                         ?>
@@ -303,11 +305,11 @@ if (isset($_GET['f_gubun'])) {
                     <td>
                         <a href="javascript:void(0);" class="sample-lecture">
                             <?php
-                            if (isset($row_thumbnail)) {
+                            if (isset($row_thumbnail)) { // 강의 수정 시, 썸네일 정보 가져오기
                             ?>
                             <img src="./thumbnail/<?php echo @$row_thumbnail['F_THUMBNAIL_NAME_CRYPTO']; ?>" alt="" name="thumbnail_section" id="thumbnail_section" width="144" height="101" />
                             <?php
-                            } else {
+                            } else { // 강의 등록 시, 썸네일 기본 정보
                             ?>
                             <img src="http://via.placeholder.com/144x101" alt="" name="thumbnail_section" id="thumbnail_section" width="144" height="101" />
                             <?php
@@ -323,11 +325,11 @@ if (isset($_GET['f_gubun'])) {
             <div class="box-btn t-r">
                 <a href="javascript:history.back();" class="btn-m-gray">목록</a>
                 <?php
-                if (@$_GET['f_gubun'] != "modify") {
+                if (@$_GET['f_gubun'] != "modify") { // 강의 등록
                 ?>
                     <a href="javascript:void(0);" onclick="regist_modify_submit();" class="btn-m ml5">등록</a>
                 <?php
-                } else {
+                } else { // 강의 수정
                 ?>
                     <a href="#" class="btn-m ml5" onclick="regist_modify_submit();">수정</a>
                     <a href="/admin/modify.php?f_gubun=delete&f_num=<?php echo $f_num ?>" class="btn-m-dark">삭제</a>
