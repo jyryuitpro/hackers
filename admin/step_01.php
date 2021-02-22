@@ -7,8 +7,7 @@ session_start();
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
 
-// search.php에서 생성한 query string 게시글 URI에 추가 세팅
-// 관리자 페이지에서 직접적으로 영향받는 사항은 없으나 수강후기 뷰 페이지 하단 리스트 노출 테스트를 위해서 시도
+// query string 게시글 URI에 추가 세팅
 $data = array();
 
 if (isset($_GET['f_category_id'])) {
@@ -33,7 +32,7 @@ if ($query_string) {
     $query_string_add = '&' . $query_string;
 }
 
-// 페이징 시작
+// 페이징 생성 시작
 if (isset($_GET['page'])) { // $_GET['page']가 있는 경우
     $page = $_GET['page'];
 } else { // $_GET['page']가 없는 경우
@@ -81,7 +80,7 @@ if($page < 1 || ($allPage && $page > $allPage)) {
     echo '<script> alert("존재하지 않는 페이지입니다."); history.back(); </script>';
 }
 
-// 한번에 보여줄 페이지 번호
+// 한번에 보여줄 섹션 페이지 번호
 $oneSection = 3;
 // 현재 섹션 : 섹션 1) [1,2,3], 섹션 2) [4,5,6], 섹션 3) [7,8,9]
 $currentSection = ceil($page / $oneSection);
@@ -102,7 +101,8 @@ if ($currentSection == $allSection) {
 $prevPage = (($currentSection - 1) * $oneSection); // 이전 섹션으로 이동
 $nextPage = (($currentSection + 1) * $oneSection) - ($oneSection - 1); // 다음 섹션으로 이동
 
-$paging = '<ul>'; // 페이징을 저장할 변수
+// 페이징을 저장할 변수
+$paging = '<ul>';
 //첫 페이지가 아니라면 처음 섹션 버튼을 생성
 if($page != 1) {
     $paging .= '<a href="/admin/step_01.php?page=1'.$query_string_add.'"><i class="icon-first"><span class="hidden">첫 페이지</span></i></a>';
@@ -133,12 +133,15 @@ if($page != $allPage) {
     $paging .= '<a href="/admin/step_01.php?page=' . $allPage . $query_string_add. '"><i class="icon-last"><span class="hidden">마지막 페이지</span></i></a>';
 }
 
+// 페이징 생성 끝
 $paging .= '</ul>';
 
-$currentLimit = ($onePage * $page) - $onePage; //몇 번째의 글부터 가져오는지
+//몇 번째의 글부터 가져오는지 확인
+$currentLimit = ($onePage * $page) - $onePage;
 
-$sqlLimit = ' LIMIT ' . $currentLimit . ', ' . $onePage; //limit sql 구문
-$sql = "SELECT * FROM LECTURE ".$search." ORDER BY F_NUM DESC ". $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지)
+//limit sql 구문
+$sqlLimit = ' LIMIT ' . $currentLimit . ', ' . $onePage;
+$sql = "SELECT * FROM LECTURE ".$search." ORDER BY F_NUM DESC ". $sqlLimit;
 $result_normal = $conn->query($sql);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

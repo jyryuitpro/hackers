@@ -1,13 +1,20 @@
 <?php
 require_once("../database/dbconfig.php");
-error_reporting(E_ALL);
-ini_set("display_errors", 1);
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
 
-//array(3) {
-//    ["f_category_id"]=> string(0) ""
-//    ["f_search_detatil"]=> string(0) ""
-//    ["f_search_content"]=> string(0) ""
-//}
+// 수강후기 강의
+
+
+
+// array(3) { ["f_category_id"]=> string(3) "all" ["f_search_detatil"]=> string(9) "f_lecture" ["f_search_content"]=> string(0) "" }
+// array(3) { ["f_category_id"]=> string(3) "all" ["f_search_detatil"]=> string(12) "f_admin_name" ["f_search_content"]=> string(0) "" }
+
+// array(3) { ["f_category_id"]=> string(1) "1" ["f_search_detatil"]=> string(9) "f_lecture" ["f_search_content"]=> string(0) "" }
+// array(3) { ["f_category_id"]=> string(1) "1" ["f_search_detatil"]=> string(12) "f_admin_name" ["f_search_content"]=> string(0) "" }
+
+
+
 
 if (isset($_GET['f_category_id'])) {
     $f_category_id = $_GET['f_category_id'];

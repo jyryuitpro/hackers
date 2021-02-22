@@ -24,8 +24,8 @@ else
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Daum에디터 - 이미지 첨부</title>
-    <script src="daumeditor/js/popup.js" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" href="daumeditor/css/popup.css" type="text/css" charset="utf-8"/>
+    <script src="../../js/popup.js" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="../../css/popup.css" type="text/css" charset="utf-8"/>
     <script type="text/javascript">
         // <![CDATA[
 
