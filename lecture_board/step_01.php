@@ -213,7 +213,7 @@ $result_normal = $conn->query($sql);
                     </select>
                     <select class="input-sel" style="width:158px" name="f_search_detatil" id="f_search_detatil">
                         <option value="f_lecture" <? if(isset($_GET['f_lecture'])) { echo "selected"; } ?>>강의명</option>
-                        <option value="f_admin_name" <? if(isset($_GET['f_name'])) { echo "selected"; } ?>>작성자</option>
+                        <option value="f_name" <? if(isset($_GET['f_name'])) { echo "selected"; } ?>>작성자</option>
                     </select>
                     <input type="text" class="input-text" placeholder="상세조건 입력하세요." style="width:158px" name="f_search_content" id="f_search_content"\
                            value="<?php if (isset($_GET['f_lecture'])) echo $_GET['f_lecture']; if (isset($_GET['f_name'])) echo $_GET['f_name'];?>"/>

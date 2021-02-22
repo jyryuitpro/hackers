@@ -37,7 +37,7 @@ if ($query_string != "") {
     $query_string_add = $query_string;
 }
 
-var_dump($query_string_add);
+//var_dump($query_string_add);
 
 // 일반 게시글
 $sql = 'SELECT * FROM BOARD WHERE F_NUM = '. $f_num;
