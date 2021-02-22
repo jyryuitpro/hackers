@@ -71,7 +71,7 @@ session_start();
 
 			<div class="box-btn mt30">
 				<a href="/member/index.php?mode=login" class="btn-l">로그인하러 가기</a>
-				<a href="/member/index.php?mode=find_password" class="btn-l-line ml5">비밀번호 찾기</a>
+				<a href="/member/index.php?mode=find_pass" class="btn-l-line ml5">비밀번호 찾기</a>
 			</div>
 
 		</div>

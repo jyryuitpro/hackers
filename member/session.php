@@ -23,7 +23,6 @@ if(!$_POST['f_gubun']) {
     $row = $result->fetch_assoc();
 
     $exist = mysqli_num_rows($result);
-
     if ($exist > 0 && $_SESSION['verification_number'] == $_POST['verification_number']) {
         echo json_encode(array('res'=>'success'));
     } else {
@@ -36,13 +35,10 @@ if(!$_POST['f_gubun']) {
     $f_email = $_POST['f_email'];
 
     $sql = "SELECT F_NAME, F_ID FROM MEMBER WHERE F_NAME='{$f_name}' and F_BIRTHDAY='{$f_birthday}' and F_EMAIL='{$f_email}'";
-//    var_dump($sql);
-
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_row($result);
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
 
     $exist = mysqli_num_rows($result);
-
     if ($exist > 0 && $_SESSION['verification_number'] == $_POST['verification_number']) {
         echo json_encode(array('res'=>'success'));
     } else {
@@ -52,5 +48,5 @@ if(!$_POST['f_gubun']) {
 }
 
 /* If success */
-$_SESSION['find_name'] = $row[0];
-$_SESSION['find_id'] = $row[1];
+$_SESSION['find_name'] = $row['F_NAME'];
+$_SESSION['find_id'] = $row['F_ID'];

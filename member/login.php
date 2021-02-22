@@ -1,7 +1,7 @@
 <?php
 session_start();
 // 로그인 성공시 리퍼러를 활용한 페이지 리다이렉트 처리
-$_SESSION['HACKERS_MAIN'] = $_SERVER['HTTP_REFERER'];
+$_SESSION['HACKERS'] = $_SERVER['HTTP_REFERER'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
@@ -108,7 +108,7 @@ $_SESSION['HACKERS_MAIN'] = $_SERVER['HTTP_REFERER'];
 			</div>
 			
 			<div class="box-btn">
-				<a href="#" class="btn-m-gray">회원가입</a>
+				<a href="/member/index.php?mode=step_01" class="btn-m-gray">회원가입</a>
 				<a href="/member/index.php?mode=find_id" class="btn-m-gray">ID/PW 찾기</a>
 			</div>
 		</div>

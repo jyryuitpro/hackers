@@ -78,46 +78,44 @@ session_start();
 						</ul>
 						<div class="tab-best-con">
 							<ul class="tab-category">
-								<li class="on"><a href="#">근로자카드</a></li><!-- class="on" 활성화 -->
-								<li><a href="#">사업주지원</a></li>
-								<li><a href="#">일반</a></li>
+								<li class="on"><a href="#">일반</a></li>
 							</ul>
 							<div class="tab-category-con">
 								<ul class="list-best">
 									<li>
 										<a href="#">
-											<img src="http://www.champstudy.com/files/banner/imglib_files/banner/imglib/main_toeic_review.jpg" alt="" width="198" height="138"/>
-											<span class="txt">부자들이 모르는 35가지 보험과<br/>세금 케이스</span><!-- 두줄 말줄임 개발처리 -->
+											<img src="https://www.hackershrd.com/lms/data/file/B01/168431688_v1EldKBi_EC9DB8EAB68CEAB2BDEC98812C_EC9CA4EBA6ACEAB2BDEC98812C_EC82ACED9A8CECA081ECB185EC9E84_EB8BA4EAB099EC9DB4_EC9E98EC82ACEB8A94_EAB8B0EC9785.jpg" alt="" width="198" height="138"/>
+											<span class="txt">인권경영, 윤리경영, 사회적책임: 다같이 잘사는 기업</span><!-- 두줄 말줄임 개발처리 -->
 										</a>
 									</li>
 									<li>
 										<a href="#">
-											<img src="http://www.champstudy.com/files/banner/imglib_files/banner/imglib/main_toeic_review.jpg" alt="" width="198" height="138"/>
-											<span class="txt">부자들이 모르는 35가지 보험과<br/>세금 케이스</span>
+											<img src="https://www.hackershrd.com/lms/data/file/B01/168431694_Wk0XprBD_EBB88CEB9E9CEB939C_EAB080ECB998EBA5BC_EB8692EC9DB4EB8A94_ED98B8ED8594_ECA781EBACB4_EAB590EC9CA1.jpg" alt="" width="198" height="138"/>
+											<span class="txt">브랜드 가치를 높이는 호텔 직무 교육</span>
 										</a>
 									</li>
 									<li>
 										<a href="#">
-											<img src="http://www.champstudy.com/files/banner/imglib_files/banner/imglib/main_toeic_review.jpg" alt="" width="198" height="138"/>
-											<span class="txt">부자들이 모르는 35가지 보험과<br/>세금 케이스</span>
+											<img src="https://www.hackershrd.com/lms/data/file/B01/168431688_rYxysvMN_EAB8B0ED9A8DEC9790EC849C_ED8C90EBA7A4EAB98CECA78021_EC9DB4ECBBA4EBA8B8EC8AA4_EC8BA4EBACB4_EBB094EC9DB4EBB894.jpg" alt="" width="198" height="138"/>
+											<span class="txt">기획에서 판매까지! 이커머스 실무 바이블</span>
 										</a>
 									</li>
 									<li>
 										<a href="#">
-											<img src="http://www.champstudy.com/files/banner/imglib_files/banner/imglib/main_toeic_review.jpg" alt="" width="198" height="138"/>
-											<span class="txt">부자들이 모르는 35가지 보험과<br/>세금 케이스</span>
+											<img src="https://www.hackershrd.com/lms/data/file/B01/168431688_BSNDH5Tr_EC958CEC8FADEB8BACEC8FADEAB7BCEBA19CEAB8B0ECA480EBB295EC9984ECA084ECA095EBB3B5_EC82ACECA784EC8898ECA095.jpg" alt="" width="198" height="138"/>
+											<span class="txt">알쏭달쏭 근로기준법 완전정복</span>
 										</a>
 									</li>
 									<li>
 										<a href="#">
-											<img src="http://www.champstudy.com/files/banner/imglib_files/banner/imglib/main_toeic_review.jpg" alt="" width="198" height="138"/>
-											<span class="txt">부자들이 모르는 35가지 보험과<br/>세금 케이스</span>
+											<img src="https://www.hackershrd.com/lms/data/file/B01/168431688_pEGYANwV_EBA7A4EB8488EAB080_EC84B1EAB3BCEBA5BC_EBA78CEB93A0EB8BA421_ED95B5EC8BACEC9DB8EC9EAC_EBA7A4EB8488EBB0B1EC849C.jpg" alt="" width="198" height="138"/>
+											<span class="txt">매너가 성과를 만든다! 핵심인재 매너백서</span>
 										</a>
 									</li>
 									<li>
 										<a href="#">
-											<img src="http://www.champstudy.com/files/banner/imglib_files/banner/imglib/main_toeic_review.jpg" alt="" width="198" height="138"/>
-											<span class="txt">부자들이 모르는 35가지 보험과<br/>세금 케이스</span>
+											<img src="https://www.hackershrd.com/lms/data/file/B01/168431688_thYc8ubV_EC9AB0EBA6AC_EBB391EC9B90_ECB0A8EBB384ED9994_ECA084EB9EB521_EBB391EC9B90CSEC9D98_EBAAA8EB93A0_EAB283.jpg" alt="" width="198" height="138"/>
+											<span class="txt">우리 병원 차별화 전략! 병원CS의 모든 것</span>
 										</a>
 									</li>
 								</ul>
@@ -161,8 +159,22 @@ session_start();
 							<ul class="list-bbs">
 								<li>
 									<a href="#">
-										<span class="tc-brand"><strong>일반직무</strong></span>
-										<span class="sbj ellipsis_line">부자들이 모르는 35가지 보험 부자들이 모르는 35가지 보험</span>
+										<span class="tc-brand"><strong>영어</strong></span>
+										<span class="sbj ellipsis_line">누구나 쉽게 배우는 왕초보 영어 STEP1</span>
+										<em><i class="icon-new"><span class="hidden">new</span></i></em>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<span class="tc-brand"><strong>영어</strong></span>
+										<span class="sbj ellipsis_line">미생으로 배우는 비즈니스 영어 - 실무영어</span>
+										<em><i class="icon-new"><span class="hidden">new</span></i></em>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<span class="tc-brand"><strong>영어</strong></span>
+										<span class="sbj ellipsis_line">미생으로 배우는 비즈니스 영어 - 협상/설득/소통</span>
 										<em><i class="icon-new"><span class="hidden">new</span></i></em>
 									</a>
 								</li>
@@ -176,28 +188,14 @@ session_start();
 								<li>
 									<a href="#">
 										<span class="tc-brand"><strong>일반직무</strong></span>
-										<span class="sbj ellipsis_line">부자들이 모르는 35가지 보험 부자들이 모르는 35가지 보험</span>
+										<span class="sbj ellipsis_line">Biz Skill up! 조직관리를 위한 리더십 코칭</span>
 										<em><i class="icon-new"><span class="hidden">new</span></i></em>
 									</a>
 								</li>
 								<li>
 									<a href="#">
-										<span class="tc-brand"><strong>일반직무</strong></span>
-										<span class="sbj ellipsis_line">부자들이 모르는 35가지 보험 부자들이 모르는 35가지 보험</span>
-										<em><i class="icon-new"><span class="hidden">new</span></i></em>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<span class="tc-brand"><strong>일반직무</strong></span>
-										<span class="sbj ellipsis_line">부자들이 모르는 35가지 보험 부자들이 모르는 35가지 보험</span>
-										<em><i class="icon-new"><span class="hidden">new</span></i></em>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<span class="tc-brand"><strong>일반직무</strong></span>
-										<span class="sbj ellipsis_line">부자들이 모르는 35가지 보험 부자들이 모르는 35가지 보험</span>
+										<span class="tc-brand"><strong>업무관리</strong></span>
+										<span class="sbj ellipsis_line">Biz Skill up! 내 손으로 미래를 여는 프로젝트 관리</span>
 										<em><i class="icon-new"><span class="hidden">new</span></i></em>
 									</a>
 								</li>

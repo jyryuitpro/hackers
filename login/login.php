@@ -17,7 +17,10 @@ $exist = mysqli_num_rows($result);
 //var_dump($_SESSION['HACKERS_MAIN']);
 //var_dump($_SESSION['HACKERS_SIGNUP']);
 
-if ($_SESSION['HACKERS_MAIN'] == "http://test.hackers.com/" || $_SESSION['HACKERS_MAIN'] == "http://test.hackers.com/index.php" || $_SESSION['HACKERS_SIGNUP'] == "http://test.hackers.com/member/step_04.php"){
+if ($_SESSION['HACKERS'] == "http://test.hackers.com/"
+    || $_SESSION['HACKERS'] == "http://test.hackers.com/index.php"
+    || $_SESSION['HACKERS'] == "http://test.hackers.com/login/find_id_completed.php"
+    || $_SESSION['HACKERS'] == "http://test.hackers.com/member/step_04.php"){
     if ($exist > 0) {
         $_SESSION['f_name'] = $row['F_NAME'];
         $_SESSION['f_id'] = $f_id;
