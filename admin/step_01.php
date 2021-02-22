@@ -7,6 +7,8 @@ session_start();
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
 
+// search.php에서 생성한 query string 게시글 URI에 추가 세팅
+// 관리자 페이지에서 직접적으로 영향받는 사항은 없으나 수강후기 뷰 페이지 하단 리스트 노출 테스트를 위해서 시도
 $data = array();
 
 if (isset($_GET['f_category_id'])) {
@@ -15,6 +17,10 @@ if (isset($_GET['f_category_id'])) {
 
 if (isset($_GET['f_lecture'])) {
     $data["f_lecture"] = $_GET['f_lecture'];
+}
+
+if (isset($_GET['f_instructor'])) {
+    $data["f_instructor"] = $_GET['f_instructor'];
 }
 
 if (isset($_GET['f_admin_name'])) {
@@ -27,50 +33,64 @@ if ($query_string) {
     $query_string_add = '&' . $query_string;
 }
 
-// paging
-if (isset($_GET['page'])) {
+// 페이징 시작
+if (isset($_GET['page'])) { // $_GET['page']가 있는 경우
     $page = $_GET['page'];
-} else {
+} else { // $_GET['page']가 없는 경우
     $page = 1;
 }
 
-$search_category = 'WHERE 1=1 ';
+$search = 'WHERE 1=1 ';
 
+// search.php에서 생성한 query string으로 페이지에 보여줄 강의 리스트 검색조건 만들기 (SQL)
 if (isset($_GET['f_category_id']) && $_GET['f_category_id'] != "all") {
     $f_category_id = $_GET['f_category_id'];
-    $search_category .= "AND F_CATEGORY_ID = '$f_category_id'";
+    $search .= "AND F_CATEGORY_ID = '$f_category_id'";
 }
 
 if (isset($_GET['f_lecture'])) {
     $f_lecture = $_GET['f_lecture'];
-    $search_category .= "AND F_LECTURE = '$f_lecture'";
+    $search .= "AND F_LECTURE = '$f_lecture'";
+}
+
+if (isset($_GET['f_instructor'])) {
+    $f_instructor = $_GET['f_instructor'];
+    $search .= "AND F_INSTRUCTOR = '$f_instructor'";
 }
 
 if (isset($_GET['f_admin_name'])) {
     $f_admin_name = $_GET['f_admin_name'];
-    $search_category .= "AND F_ADMIN_NAME = '$f_admin_name'";
+    $search .= "AND F_ADMIN_NAME = '$f_admin_name'";
 }
 
-$sql = "SELECT count(*) as cnt FROM LECTURE ".$search_category." ORDER BY F_NUM DESC";
-
+// 페이징을 하기 위해서 등록된 전체 강의 갯수 가져오기
+$sql = "SELECT count(*) as cnt FROM LECTURE ".$search." ORDER BY F_NUM DESC";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 
-$allPost = $row['cnt']; //전체 게시글의 수
+//전체 강의 갯수
+$allPost = $row['cnt']; // 44
+// 한 페이지에 보여줄 게시글의 수
+$onePage = 5;
+// 전체 페이지의 수
+// ceil() : 소수점 아래의 숫자를 모두 버리고, 정수부에 1일 더해주는 함수
+$allPage = ceil($allPost / $onePage); // 9
 
-$onePage = 5; // 한 페이지에 보여줄 게시글의 수
-$allPage = ceil($allPost / $onePage); // 전체 페이지의 수
-
-if ($page < 1 || ($page > $allPage)) {
-    echo "존재하지 않는 페이지입니다.";
+// 페이징 에러
+if($page < 1 || ($allPage && $page > $allPage)) {
+    echo '<script> alert("존재하지 않는 페이지입니다."); history.back(); </script>';
 }
 
-$oneSection = 3; // 한번에 보여줄 총 페이지 개수
-$currentSection = ceil($page / $oneSection); // 현재 섹션
+// 한번에 보여줄 페이지 번호
+$oneSection = 3;
+// 현재 섹션 : 섹션 1) [1,2,3], 섹션 2) [4,5,6], 섹션 3) [7,8,9]
+$currentSection = ceil($page / $oneSection);
 
-$allSection = ceil($allPage / $oneSection); // 전체 섹션의 수
+// 전체 섹션의 수 : [1,2,3] [4,5,6] [7,8,9]
+$allSection = ceil($allPage / $oneSection); // 3
 
-$firstPage = ($currentSection * $oneSection) - ($oneSection - 1); //현재 섹션의 처음 페이지
+//현재 섹션의 처음 페이지 : 1, 4, 7
+$firstPage = ($currentSection * $oneSection) - ($oneSection - 1);
 
 if ($currentSection == $allSection) {
     $lastPage = $allPage; // 현재 섹션이 마지막 섹션이라면 $allPage가 마지막 페이지가 된다.
@@ -78,45 +98,47 @@ if ($currentSection == $allSection) {
     $lastPage = $currentSection * $oneSection; //현재 섹션의 마지막 페이지
 }
 
-$prevPage = (($currentSection - 1) * $oneSection); //이전 페이지, 11~20일 때 이전을 누르면 10 페이지로 이동.
-$nextPage = (($currentSection + 1) * $oneSection) - ($oneSection - 1); //다음 페이지, 11~20일 때 다음을 누르면 21 페이지로 이동.
+// 전체 섹션의 수 : [1,2,3] [4,5,6] [7,8,9]
+$prevPage = (($currentSection - 1) * $oneSection); // 이전 섹션으로 이동
+$nextPage = (($currentSection + 1) * $oneSection) - ($oneSection - 1); // 다음 섹션으로 이동
 
 $paging = '<ul>'; // 페이징을 저장할 변수
-//첫 페이지가 아니라면 처음 버튼을 생성
+//첫 페이지가 아니라면 처음 섹션 버튼을 생성
 if($page != 1) {
-    $paging .= '<a href="/admin/step_01.php?page=1'.$query_string_add.'"><i class="icon-first"><span class="hidden">첫페이지</span></i></a>';
+    $paging .= '<a href="/admin/step_01.php?page=1'.$query_string_add.'"><i class="icon-first"><span class="hidden">첫 페이지</span></i></a>';
 }
 
 //첫 섹션이 아니라면 이전 버튼을 생성
-//var_dump($currentSection);
 if($currentSection != 1) {
-    $paging .= '<a href="/admin/step_01.php?page=' . $prevPage . $query_string_add. '"><i class="icon-prev"><span class="hidden">이전페이지</span></i></a>';
+    $paging .= '<a href="/admin/step_01.php?page=' . $prevPage . $query_string_add. '"><i class="icon-prev"><span class="hidden">이전 섹션</span></i></a>';
 }
 
+// 페이지 번호 생성
 for($i = $firstPage; $i <= $lastPage; $i++) {
     if($i == $page) {
-        $paging .= '<a href="#" class="active">'.$i.'</a>';
+        // 현재 페이지
+        $paging .= '<a class="active">'.$i.'</a>';
     } else {
         $paging .= '<a href="/admin/step_01.php?page=' . $i .$query_string_add. '">' . $i . '</a>';
     }
 }
 
-//마지막 섹션이 아니라면 다음 버튼을 생성
+//마지막 섹션이 아니라면 다음 섹션 버튼을 생성
 if($currentSection != $allSection) {
-    $paging .= '<a href="/admin/step_01.php?page=' . $nextPage . $query_string_add. '"><i class="icon-next"><span class="hidden">다음페이지</span></i></a>';
+    $paging .= '<a href="/admin/step_01.php?page=' . $nextPage . $query_string_add. '"><i class="icon-next"><span class="hidden">다음 섹션</span></i></a>';
 }
 
-//마지막 페이지가 아니라면 끝 버튼을 생성
+//마지막 페이지가 아니라면 끝 섹션 버튼을 생성
 if($page != $allPage) {
-    $paging .= '<a href="/admin/step_01.php?page=' . $allPage . $query_string_add. '"><i class="icon-last"><span class="hidden">마지막페이지</span></i></a>';
+    $paging .= '<a href="/admin/step_01.php?page=' . $allPage . $query_string_add. '"><i class="icon-last"><span class="hidden">마지막 페이지</span></i></a>';
 }
 
 $paging .= '</ul>';
 
 $currentLimit = ($onePage * $page) - $onePage; //몇 번째의 글부터 가져오는지
-$sqlLimit = ' LIMIT ' . $currentLimit . ', ' . $onePage; //limit sql 구문
 
-$sql = "SELECT * FROM LECTURE ".$search_category." ORDER BY F_NUM DESC ". $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지)
+$sqlLimit = ' LIMIT ' . $currentLimit . ', ' . $onePage; //limit sql 구문
+$sql = "SELECT * FROM LECTURE ".$search." ORDER BY F_NUM DESC ". $sqlLimit; //원하는 개수만큼 가져온다. (0번째부터 20번째까지)
 $result_normal = $conn->query($sql);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -217,10 +239,11 @@ $result_normal = $conn->query($sql);
                     </select>
                     <select class="input-sel" style="width:158px" name="f_search_detatil" id="f_search_detatil">
                         <option value="f_lecture" <? if(isset($_GET['f_lecture'])) { echo "selected"; } ?>>강의명</option>
+                        <option value="f_instructor" <? if(isset($_GET['f_instructor'])) { echo "selected"; } ?>>강사명</option>
                         <option value="f_admin_name" <? if(isset($_GET['f_admin_name'])) { echo "selected"; } ?>>관리자</option>
                     </select>
                     <input type="text" class="input-text" placeholder="상세조건 입력하세요." style="width:345px" name="f_search_content" id="f_search_content"
-                           value="<?php if (isset($_GET['f_lecture'])) echo $_GET['f_lecture']; if (isset($_GET['f_admin_name'])) echo $_GET['f_admin_name'];?>"/>
+                           value="<?php if (isset($_GET['f_lecture'])) echo $_GET['f_lecture']; if (isset($_GET['f_instructor'])) echo $_GET['f_instructor']; if (isset($_GET['f_admin_name'])) echo $_GET['f_admin_name'];?>"/>
                     <button type="submit" class="btn-s-dark">검색</button>
                 </div>
             </div>
@@ -303,7 +326,7 @@ $result_normal = $conn->query($sql);
             if ($allPost != 0) {
                 echo $paging;
             } else {
-                echo '검색된 수강후기가 없습니다. 다른 검색조건으로 검색해주세요.';
+                echo '검색된 결과가 없습니다.';
             }
             ?>
         </div>
