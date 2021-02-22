@@ -40,14 +40,15 @@ $f_month = substr($row['F_BIRTHDAY'], 4, 2);
 $f_day = substr($row['F_BIRTHDAY'], 6);
 
 // 휴대폰번호
-$f_mobile_0 = substr($row['F_MOBILE'], 0, 3);
-$f_mobile_1 = substr($row['F_MOBILE'], 3, 4);
-$f_mobile_2 = substr($row['F_MOBILE'], 7);
+$f_mobile = $row['F_MOBILE'];
+$f_mobile_0 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$1", $row['F_MOBILE']);
+$f_mobile_1 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$2", $row['F_MOBILE']);
+$f_mobile_2 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$3", $row['F_MOBILE']);
 
 // 일반번호
-$f_tel_0 = substr($row['F_TEL'], 0, 3);
-$f_tel_1 = substr($row['F_TEL'], 3, 3);
-$f_tel_2 = substr($row['F_TEL'], 6);
+$f_tel_0 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$1", $row['F_TEL']);
+$f_tel_1 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$2", $row['F_TEL']);
+$f_tel_2 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$3", $row['F_TEL']);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -218,7 +219,7 @@ $f_tel_2 = substr($row['F_TEL'], 6);
 <!-- //skip nav -->
 
 <div id="wrap">
-    <?php include 'header.php'; ?>
+    <?php include '../include/header.php'; ?>
 <div id="container" class="container-full">
 	<div id="content" class="content">
 		<div class="inner">
@@ -246,11 +247,15 @@ $f_tel_2 = substr($row['F_TEL'], 6);
                         </tr>
                         <tr>
                             <th scope="col"><span class="icons">*</span>아이디</th>
-                            <td><input type="text" class="input-text" style="width:302px" name="f_id_old" id="f_id_old"/><input type="text" class="input-text" style="width:302px" name="f_id_new" id="f_id_new" value="<?php echo $row[1]; ?>" placeholder="영문자로 시작하는 4~15자의 영문소문자, 숫자"/><a href="javascript:void(0);" onclick="idDuplicationCheck();" class="btn-s-tin ml10">중복확인</a></td>
+                            <td>
+                                <input type="hidden" class="input-text" style="width:302px" name="f_id_old" id="f_id_old" value="<?php echo $row['F_ID']; ?>"/>
+                                <input type="text" class="input-text" style="width:302px" name="f_id_new" id="f_id_new" value="<?php echo $row['F_ID']; ?>" placeholder="영문자로 시작하는 4~15자의 영문소문자, 숫자"/>
+                                <a href="javascript:void(0);" onclick="idDuplicationCheck();" class="btn-s-tin ml10">중복확인</a>
+                            </td>
                         </tr>
                         <tr>
                             <th scope="col"><span class="icons">*</span>비밀번호</th>
-                            <td><input type="password" class="input-text password" style="width:302px" name="f_password_0" id="f_password_0" placeholder="8-15자의 영문자/숫자 혼합"/></td>
+                            <td><input type="password" class="input-text password" style="width:302px" name="f_password_0" id="f_password_0" placeholder="8-15자의 영문자/숫자 혼합"/> 비밀번호를 변경하실 경우만 새로 입력해주세요.</td>
                         </tr>
                         <tr>
                             <th scope="col"><span class="icons">*</span>비밀번호 확인</th>
@@ -259,7 +264,7 @@ $f_tel_2 = substr($row['F_TEL'], 6);
                         <tr>
                             <th scope="col"><span class="icons">*</span>이메일주소</th>
                             <td>
-                                <input type="text" class="input-text" style="width:302px" name="f_email" id="f_email"/>
+                                <input type="hidden" class="input-text" style="width:302px" name="f_email" id="f_email"/>
                                 <input type="text" class="input-text" style="width:138px" name="f_email_0" id="f_email_0" value="<?php echo $f_email_0 ?>"/> @ <input type="text" class="input-text" style="width:138px" name="f_email_1" id="f_email_1" value="<?php echo $f_email_1 ?>"/>
                                 <select class="input-sel email_sel" style="width:160px" name="email_sel" id="email_sel">
                                     <option value="1">직접입력</option>
@@ -274,7 +279,7 @@ $f_tel_2 = substr($row['F_TEL'], 6);
                         <tr>
                             <th scope="col"><span class="icons">*</span>휴대폰 번호</th>
                             <td>
-                                <input type="text" class="input-text" style="width:50px" name="f_mobile" id="f_mobile" value="<?php echo $f_mobile ?>" readonly />
+                                <input type="hidden" class="input-text" style="width:50px" name="f_mobile" id="f_mobile" value="<?php echo $f_mobile ?>" readonly />
                                 <input type="text" class="input-text" style="width:50px" name="f_mobile_0" id="f_mobile_0" value="<?php echo $f_mobile_0 ?>" readonly /> -
                                 <input type="text" class="input-text" style="width:50px" name="f_mobile_1" id="f_mobile_1" value="<?php echo $f_mobile_1 ?>" readonly /> -
                                 <input type="text" class="input-text" style="width:50px" name="f_mobile_2" id="f_mobile_2" value="<?php echo $f_mobile_2 ?>" readonly />
@@ -283,7 +288,7 @@ $f_tel_2 = substr($row['F_TEL'], 6);
                         <tr>
                             <th scope="col"><span class="icons"></span>일반전화 번호</th>
                             <td>
-                                <input type="text" class="input-text" style="width:88px" name="f_tel" id="f_tel" />
+                                <input type="hidden" class="input-text" style="width:88px" name="f_tel" id="f_tel" />
                                 <input type="text" class="input-text" style="width:88px" name="f_tel_0" id="f_tel_0" value="<?php echo $f_tel_0 ?>" /> -
                                 <input type="text" class="input-text" style="width:88px" name="f_tel_1" id="f_tel_1" value="<?php echo $f_tel_1 ?>" /> -
                                 <input type="text" class="input-text" style="width:88px" name="f_tel_2" id="f_tel_2" value="<?php echo $f_tel_2 ?>" />
@@ -346,7 +351,7 @@ $f_tel_2 = substr($row['F_TEL'], 6);
 		</div>
 	</div>
 </div>
-    <?php include 'footer.php'; ?>
+    <?php include '../include/footer.php'; ?>
 </div>
 </body>
 </html>
