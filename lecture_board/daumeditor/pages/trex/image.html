@@ -39,15 +39,21 @@
 </script>
 </head>
 <body onload="initUploader();">
+
 <div class="wrapper">
 	<div class="header">
 		<h1>사진 첨부</h1>
-	</div>	
+	</div>
+
 	<div class="body">
 		<dl class="alert">
-		    <dt>사진 첨부 확인</dt>
-		    <dd>
-		    	확인을 누르시면 임시 데이터가 사진첨부 됩니다.<br /> 
+			<dt>사진 첨부 확인</dt>
+			<form method = "post" action = "/lecture_board/uploader.php" name="form1" id="form1" enctype="multipart/form-data">
+				<input type="file" name="upload_file" id="upload_file">
+				<input type="submit" value="전송">
+			</form>
+			<dd>
+				확인을 누르시면 임시 데이터가 사진첨부 됩니다.<br />
 				인터페이스는 소스를 확인해주세요.
 			</dd>
 		</dl>
@@ -60,5 +66,6 @@
 		</ul>
 	</div>
 </div>
+
 </body>
 </html>

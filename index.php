@@ -133,15 +133,15 @@ session_start();
 							<h3 class="main-tit-h3">근로자카드 학사일정</h3>
 						</div>
 						<dl>
-							<dt><strong><em>D-07</em></strong> 2017년 7월 1기 모집</dt>
+							<dt><strong><em>START</em></strong> 2021년 2월 1기</dt>
 							<dd>
 								<p>
 									<strong><i class="icon-receipt"></i>접수기간</strong>
-									<span>09/07(목)까지</span>
+									<span>02/12(금)까지</span>
 								</p>
 								<p>
 									<strong><i class="icon-learning"></i>학습기간</strong>
-									<span>09/07(목)~09/08(금)</span>
+									<span>02/15(월)~02/26(금)</span>
 								</p>
 							</dd>
 						</dl>

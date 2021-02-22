@@ -2,10 +2,14 @@
 require_once("../database/dbconfig.php");
 //error_reporting(E_ALL);
 //ini_set("display_errors", 1);
-
+session_start();
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
 $f_category_id = $_GET['f_category_id'];
+
+var_dump($f_name);
+var_dump($f_id);
+var_dump($f_category_id);
 
 if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
     $f_num = $_GET['f_num'];
@@ -728,6 +732,11 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
             attachbox: {
                 show: true,
                 confirmForDeleteAll: true
+            },
+            attacher: {
+                file: {
+                    boxonly: true
+                }
             }
         },
         size: {
@@ -796,7 +805,7 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
             // existStage는 현재 본문에 존재하는지 여부
             if (images[i].existStage) {
                 // data는 팝업에서 execAttach 등을 통해 넘긴 데이터
-                alert('attachment information - image[' + i + '] \r\n' + JSON.stringify(images[i].data));
+                // alert('attachment information - image[' + i + '] \r\n' + JSON.stringify(images[i].data));
                 input = document.createElement('input');
                 input.type = 'hidden';
                 input.name = 'attach_image';
@@ -805,7 +814,7 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
             }
         }
 
-        var files = editor.getAttachments('file');
+        var files = editor.getAttachments('file', true);
         for (i = 0; i < files.length; i++) {
             input = document.createElement('input');
             input.type = 'hidden';
