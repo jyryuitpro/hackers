@@ -1,8 +1,9 @@
 <?php
-session_start();
-$conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
+require_once("../database/dbconfig.php");
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
 
-//var_dump($_POST['f_id_new']);
+session_start();
 
 // UPDATE WHERE 아이디
 $f_id = $_SESSION['f_id'];
@@ -18,9 +19,9 @@ $f_address_detail = $_POST['f_address_detail'];
 $f_mobile_agree = $_POST['radio'];
 $f_email_agree = $_POST['radio2'];
 
-$sql = "UPDATE MEMBER SET F_ID = '$f_id_new', F_EMAIL = '$f_email', F_MOBILE = '$f_mobile', F_TEL = '$f_tel' ";
-$sql .= ", F_ZIPCODE = '$f_zipcode', F_ADDRESS = '$f_address', F_ADDRESS_DETAIL = '$f_address_detail' ";
-$sql .= ", F_MOBILE_AGREE = '$f_mobile_agree', F_EMAIL_AGREE = '$f_email_agree' ";
+$sql = "UPDATE MEMBER SET F_ID = '$f_id_new', F_EMAIL = '$f_email', F_MOBILE = '$f_mobile', F_TEL = '$f_tel', ";
+$sql .= "F_ZIPCODE = '$f_zipcode', F_ADDRESS = '$f_address', F_ADDRESS_DETAIL = '$f_address_detail', ";
+$sql .= "F_MOBILE_AGREE = '$f_mobile_agree', F_EMAIL_AGREE = '$f_email_agree' ";
 
 // 변경할 비밀번호가 있는 경우
 if ($_POST['f_password_0']) {
@@ -30,7 +31,7 @@ if ($_POST['f_password_0']) {
 
 $sql .= "WHERE F_ID = '$f_id'";
 
-$result = mysqli_query($conn, $sql);
+$result = $conn->query($sql);
 
 if($result){
     echo "<script language='javascript'>";

@@ -1,9 +1,12 @@
 <?php
+require_once("../database/dbconfig.php");
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
+
 $f_mobile = $_POST['f_mobile'];
-$conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
 
 $sql = "SELECT * FROM MEMBER WHERE F_MOBILE='{$f_mobile}'";
-$result = mysqli_query($conn, $sql);
+$result = $conn->query($sql);
 $exist = mysqli_num_rows($result);
 if ($exist > 0) {
     $row = mysqli_fetch_row($result);

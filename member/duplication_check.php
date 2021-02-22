@@ -1,10 +1,11 @@
 <?php
-//$conn = mysqli_connect('192.168.56.108', 'root', '', 'hackers');
-$conn = mysqli_connect('localhost:3307', 'root', 'root', 'hackers');
+require_once("../database/dbconfig.php");
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
 
 $f_id = $_POST['f_id'];
 $sql = "SELECT * FROM MEMBER WHERE F_ID='{$f_id}'";
-$result = mysqli_query($conn, $sql);
+$result = $conn->query($sql);
 $exist = mysqli_num_rows($result);
 
 if ($exist > 0) {

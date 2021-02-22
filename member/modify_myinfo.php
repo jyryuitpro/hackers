@@ -1,36 +1,53 @@
 <?php
+require_once("../database/dbconfig.php");
+//error_reporting(E_ALL);
+//ini_set("display_errors", 1);
+
 session_start();
-$conn = mysqli_connect('192.168.56.108', 'root', '', hackers);
-
-//var_dump($_SESSION['f_id']);
-
 $f_id = $_SESSION['f_id'];
 
-$sql = "SELECT * FROM MEMBER WHERE F_ID='{$f_id}'";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_row($result);
-// var_dump($row); // array(4) { [0]=> string(9) "류지영" [1]=> string(8) "19891107" [2]=> string(1) "M" [3]=> string(11) "01093789025" }
+$sql = "SELECT * FROM MEMBER WHERE F_ID='$f_id'";
+$result = $conn->query($sql);
+$row = $result->fetch_assoc();
 
-// email
-$f_email = explode('@', $row[3]);
-//var_dump($row[10]);
+//var_dump($row);
+
+// array(14) {
+// ["F_NUM"]=> string(1) "1"
+// ["F_NAME"]=> string(9) "류지영" -- 이름
+// ["F_ID"]=> string(12) "jyryujiyoung" -- 아이디
+// ["F_PASSWORD"]=> string(44) "ickxvlUf3OS5dndtY1SOl5H5j0Xp/VMRqVYu9AIsI2s=" -- 비밀번호
+// ["F_EMAIL"]=> string(24) "jy.ryu.jiyoung@gmail.com" -- 이메일
+// ["F_MOBILE"]=> string(11) "01093789025" -- 휴대폰번호
+// ["F_TEL"]=> string(10) "0312613227" -- 일반번호
+// ["F_ZIPCODE"]=> string(5) "16873" -- 우편번호
+// ["F_ADDRESS"]=> string(67) "경기 용인시 수지구 대지로 64 (도담마을 롯데캐슬)" -- 주소1
+// ["F_ADDRESS_DETAIL"]=> string(14) "304동 1001호" -- 주소2
+// ["F_MOBILE_AGREE"]=> string(1) "Y" -- SMS수신
+// ["F_EMAIL_AGREE"]=> string(1) "Y" -- 이메일수신
+// ["F_BIRTHDAY"]=> string(8) "19891107" -- 생년월일
+// ["F_AUTHORITY"]=> string(1) "0" -- 권한
+// }
+
+// 이메일
+$f_email = explode('@', $row['F_EMAIL']);
 $f_email_0 = $f_email[0];
 $f_email_1 = $f_email[1];
 
-// 19891107
-$f_year = substr($row[1], 0, 4);
-$f_month = substr($row[1], 4, 2);
-$f_day = substr($row[1], 6);
+// 생년월일
+$f_year = substr($row['F_BIRTHDAY'], 0, 4);
+$f_month = substr($row['F_BIRTHDAY'], 4, 2);
+$f_day = substr($row['F_BIRTHDAY'], 6);
 
-// mobile
-$f_mobile_0 = substr($row[4], 0, 3);
-$f_mobile_1 = substr($row[4], 3, 4);
-$f_mobile_2 = substr($row[4], 7);
+// 휴대폰번호
+$f_mobile_0 = substr($row['F_MOBILE'], 0, 3);
+$f_mobile_1 = substr($row['F_MOBILE'], 3, 4);
+$f_mobile_2 = substr($row['F_MOBILE'], 7);
 
-// tel
-$f_tel_0 = substr($row[5], 0, 3);
-$f_tel_1 = substr($row[5], 3, 3);
-$f_tel_2 = substr($row[5], 6);
+// 일반번호
+$f_tel_0 = substr($row['F_TEL'], 0, 3);
+$f_tel_1 = substr($row['F_TEL'], 3, 3);
+$f_tel_2 = substr($row['F_TEL'], 6);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -225,7 +242,7 @@ $f_tel_2 = substr($row[5], 6);
                         <tbody>
                         <tr>
                             <th scope="col"><span class="icons">*</span>이름</th>
-                            <td><?php echo $row[0]; ?></td>
+                            <td><?php echo $row['F_NAME']; ?></td>
                         </tr>
                         <tr>
                             <th scope="col"><span class="icons">*</span>아이디</th>
@@ -276,13 +293,13 @@ $f_tel_2 = substr($row[5], 6);
                             <th scope="col"><span class="icons">*</span>주소</th>
                             <td>
                                 <p >
-                                    <label>우편번호 <input type="text" class="input-text ml5" style="width:242px" name="f_zipcode" id="f_zipcode" value="<?php echo $row[6]; ?>" readonly /></label><a href="#" onclick="open_zipcode_popup();" class="btn-s-tin ml10">주소찾기</a>
+                                    <label>우편번호 <input type="text" class="input-text ml5" style="width:242px" name="f_zipcode" id="f_zipcode" value="<?php echo $row['F_ZIPCODE']; ?>" readonly /></label><a href="#" onclick="open_zipcode_popup();" class="btn-s-tin ml10">주소찾기</a>
                                 </p>
                                 <p class="mt10">
-                                    <label>기본주소 <input type="text" class="input-text ml5" style="width:719px" name="f_address" id="f_address" value="<?php echo $row[7]; ?>" readonly /></label>
+                                    <label>기본주소 <input type="text" class="input-text ml5" style="width:719px" name="f_address" id="f_address" value="<?php echo $row['F_ADDRESS']; ?>" readonly /></label>
                                 </p>
                                 <p class="mt10">
-                                    <label>상세주소 <input type="text" class="input-text ml5" style="width:719px" name="f_address_detail" id="f_address_detail" value="<?php echo $row[8]; ?>"/></label>
+                                    <label>상세주소 <input type="text" class="input-text ml5" style="width:719px" name="f_address_detail" id="f_address_detail" value="<?php echo $row['F_ADDRESS_DETAIL']; ?>"/></label>
                                 </p>
                             </td>
                         </tr>
@@ -291,11 +308,11 @@ $f_tel_2 = substr($row[5], 6);
                             <td>
                                 <div class="box-input">
                                     <label class="input-sp">
-                                        <input type="radio" name="radio" value="Y" id="f_mobile_agree_y" <?php if ($row[9] == 'Y') echo "checked"?>/>
+                                        <input type="radio" name="radio" value="Y" id="f_mobile_agree_y" <?php if ($row['F_MOBILE_AGREE'] == 'Y') echo "checked"?>/>
                                         <span class="input-txt">수신함</span>
                                     </label>
                                     <label class="input-sp">
-                                        <input type="radio" name="radio" value="N" id="f_mobile_agree_n" <?php if ($row[9] == 'N') echo "checked"?>/>
+                                        <input type="radio" name="radio" value="N" id="f_mobile_agree_n" <?php if ($row['F_MOBILE_AGREE'] == 'N') echo "checked"?>/>
                                         <span class="input-txt">미수신</span>
                                     </label>
                                 </div>
@@ -307,11 +324,11 @@ $f_tel_2 = substr($row[5], 6);
                             <td>
                                 <div class="box-input">
                                     <label class="input-sp">
-                                        <input type="radio" name="radio2" id="f_email_agree_y" value="Y" <?php if ($row[10] == 'Y') echo "checked"?>/>
+                                        <input type="radio" name="radio2" id="f_email_agree_y" value="Y" <?php if ($row['F_EMAIL_AGREE'] == 'Y') echo "checked"?>/>
                                         <span class="input-txt">수신함</span>
                                     </label>
                                     <label class="input-sp">
-                                        <input type="radio" name="radio2" id="f_email_agree_n" value="N" <?php if ($row[10] == 'N') echo "checked"?>/>
+                                        <input type="radio" name="radio2" id="f_email_agree_n" value="N" <?php if ($row['F_EMAIL_AGREE'] == 'N') echo "checked"?>/>
                                         <span class="input-txt">미수신</span>
                                     </label>
                                 </div>

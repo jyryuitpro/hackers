@@ -19,8 +19,8 @@ if(!$_POST['f_gubun']) {
     $f_mobile = $_POST['f_mobile'];
 
     $sql = "SELECT F_NAME, F_ID FROM MEMBER WHERE F_NAME='{$f_name}' and F_BIRTHDAY='{$f_birthday}' and F_MOBILE='{$f_mobile}'";
-    $result = mysqli_query($conn, $sql);
-    $row = mysqli_fetch_row($result);
+    $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
 
     $exist = mysqli_num_rows($result);
 

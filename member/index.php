@@ -47,6 +47,7 @@ if ($_GET['mode'] == "find_pass_completed") {
     Header("Location: ../login/find_password_completed.php");
 }
 
+// 내정보수정
 if ($_GET['mode'] == "modify") {
     Header("Location: /member/modify_myinfo.php");
 }

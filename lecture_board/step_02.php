@@ -7,9 +7,9 @@ $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
 $f_category_id = $_GET['f_category_id'];
 
-var_dump($f_name);
-var_dump($f_id);
-var_dump($f_category_id);
+//var_dump($f_name);
+//var_dump($f_id);
+//var_dump($f_category_id);
 
 if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
     $f_num = $_GET['f_num'];
