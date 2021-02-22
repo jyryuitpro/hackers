@@ -14,13 +14,16 @@ ini_set("display_errors", 1);
 //                            }
 //        }
 
-//$subject = $_POST['subject'];
 $tmpfilename = $_FILES['upload_file']['tmp_name'];
-$filename = $_FILES['upload_file']['name'];
+// 첨부파일 확장자 가져오기
+$ext = substr($_FILES['upload_file']['name'], strrpos($_FILES['upload_file']['name'], '.') + 1);
+
+// 저장될 첨부파일 파일명 생성
+$filename = md5(microtime()) . '.' . $ext;
 $filetype = $_FILES['upload_file']['type'];
 $filesize = $_FILES['upload_file']['size'];
-$destination = "./attachment/" . $filename;
-$fileurl = "./attachment/" . $filename;
+$destination = "./attachment_file/" . $filename;
+$fileurl = "./attachment_file/" . $filename;
 move_uploaded_file($tmpfilename, $destination);
 //write_into_db_filemeta($filename, $destination, $filesize, $filetype, $fileurl);
 //업로드한 이름과 파일의 사이즈나 mime / type들을 읽어서 DB에 저장하는 사용자 함수

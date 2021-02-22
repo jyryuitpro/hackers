@@ -112,7 +112,14 @@ $result_normal = $conn->query($sql);
                                     <?php
                                 }
                                 ?>
-							</span>
+							</span><br><br>
+                            <?php
+                            if ($row['F_ATTACH_FILE'] != ""){
+                            ?>
+                                <span style="cursor:pointer; cursor:hand;" onclick='location.href="/lecture_board/attachment_file_download.php?f_attach_file=<?php echo $row['F_ATTACH_FILE'] ?>"' class="tc-brand" > 첨부파일 다운로드</span>
+                            <?php
+                            }
+                            ?>
 						</div>
                         <?php echo $row['F_CONTENTS'] ?>
 					</td>
@@ -141,7 +148,7 @@ $result_normal = $conn->query($sql);
 					<td>
 						<a href="#" class="sample-lecture">
 							<img src="../admin/thumbnail/<?php echo $row_lecture['F_THUMBNAIL_NAME_CRYPTO'] ?>" alt="" width="144" height="101" />
-							<span onclick='location.href="/admin/thumbnail_download.php?f_thumbnail_name_crypto=<?php echo $row_lecture['F_THUMBNAIL_NAME_CRYPTO'] ?>"' class="tc-brand" >첨부파일 다운로드</span>
+							<span onclick='location.href="/admin/thumbnail_download.php?f_thumbnail_name_crypto=<?php echo $row_lecture['F_THUMBNAIL_NAME_CRYPTO'] ?>"' class="tc-brand" >썸네일 다운로드</span>
 						</a>
 					</td>
 					<td class="lecture-txt">
