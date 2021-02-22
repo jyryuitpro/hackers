@@ -1,3 +1,8 @@
+<?php
+session_start();
+// 로그인 성공시 리퍼러를 활용한 페이지 리다이렉트 처리
+$_SESSION['HACKERS_SIGNUP'] = $_SERVER['HTTP_REFERER'];
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
 <!--[if (IE 7)]><html class="no-js ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko"><![endif]-->

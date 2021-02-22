@@ -1,3 +1,8 @@
+<?php
+session_start();
+// 로그인 성공시 리퍼러를 활용한 페이지 리다이렉트 처리
+$_SESSION['HACKERS_MAIN'] = $_SERVER['HTTP_REFERER'];
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
 <!--[if (IE 7)]><html class="no-js ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko"><![endif]-->
@@ -63,6 +68,8 @@
                     alert("비밀번호를 확인해주세요.");
                 } else if (data.res == "fail") {
                     alert("아이디와 비밀번호를 확인해주세요.");
+                } else if (data.res == "wrong_path") { // 로그인 성공시 리퍼러를 활용한 페이지 리다이렉트 처리
+                    alert("잘못된 경로 접근입니다. 확인해주세요.");
                 }
             },
             error:function () {
