@@ -56,7 +56,7 @@ session_start();
 			</div>
 
 			<ul class="tab-list">
-				<li class="on"><a href="/member/index.php?mode=id">아이디 찾기</a></li>
+				<li class="on"><a href="/member/index.php?mode=find_id">아이디 찾기</a></li>
 				<li><a href="/member/index.php?mode=find_pass">비밀번호 찾기</a></li>
 			</ul>
 

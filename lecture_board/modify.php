@@ -73,16 +73,18 @@ if (isset($_POST['f_gubun']) && $_POST['f_gubun'] == 'modify') {
         $result = $conn->query($sql);
         $result = $result->fetch_assoc();
 
-        $f_attach_file_crypto_ori = $result['F_ATTACH_FILE_CRYPTO'];
-        $attachment_file_dir = "./attachment_file/";
-        $attachment_file_path = $attachment_file_dir.$f_attach_file_crypto_ori;
+        if ($result['F_ATTACH_FILE_CRYPTO'] != "") {
+            $f_attach_file_crypto_ori = $result['F_ATTACH_FILE_CRYPTO'];
+            $attachment_file_dir = "./attachment_file/";
+            $attachment_file_path = $attachment_file_dir.$f_attach_file_crypto_ori;
 
-        $result_unlink = unlink($attachment_file_path);
+            $result_unlink = unlink($attachment_file_path);
 
-        // 첨부파일 삭제 실패
-        if(!$result_unlink){
-            echo '<script>alert("썸네일 파일 삭제 실패했습니다."); history.back(); </script>';
-            return false;
+            // 첨부파일 삭제 실패
+            if(!$result_unlink){
+                echo '<script>alert("썸네일 파일 삭제 실패했습니다."); history.back(); </script>';
+                return false;
+            }
         }
 
         $sql = "UPDATE BOARD SET F_CATEGORY = '$f_category', F_LECTURE = '$f_lecture', F_TITLE = '$f_title', F_GRADE = '$f_grade', F_CONTENTS = '$f_contents', ";

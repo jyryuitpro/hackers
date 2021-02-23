@@ -168,7 +168,7 @@ $_SESSION['verification_number'] = 123456;
             const f_birthday = document.getElementById('f_birthday').value;
             const f_email = document.getElementById("f_email").value
             $.ajax({
-                url: "/member/session.php",
+                url: "/member/certification.php",
                 dataType: "json",
                 data: {'verification_number': verification_number, 'f_email': f_email, 'f_gubun': f_gubun, 'f_name': f_name, 'f_birthday': f_birthday},
                 type: "POST",
@@ -314,10 +314,11 @@ $_SESSION['verification_number'] = 123456;
                         <tr id="E">
                             <th scope="col">이메일주소</th>
                             <td>
-                                <input type="text" class="input-text" style="width:100px" name="f_email" id="f_email"/>
+                                <input type="hidden" class="input-text" style="width:100px" name="f_email" id="f_email"/>
                                 <input type="text" class="input-text" style="width:138px" name="f_email_0" id="f_email_0"/> @ <input type="text" class="input-text" style="width:138px" name="f_email_1" id="f_email_1"/>
                                 <select class="input-sel email_sel" style="width:160px" name="email_sel" id="email_sel">
                                     <option value="1">직접입력</option>
+                                    <option value="hackers.com">hackers.com</option>
                                     <option value="gmail.com">gmail.com</option>
                                     <option value="naver.com">naver.com</option>
                                     <option value="daum.net">daum.net</option>

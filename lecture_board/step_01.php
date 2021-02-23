@@ -67,7 +67,7 @@ $row = $result->fetch_assoc();
 //전체 수강후기 갯수
 $allPost = $row['cnt']; // 45
 // 한 페이지에 보여줄 게시글의 수
-$onePage = 3;
+$onePage = 20;
 
 // 전체 페이지의 수
 // ceil() : 소수점 아래의 숫자를 모두 버리고, 정수부에 1일 더해주는 함수
