@@ -25,4 +25,9 @@ if ($_GET['mode'] == "view") {
     Header("Location: /admin/step_02.php?f_gubun=modify&f_category_id=".$f_category_id."&f_num=".$f_num);
 }
 
+// 관리자2 step_03 / step_04
+if ($_GET['mode'] == "member") {
+    Header("Location: /admin/step_03.php");
+}
+
 

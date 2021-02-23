@@ -236,6 +236,12 @@
             }
         }
     }
+    window.onpageshow = function (event) {
+        if (event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            alert("회원가입이 완료되었습니다. 메인페이지로 이동합니다.");
+            window.location.href = 'http://test.hackers.com/';
+        }
+    }
 </script>
 </head><body>
 <!-- skip nav -->
@@ -337,7 +343,7 @@
                                     <input type="hidden" class="input-text" style="width:50px" name="f_mobile" id="f_mobile" value="<?php echo $f_mobile ?>" readonly />
                                     <input type="text" class="input-text" style="width:50px" name="f_mobile_0" id="f_mobile_0" value="<?php echo $f_mobile_0 ?>" readonly /> -
                                     <input type="text" class="input-text" style="width:50px" name="f_mobile_1" id="f_mobile_1" value="<?php echo $f_mobile_1 ?>" readonly /> -
-                                    <input type="text" class="input-text" style="width:50px" name="f_mobile_2" id="f_mobile_2" value="<?php echo $f_mobile_2 ?>" readonly />
+                                    <input type="text" class="input-text" style="width:50px" name="f_mobile_2" id="f_mobile_2" value="<?php echo $f_mobile_2 ?>" readonly /> 인증용으로 사용된 정보는 수정이 불가합니다.
                                 </td>
                             </tr>
                             <tr>

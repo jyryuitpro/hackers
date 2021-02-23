@@ -18,10 +18,7 @@ $exist = mysqli_num_rows($result);
 //var_dump($_SESSION['HACKERS_SIGNUP']);
 
 // 로그인 성공시 리퍼러를 활용한 페이지 리다이렉트 처리
-if ($_SESSION['HACKERS'] == "http://test.hackers.com/"
-    || $_SESSION['HACKERS'] == "http://test.hackers.com/index.php"
-    || $_SESSION['HACKERS'] == "http://test.hackers.com/login/find_id_completed.php"
-    || $_SESSION['HACKERS'] == "http://test.hackers.com/member/step_04.php"){
+if (substr($_SESSION['HACKERS'],0, 23) == "http://test.hackers.com"){
     if ($exist > 0) {
         $_SESSION['f_name'] = $row['F_NAME'];
         $_SESSION['f_id'] = $f_id;

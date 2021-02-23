@@ -47,19 +47,22 @@ if (isset($_GET['f_category_id']) && $_GET['f_category_id'] != "all") {
     $search .= "AND F_CATEGORY_ID = '$f_category_id'";
 }
 
+// LIKE 검색
 if (isset($_GET['f_lecture'])) {
     $f_lecture = $_GET['f_lecture'];
-    $search .= "AND F_LECTURE = '$f_lecture'";
+    $search .= "AND F_LECTURE LIKE '%$f_lecture%'";
 }
 
+// LIKE 검색
 if (isset($_GET['f_instructor'])) {
     $f_instructor = $_GET['f_instructor'];
-    $search .= "AND F_INSTRUCTOR = '$f_instructor'";
+    $search .= "AND F_INSTRUCTOR LIKE '%$f_instructor%'";
 }
 
+// LIKE 검색
 if (isset($_GET['f_admin_name'])) {
     $f_admin_name = $_GET['f_admin_name'];
-    $search .= "AND F_ADMIN_NAME = '$f_admin_name'";
+    $search .= "AND F_ADMIN_NAME LIKE '%$f_admin_name%'";
 }
 
 // 페이징을 하기 위해서 등록된 전체 강의 갯수 가져오기

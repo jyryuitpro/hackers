@@ -3,6 +3,8 @@ session_start();
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
 $f_authority = $_SESSION['f_authority'];
+// 로그인 성공시 리퍼러를 활용한 페이지 리다이렉트 처리
+$_SESSION['HACKERS'] = $_SERVER['HTTP_REFERER'];
 ?>
 <div id="header" class="header">
     <div class="nav-section">
@@ -118,6 +120,7 @@ $f_authority = $_SESSION['f_authority'];
                     if ($_SESSION['f_authority'] == '0') {
                     ?>
                         <a href="/admin/index.php?mode=list"><img src="/admin/image/btn_hackershrd_inconve.png"> 관리자</a>
+<!--                        <a href="/admin/index.php?mode=member"><img src="/admin/image/btn_hackershrd_inconve.png"> 관리자</a>-->
                     <?php
                     }
                     ?>

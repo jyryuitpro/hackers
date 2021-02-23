@@ -9,6 +9,16 @@ $f_id = $_SESSION['f_id']; // 관리자 아이디
 $f_gubun = $_GET['f_gubun']; // 강의 등록, 수정 구분 값
 $f_num = $_GET['f_num']; // 강의 등록 번호
 
+$data = array();
+
+if (isset($_GET['f_category_id'])) {
+    $data["f_category_id"] = $_GET['f_category_id'];
+}
+
+if (isset($_GET['f_num'])) {
+    $data["f_num"] = $_GET['f_num'];
+}
+
 // 강의 수정 시, DB에 저장된 강의, 썸네일 정보 가져오기
 if ($_GET['f_gubun'] == "modify") {
 
@@ -128,6 +138,7 @@ if ($_GET['f_gubun'] == "modify") {
         var f_gubun = $.urlParam('f_gubun');
 
         var path = document.getElementById("thumbnail").value;
+        // 강의 최초 등록인 경우, 썸네일 파일을 반드시 선택해야함
         if(path == "" && f_gubun != "modify") {
             alert("썸네일 파일을 선택해 주세요.");
             return false;
@@ -318,6 +329,7 @@ if ($_GET['f_gubun'] == "modify") {
                             <input type="file" name="thumbnail" id="thumbnail" style="display: none"/>
                             <span class="tc-brand" onclick="upload_thumbnail();">썸네일 선택</span>
                         </a>
+                        <p style="color: red;">* 썸네일은 .jpg, .gif, .png 파일만 업로드 가능합니다.</p>
                     </td>
                 </tr>
                 </tbody>
@@ -331,7 +343,7 @@ if ($_GET['f_gubun'] == "modify") {
                 <?php
                 } else { // 강의 수정
                 ?>
-                    <a href="#" class="btn-m ml5" onclick="regist_modify_submit();">수정</a>
+                    <a href="javascript:void(0);" class="btn-m ml5" onclick="regist_modify_submit();">수정</a>
                     <a href="/admin/modify.php?f_gubun=delete&f_num=<?php echo $f_num ?>" class="btn-m-dark">삭제</a>
                 <?php
                 }

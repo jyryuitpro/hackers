@@ -7,6 +7,7 @@ session_start();
 $f_name = $_SESSION['f_name'];
 $f_id = $_SESSION['f_id'];
 
+
 // query string를 페이지 번호 및 게시글 URI에 세팅
 $data = array();
 
@@ -139,7 +140,6 @@ $sqlLimit = ' LIMIT ' . $currentLimit . ', ' . $onePage;
 $sql = "SELECT * FROM BOARD ".$search_category." ORDER BY F_NUM DESC". $sqlLimit;
 $result_normal = $conn->query($sql);
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
 <!--[if (IE 7)]><html class="no-js ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko"><![endif]-->

@@ -127,7 +127,8 @@ if ($_GET['f_gubun'] == 'modify') { // 강의 수정
         $conn->close();
 
         if($result){
-            echo "<script> alert('강의 정보가 수정되었습니다.');window.location.href='/admin/index.php?mode=list'</script>";
+//            echo "<script> alert('강의 정보가 수정되었습니다.');window.location.href='/admin/index.php?mode=list'</script>";
+            echo "<script> alert('강의 정보가 수정되었습니다.');window.location.href=location.href;</script>";
         }else{
             echo "<script> alert('강의 정보 수정이 실패했습니다.'); history.back();</script>";
             return false;
@@ -140,7 +141,8 @@ if ($_GET['f_gubun'] == 'modify') { // 강의 수정
         $conn->close();
 
         if($result){
-            echo "<script> alert('강의 정보가 수정되었습니다.'); window.location.href='/admin/index.php?mode=list'</script>";
+//            echo "<script> alert('강의 정보가 수정되었습니다.'); window.location.href='/admin/index.php?mode=list'</script>";
+            echo "<script> alert('강의 정보가 수정되었습니다.'); history.back();</script>";
         }else{
             echo "<script> alert('강의 정보 수정이 실패했습니다.'); history.back();</script>";
             return false;

@@ -63,6 +63,7 @@
 
     // 인증번호 확인
     function confirm_verification_number() {
+
         const verification_number = document.getElementById("verification_number").value
         const f_mobile = document.getElementById("f_mobile").value
 
