@@ -67,7 +67,7 @@ $row = $result->fetch_assoc();
 //전체 수강후기 갯수
 $allPost = $row['cnt']; // 45
 // 한 페이지에 보여줄 게시글의 수
-$onePage = 5;
+$onePage = 3;
 
 // 전체 페이지의 수
 // ceil() : 소수점 아래의 숫자를 모두 버리고, 정수부에 1일 더해주는 함수
@@ -96,8 +96,12 @@ if ($currentSection == $allSection) {
 }
 
 // 전체 섹션의 수 : [1,2,3] [4,5,6] [7,8,9]
-$prevPage = (($currentSection - 1) * $oneSection); // 이전 섹션으로 이동
-$nextPage = (($currentSection + 1) * $oneSection) - ($oneSection - 1); // 다음 섹션으로 이동
+//$prevPage = (($currentSection - 1) * $oneSection); // 이전 섹션으로 이동
+//$nextPage = (($currentSection + 1) * $oneSection) - ($oneSection - 1); // 다음 섹션으로 이동
+
+// 섹션 단위가 아닌 페이지 단위로 변경
+$prevPage = $page - 1; // 이전 섹션으로 이동
+$nextPage = $page + 1; // 다음 섹션으로 이동
 
 // 페이징을 저장할 변수
 $paging = '<ul>';
@@ -107,7 +111,12 @@ if($page != 1) {
 }
 
 //첫 페이지가 아니라면 처음 섹션 버튼을 생성
-if($currentSection != 1) {
+//if($currentSection != 1) {
+//    $paging .= '<a href="/lecture_board/step_01.php?page=' . $prevPage . $query_string_add. '"><i class="icon-prev"><span class="hidden">이전페이지</span></i></a>';
+//}
+
+//var_dump($page);
+if($page != 1) {
     $paging .= '<a href="/lecture_board/step_01.php?page=' . $prevPage . $query_string_add. '"><i class="icon-prev"><span class="hidden">이전페이지</span></i></a>';
 }
 
@@ -122,7 +131,11 @@ for($i = $firstPage; $i <= $lastPage; $i++) {
 }
 
 //마지막 섹션이 아니라면 다음 섹션 버튼을 생성
-if($currentSection != $allSection) {
+//if($currentSection != $allSection) {
+//    $paging .= '<a href="/lecture_board/step_01.php?page=' . $nextPage . $query_string_add. '"><i class="icon-next"><span class="hidden">다음페이지</span></i></a>';
+//}
+
+if($page != $allPage) {
     $paging .= '<a href="/lecture_board/step_01.php?page=' . $nextPage . $query_string_add. '"><i class="icon-next"><span class="hidden">다음페이지</span></i></a>';
 }
 
@@ -246,50 +259,52 @@ $result_normal = $conn->query($sql);
 	 
 			<tbody>
                 <?php
-                $sql = "SELECT * FROM BOARD ORDER BY F_COUNT DESC, F_NUM DESC LIMIT 3";
-                $result_best = $conn->query($sql);
+                if (!isset($_GET['page']) || $_GET['page'] == 1) {
+                    $sql = "SELECT * FROM BOARD ORDER BY F_COUNT DESC, F_NUM DESC LIMIT 3";
+                    $result_best = $conn->query($sql);
 
-                while ($row = $result_best->fetch_assoc()) {
+                    while ($row = $result_best->fetch_assoc()) {
                 ?>
-                <tr class="bbs-sbj">
-                    <td><span class="txt-icon-line"><em>BEST</em></span></td>
-                    <td><?php echo $row['F_CATEGORY'] ?></td>
-                    <td>
-                        <a href="/lecture_board/index.php?mode=view<?php if (isset($_GET['page'])) echo '&page='.$page ?>&f_num=<?php echo $row['F_NUM'] ?><?php echo $query_string_add ?>">
-                            <span class="tc-gray ellipsis_line">수강 강의명 : <?php echo $row['F_LECTURE'] ?></span>
-                            <strong class="ellipsis_line"><?php echo $row['F_TITLE'] ?></strong>
-                        </a>
-                    </td>
-                    <td>
-                    <span class="star-rating">
-                    <?php
-                    if ($row['F_GRADE'] == 5) {
-                        ?>
-                        <span class="star-inner" style="width:100%"></span>
+                    <tr class="bbs-sbj">
+                        <td><span class="txt-icon-line"><em>BEST</em></span></td>
+                        <td><?php echo $row['F_CATEGORY'] ?></td>
+                        <td>
+                            <a href="/lecture_board/index.php?mode=view<?php if (isset($_GET['page'])) echo '&page='.$page ?>&f_num=<?php echo $row['F_NUM'] ?><?php echo $query_string_add ?>">
+                                <span class="tc-gray ellipsis_line">수강 강의명 : <?php echo $row['F_LECTURE'] ?></span>
+                                <strong class="ellipsis_line"><?php echo $row['F_TITLE'] ?></strong>
+                            </a>
+                        </td>
+                        <td>
+                        <span class="star-rating">
                         <?php
-                    } else if ($row['F_GRADE'] == 4) {
+                        if ($row['F_GRADE'] == 5) {
+                            ?>
+                            <span class="star-inner" style="width:100%"></span>
+                            <?php
+                        } else if ($row['F_GRADE'] == 4) {
+                            ?>
+                            <span class="star-inner" style="width:80%"></span>
+                            <?php
+                        } else if ($row['F_GRADE'] == 3) {
+                            ?>
+                            <span class="star-inner" style="width:60%"></span>
+                            <?php
+                        } else if ($row['F_GRADE'] == 2) {
+                            ?>
+                            <span class="star-inner" style="width:40%"></span>
+                            <?php
+                        } else if ($row['F_GRADE'] == 1) {
+                            ?>
+                            <span class="star-inner" style="width:20%"></span>
+                            <?php
+                        }
                         ?>
-                        <span class="star-inner" style="width:80%"></span>
-                        <?php
-                    } else if ($row['F_GRADE'] == 3) {
-                        ?>
-                        <span class="star-inner" style="width:60%"></span>
-                        <?php
-                    } else if ($row['F_GRADE'] == 2) {
-                        ?>
-                        <span class="star-inner" style="width:40%"></span>
-                        <?php
-                    } else if ($row['F_GRADE'] == 1) {
-                        ?>
-                        <span class="star-inner" style="width:20%"></span>
-                        <?php
-                    }
-                    ?>
-                    </span>
-                    </td>
-                    <td class="last"><?php echo $row['F_NAME'] ?></td>
-                </tr>
+                        </span>
+                        </td>
+                        <td class="last"><?php echo $row['F_NAME'] ?></td>
+                    </tr>
                 <?php
+                    }
                 }
                 ?>
 				<!-- set -->

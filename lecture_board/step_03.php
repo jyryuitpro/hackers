@@ -34,7 +34,7 @@ $query_string = http_build_query($data);
 
 $query_string_add = "";
 if ($query_string != "") {
-    $query_string_add = $query_string;
+    $query_string_add = '?'.$query_string;
 }
 
 //var_dump($query_string_add);
@@ -217,7 +217,7 @@ $result_normal = $conn->query($sql);
 		</table>
 
         <div class="box-btn t-r">
-            <a href="/lecture_board/step_01.php?<?php echo $query_string_add;?>" class="btn-m-gray">목록</a>
+            <a href="/lecture_board/step_01.php<?php echo $query_string_add;?>" class="btn-m-gray">목록</a>
             <?php
             if (isset($_SESSION['f_name']) && ($_SESSION['f_id'] == $row['F_ID'])) {
             ?>
