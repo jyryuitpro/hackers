@@ -81,11 +81,51 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
 
         // 글 내용 저장
         function saveContent() {
+            if (!$("#f_category_id > option:selected").val()) {
+                alert("강의 분류를 선택해주세요.");
+                return false;
+            }
+
+            if (!$("#f_lecture > option:selected").val()) {
+                alert("강의명을 선택해주세요.");
+                return false;
+            }
+
+            if (!$("#f_title").val()) {
+                alert("제목을 입력해주세요.");
+                return false;
+            }
+
+            if (!$('input:radio[name=radio]').is(':checked')) {
+                alert("강의 만족도를 선택해주세요.");
+                return false;
+            }
+
             Editor.save(); // 이 함수를 호출하여 글을 등록하면 된다.
         }
 
         // 글 내용 수정
         function editContent() {
+            if (!$("#f_category_id > option:selected").val()) {
+                alert("강의 분류를 선택해주세요.");
+                return false;
+            }
+
+            if (!$("#f_lecture > option:selected").val()) {
+                alert("강의명을 선택해주세요.");
+                return false;
+            }
+
+            if (!$("#f_title").val()) {
+                alert("제목을 입력해주세요.");
+                return false;
+            }
+
+            if (!$('input:radio[name=radio]').is(':checked')) {
+                alert("강의 만족도를 선택해주세요.");
+                return false;
+            }
+
             Editor.save(); // 이 함수를 호출하여 글을 등록하면 된다.
         }
 
@@ -679,11 +719,11 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
                     <?php
                     if ($_GET['f_gubun'] != "modify") {
                     ?>
-                        <a href="#" class="btn-m ml5" onClick="saveContent();">저장</a>
+                        <a href="javascript:void(0);" class="btn-m ml5" onClick="saveContent();">저장</a>
                     <?php
                     } else {
                     ?>
-                        <a href="#" class="btn-m ml5" onClick="editContent();">수정</a>
+                        <a href="javascript:void(0);" class="btn-m ml5" onClick="editContent();">수정</a>
                     <?php
                     }
                     ?>
@@ -736,7 +776,10 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
             },
             attacher: {
                 file: {
-                    boxonly: true
+                    boxonly: true,
+                    features:{
+                        width:450, height:180
+                    }
                 }
             }
         },
@@ -793,11 +836,19 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
         var form = editor.getForm();
         var content = editor.getContent();
 
+        var files = editor.getAttachments('file', true);
+
+        if (files.length != 1) {
+            alert("첨부파일은 1개만 업로드 가능합니다.");
+            return false;
+        }
+
         // 본문 내용을 필드를 생성하여 값을 할당하는 부분
         var textarea = document.createElement('textarea');
         textarea.name = 'content';
         textarea.value = content;
         form.createField(textarea);
+
 
         /* 아래의 코드는 첨부된 데이터를 필드를 생성하여 값을 할당하는 부분으로 상황에 맞게 수정하여 사용한다.
          첨부된 데이터 중에 주어진 종류(image,file..)에 해당하는 것만 배열로 넘겨준다. */
@@ -815,7 +866,8 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
             }
         }
 
-        var files = editor.getAttachments('file', true);
+
+
         for (i = 0; i < files.length; i++) {
             input = document.createElement('input');
             input.type = 'hidden';

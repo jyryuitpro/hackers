@@ -44,17 +44,19 @@ $search_category = 'WHERE 1=1 ';
 // search.php에서 생성한 query string으로 페이지에 보여줄 강의 리스트 검색조건 만들기 (SQL)
 if (isset($_GET['f_category_id']) && $_GET['f_category_id'] != "all") {
     $f_category_id = $_GET['f_category_id'];
-    $search_category .= "AND F_CATEGORY_ID = '$f_category_id'";
+    $search_category .= " AND F_CATEGORY_ID = '$f_category_id'";
 }
 
+// LIKE 검색
 if (isset($_GET['f_lecture'])) {
     $f_lecture = $_GET['f_lecture'];
-    $search_category .= "AND F_LECTURE = '$f_lecture'";
+    $search_category .= " AND F_LECTURE LIKE '%$f_lecture%'";
 }
 
+// LIKE 검색
 if (isset($_GET['f_name'])) {
     $f_name = $_GET['f_name'];
-    $search_category .= "AND F_NAME = '$f_name'";
+    $search_category .= "AND F_NAME LIKE '%$f_name%'";
 }
 
 // 페이징을 하기 위해서 등록된 전체 수강후기 갯수 가져오기

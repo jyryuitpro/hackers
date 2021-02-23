@@ -143,9 +143,9 @@ $result_normal = $conn->query($sql);
                                 ?>
 							</span><br><br>
                             <?php
-                            if ($row['F_ATTACH_FILE'] != ""){
+                            if ($row['F_ATTACH_FILE_ORI'] != "" && $row['F_ATTACH_FILE_CRYPTO'] != ""){
                             ?>
-                                <span style="cursor:pointer; cursor:hand;" onclick='location.href="/lecture_board/attachment_file_download.php?f_attach_file=<?php echo $row['F_ATTACH_FILE'] ?>"' class="tc-brand" > 첨부파일 다운로드</span>
+                                <span style="cursor:pointer; cursor:hand;" onclick='location.href="/lecture_board/attachment_file_download.php?f_attach_file_ori=<?php echo $row['F_ATTACH_FILE_ORI'] ?>&f_attach_file_crypto=<?php echo $row['F_ATTACH_FILE_CRYPTO'] ?>"' class="tc-brand" > 첨부파일 다운로드</span>
                             <?php
                             }
                             ?>
