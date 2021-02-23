@@ -18,7 +18,9 @@
   + header.php
   + left.php
 * [lecture_board]
+  + [attachment_file]
   + [daumeditor]
+  + [tmp_attachment_file]
   + attachment_file_download.php
   + attachment_file_upload.php
   + index.php
@@ -109,9 +111,9 @@
 * 로그인 실패시 로그인 실패사유에 대한 경고창(alert) 발생 및 다시 로그인하도록 복귀
 * 로그인 및 로그아웃 상태에서 상단 로그인/로그아웃 버튼 변경 필요
 * /member/login.html
-  + ![image](https://user-images.githubusercontent.com/67634983/108852116-878f0a80-7628-11eb-8efa-8140a51cdec0.png)
   + ![image](https://user-images.githubusercontent.com/67634983/108852338-d63ca480-7628-11eb-9b50-7d21b849bc4d.png)
   + ![image](https://user-images.githubusercontent.com/67634983/108852393-e6ed1a80-7628-11eb-91d7-38bb44536fe9.png)
+  + ![image](https://user-images.githubusercontent.com/67634983/108853132-b5c11a00-7629-11eb-875a-355c9d7e71f5.png)
 
 ### 2. 아이디 찾기/ 내정보수정 구현
 
@@ -121,10 +123,17 @@
 * 실제 메일, 휴대폰 인증번호(패스워드) 고정[123456] 조회되도록 세션처리하여 인증번호 확인절차 진행
 * /member/index.php?mode=find_id
 * /member/index.php?mode=find_pass
+  + ![image](https://user-images.githubusercontent.com/67634983/108853380-00db2d00-762a-11eb-92dd-e27e90943e93.png)
+  + ![image](https://user-images.githubusercontent.com/67634983/108854064-c8881e80-762a-11eb-8d76-11ee02425358.png)
+  + ![image](https://user-images.githubusercontent.com/67634983/108854131-d9389480-762a-11eb-9ac5-b549fa0f18d5.png)
+  + ![image](https://user-images.githubusercontent.com/67634983/108854248-01c08e80-762b-11eb-804d-d99d33baea85.png)
+  + ![image](https://user-images.githubusercontent.com/67634983/108855465-64665a00-762c-11eb-84ed-bdd841ac11c7.png)
+  + ![image](https://user-images.githubusercontent.com/67634983/108855872-c7f08780-762c-11eb-8b2d-e6e4c4d76bae.png)
 
 #### 내정보수정 페이지 구현
 
 * /member/index.php?mode=modify
+  + ![image](https://user-images.githubusercontent.com/67634983/108856029-f8382600-762c-11eb-83d3-40f4d72d5cc7.png)
 
 ### 3. 수강후기 게시판 만들기
 
@@ -133,6 +142,7 @@
 * 기존작업물에 추가하여 작업할것
 * 상단GNB > 직무교육안내 > 수강후기 클릭시 이동
 * 좌측 LNB 또한 구조화 하여 INCLUDE 처리
+  + ![image](https://user-images.githubusercontent.com/67634983/108861966-23257880-7633-11eb-80aa-30689c19bc56.png)
 
 #### 강의Admin 페이지 구성
 
@@ -142,6 +152,12 @@
 * 기본 분류항목 : 일반직무, 산업직무, 공통역량, 어학 및 자격증
 * 별도의 관리페이지 생성하여 해당기능 구현 : 강의 등록/수정/삭제 
 * 강의 썸네일 파일첨부(파일첨부시 웹관련 파일 업로드 금지(ex. .php/.html/.c 등등)
+  + ![image](https://user-images.githubusercontent.com/67634983/108853132-b5c11a00-7629-11eb-875a-355c9d7e71f5.png)
+  + ![image](https://user-images.githubusercontent.com/67634983/108856847-d1c6ba80-762d-11eb-8616-50a51e8eefcc.png)
+  + ![image](https://user-images.githubusercontent.com/67634983/108857324-51ed2000-762e-11eb-94e3-36fe36cf1a23.png)
+  + ![image](https://user-images.githubusercontent.com/67634983/108858120-29195a80-762f-11eb-8e37-823423d11bdb.png)
+  + ![image](https://user-images.githubusercontent.com/67634983/108858314-5c5be980-762f-11eb-9fb3-ece6dea1fec6.png)
+  + ![image](https://user-images.githubusercontent.com/67634983/108858441-7f869900-762f-11eb-96f6-9f1febce67d7.png)
 
 #### 수강후기 리스트 페이지
 
