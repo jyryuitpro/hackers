@@ -1,21 +1,32 @@
 <?php
 require_once("../database/dbconfig.php");
-//error_reporting(E_ALL);
-//ini_set("display_errors", 1);
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 
-//var_dump($_POST);
+//var_dump($_FILES);
 //exit;
 
 //array(8) {
-//    ["f_name"]=> string(9) "류지영" -- 관리자 이름
-//    ["f_id"]=> string(12) "jyryujiyoung" -- 관리자 아이디
-//    ["f_category_id"]=> string(1) "1" -- 강의 분류 아이디
-//    ["f_lecture"]=> string(23) "강의 등록 테스트" -- 강의명
-//    ["f_instructor"]=> string(9) "테스트" -- 강사명
-//    ["f_learning_time"]=> string(2) "12" -- 학습시간
-//    ["f_lecture_count"]=> string(2) "12" -- 강의수
-//    ["radio"]=> string(1) "3" -- 학습난이도
+//    ["f_name"]=> string(9) "류지영"
+//    ["f_id"]=> string(12) "jyryujiyoung"
+//    ["f_category_id"]=> string(1) "2"
+//    ["f_lecture"]=> string(26) "개인정보 보호 교육"
+//    ["f_instructor"]=> string(9) "이준화"
+//    ["f_learning_time"]=> string(1) "1"
+//    ["f_lecture_count"]=> string(1) "2"
+//    ["radio"]=> string(1) "1"
 //}
+
+//array(1) {
+//    ["thumbnail"]=> array(5) {
+//        ["name"]=> string(7) "hac.jpg"
+//        ["type"]=> string(10) "image/jpeg"
+//        ["tmp_name"]=> string(14) "/tmp/phpl47uMf"
+//        ["error"]=> int(0)
+//        ["size"]=> int(70215)
+//    }
+//}
+
 
 // 강의 분류아이디
 $f_category_id = $_POST['f_category_id'];
@@ -44,6 +55,8 @@ $f_id = $_POST['f_id'];
 // 강의 등록번호
 $f_num = $_GET['f_num'];
 
+
+
 if ($_GET['f_gubun'] == 'modify') { // 강의 수정
     if ($_FILES["thumbnail"]["name"] != "") { // 썸네일을 새로 업로드한 경우
         // 썸네일 업로드 정보
@@ -55,7 +68,7 @@ if ($_GET['f_gubun'] == 'modify') { // 강의 수정
 //        array(5) {
 //            ["name"]=> string(7) "hac.jpg"
 //            ["type"]=> string(10) "image/jpeg"
-//            ["tmp_name"]=> string(14) "/tmp/phpRDnFPh"
+//            ["tmp_name"]=> string(14) "/tmp/phpxCJfi0"
 //            ["error"]=> int(0)
 //            ["size"]=> int(70215)
 //        }
@@ -70,7 +83,7 @@ if ($_GET['f_gubun'] == 'modify') { // 강의 수정
         // 썸네일 확장자 추출
         $ext = substr($thumbnail_info['name'], strrpos($thumbnail_info['name'], '.') + 1);
 
-        // 확장자 체크 (2차)
+        // 확장자 체크
         if(!in_array($ext, $allowed_extensions)) {
             echo '<script> alert("썸네일은 .jpg, .gif, .png 파일만 업로드 가능합니다."); history.back(); </script>';
             return false;
@@ -93,6 +106,9 @@ if ($_GET['f_gubun'] == 'modify') { // 강의 수정
         $sql_thumbnail = 'SELECT F_THUMBNAIL_NAME_CRYPTO FROM LECTURE a JOIN THUMBNAIL b ON a.F_THUMBNAIL_ID = b.F_THUMBNAIL_ID WHERE a.F_NUM = ' . $f_num;
         $result_thumbnail = $conn->query($sql_thumbnail);
         $row_thumbnail = $result_thumbnail->fetch_assoc();
+
+//        var_dump($sql_thumbnail);
+//        exit;
 
         // 등록된 썸네일 파일명
         $f_thumbnail_name_crypto_pre = $row_thumbnail["F_THUMBNAIL_NAME_CRYPTO"];
@@ -127,8 +143,8 @@ if ($_GET['f_gubun'] == 'modify') { // 강의 수정
         $conn->close();
 
         if($result){
-//            echo "<script> alert('강의 정보가 수정되었습니다.');window.location.href='/admin/index.php?mode=list'</script>";
-            echo "<script> alert('강의 정보가 수정되었습니다.');window.location.href=location.href;</script>";
+            echo "<script> alert('강의 정보가 수정되었습니다.');window.location.href='/admin/index.php?mode=list'</script>";
+//            echo "<script> alert('강의 정보가 수정되었습니다.');window.location.href=location.href;</script>";
         }else{
             echo "<script> alert('강의 정보 수정이 실패했습니다.'); history.back();</script>";
             return false;
@@ -141,8 +157,8 @@ if ($_GET['f_gubun'] == 'modify') { // 강의 수정
         $conn->close();
 
         if($result){
-//            echo "<script> alert('강의 정보가 수정되었습니다.'); window.location.href='/admin/index.php?mode=list'</script>";
-            echo "<script> alert('강의 정보가 수정되었습니다.'); history.back();</script>";
+            echo "<script> alert('강의 정보가 수정되었습니다.'); window.location.href='/admin/index.php?mode=list'</script>";
+//            echo "<script> alert('강의 정보가 수정되었습니다.'); history.back();</script>";
         }else{
             echo "<script> alert('강의 정보 수정이 실패했습니다.'); history.back();</script>";
             return false;

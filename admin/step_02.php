@@ -327,6 +327,7 @@ if ($_GET['f_gubun'] == "modify") {
                             }
                             ?>
                             <input type="file" name="thumbnail" id="thumbnail" style="display: none"/>
+<!--                            <input type="file" name="thumbnail" id="thumbnail" />-->
                             <span class="tc-brand" onclick="upload_thumbnail();">썸네일 선택</span>
                         </a>
                         <p style="color: red;">* 썸네일은 .jpg, .gif, .png 파일만 업로드 가능합니다.</p>

@@ -54,6 +54,7 @@ if (isset($_POST['f_gubun']) && $_POST['f_gubun'] == 'modify') {
 
     if (isset($_POST['attach_file'])) { // 첨부파일을 새로 업로드한 경우
         // 수강후기 첨부파일
+        // string(54) "첨부파일1.txt|9c67ddf86d4bc2d6471fcbf61d2ec85d.txt"
         $array = explode("|", $_POST['attach_file']);
         // 원본 파일명
         $f_attach_file_ori = $array[0];
@@ -72,9 +73,9 @@ if (isset($_POST['f_gubun']) && $_POST['f_gubun'] == 'modify') {
         $result = $conn->query($sql);
         $result = $result->fetch_assoc();
 
-        $f_attach_file_crypto = $result['F_ATTACH_FILE_CRYPTO'];
+        $f_attach_file_crypto_ori = $result['F_ATTACH_FILE_CRYPTO'];
         $attachment_file_dir = "./attachment_file/";
-        $attachment_file_path = $attachment_file_dir.$f_attach_file_crypto;
+        $attachment_file_path = $attachment_file_dir.$f_attach_file_crypto_ori;
 
         $result_unlink = unlink($attachment_file_path);
 
@@ -84,7 +85,8 @@ if (isset($_POST['f_gubun']) && $_POST['f_gubun'] == 'modify') {
             return false;
         }
 
-        $sql = "UPDATE BOARD SET F_CATEGORY = '$f_category', F_LECTURE = '$f_lecture', F_TITLE = '$f_title', F_GRADE = '$f_grade', F_CONTENTS = '$f_contents', F_ATTACH_FILE = '$f_attach_file' ";
+        $sql = "UPDATE BOARD SET F_CATEGORY = '$f_category', F_LECTURE = '$f_lecture', F_TITLE = '$f_title', F_GRADE = '$f_grade', F_CONTENTS = '$f_contents', ";
+        $sql .= "F_ATTACH_FILE_ORI = '$f_attach_file_ori', F_ATTACH_FILE_CRYPTO = '$f_attach_file_crypto'";
         $sql .= "WHERE F_NAME = '$f_name' AND F_ID = '$f_id' AND F_NUM = $f_num";
         $result = $conn->query($sql);
         $conn->close();

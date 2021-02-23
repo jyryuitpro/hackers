@@ -106,16 +106,6 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
 
         // 글 내용 수정
         function editContent() {
-            if (!$("#f_category_id > option:selected").val()) {
-                alert("강의 분류를 선택해주세요.");
-                return false;
-            }
-
-            if (!$("#f_lecture > option:selected").val()) {
-                alert("강의명을 선택해주세요.");
-                return false;
-            }
-
             if (!$("#f_title").val()) {
                 alert("제목을 입력해주세요.");
                 return false;
