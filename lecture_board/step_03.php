@@ -275,17 +275,17 @@ $result_normal = $conn->query($sql);
 
         if (isset($_GET['f_category_id'])) {
             $f_category_id = $_GET['f_category_id'];
-            $search_category .= "AND F_CATEGORY_ID = '$f_category_id'";
+            $search_category .= "AND F_CATEGORY_ID LIKE '%$f_category_id%'";
         }
 
         if (isset($_GET['f_lecture'])) {
             $f_lecture = $_GET['f_lecture'];
-            $search_category .= " AND F_LECTURE = '$f_lecture'";
+            $search_category .= " AND F_LECTURE LIKE '%$f_lecture%'";
         }
 
         if (isset($_GET['f_name'])) {
             $f_name = $_GET['f_name'];
-            $search_category .= " AND F_NAME = '$f_name'";
+            $search_category .= " AND F_NAME LIKE '%$f_name%'";
         }
 
         $sql = "SELECT count(*) as cnt FROM BOARD ".$search_category." ORDER BY F_NUM DESC";
@@ -306,7 +306,7 @@ $result_normal = $conn->query($sql);
 //            echo "존재하는 페이지입니다.";
 //        }
 
-        $oneSection = 6; // 한번에 보여줄 총 페이지 개수
+        $oneSection = 3; // 한번에 보여줄 총 페이지 개수
         $currentSection = ceil($page / $oneSection); // 현재 섹션
 
         $allSection = ceil($allPage / $oneSection); // 전체 섹션의 수
@@ -355,7 +355,7 @@ $result_normal = $conn->query($sql);
 //            $paging .= '<a href="/lecture_board/step_03.php?page=' . $nextPage . $query_string_add. '"><i class="icon-next"><span class="hidden">다음페이지</span></i></a>';
 //        }
 
-        if($page != 1) {
+        if($page != 1 || isset($_GET['page'])) {
             $paging .= '<a href="/lecture_board/step_03.php?page=' . $nextPage . $query_string_add. '"><i class="icon-next"><span class="hidden">다음페이지</span></i></a>';
         }
 

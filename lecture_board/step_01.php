@@ -275,6 +275,7 @@ $result_normal = $conn->query($sql);
 			<tbody>
                 <?php
                 if (!isset($_GET['page']) || $_GET['page'] == 1) {
+                    // 조회수가 가장 높고, 가장 최신 수강후기 3개
                     $sql = "SELECT * FROM BOARD ORDER BY F_COUNT DESC, F_NUM DESC LIMIT 3";
                     $result_best = $conn->query($sql);
 
