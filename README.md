@@ -12,7 +12,7 @@
   + step_02.php
   + thumbnail_download.php
 * [database]
-  + dbconfig.php > DB
+  + dbconfig.php > DB연결
 * [include]
   + footer.php
   + header.php
