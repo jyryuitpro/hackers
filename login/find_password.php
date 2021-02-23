@@ -145,7 +145,7 @@ $_SESSION['verification_number'] = 123456;
                 const f_birthday = document.getElementById('f_birthday').value;
                 const f_mobile = document.getElementById("f_mobile").value
                 $.ajax({
-                    url: "/member/session.php",
+                    url: "/member/certification.php",
                     dataType: "json",
                     data: {'verification_number': verification_number, 'f_mobile': f_mobile, 'f_gubun': f_gubun, 'f_name': f_name, 'f_birthday': f_birthday},
                     type: "POST",
@@ -167,7 +167,7 @@ $_SESSION['verification_number'] = 123456;
                 const f_birthday = document.getElementById('f_birthday').value;
                 const f_email = document.getElementById("f_email").value
                 $.ajax({
-                    url: "/member/session.php",
+                    url: "/member/certification.php",
                     dataType: "json",
                     data: {'verification_number': verification_number, 'f_email': f_email, 'f_gubun': f_gubun, 'f_name': f_name, 'f_birthday': f_birthday},
                     type: "POST",
@@ -226,7 +226,7 @@ $_SESSION['verification_number'] = 123456;
 <!-- //skip nav -->
 
 <div id="wrap">
-    <?php include 'header.php'; ?>
+    <?php include '../include/header.php'; ?>
 <div id="container" class="container-full">
 	<div id="content" class="content">
 		<div class="inner">
@@ -285,7 +285,7 @@ $_SESSION['verification_number'] = 123456;
                     <tr>
                         <th scope="col">생년월일</th>
                         <td>
-                            <input type="text" class="input-text" style="width:100px" name="f_birthday" id="f_birthday"/>
+                            <input type="hidden" class="input-text" style="width:100px" name="f_birthday" id="f_birthday"/>
                             <select class="input-sel birthday_sel" style="width:100px" name="f_year" id="f_year">
                                 <!--									<option value="">선택</option>-->
                             </select>
@@ -303,7 +303,7 @@ $_SESSION['verification_number'] = 123456;
                     <tr id="M">
                         <th scope="col">휴대폰번호</th>
                         <td>
-                            <input type="text" class="input-text f_moblie" style="width:50px" name="f_mobile" id="f_mobile" value=""  />
+                            <input type="hidden" class="input-text f_moblie" style="width:50px" name="f_mobile" id="f_mobile" value=""  />
                             <input type="text" class="input-text f_moblie" style="width:50px" name="f_mobile_0" id="f_mobile_0" maxlength='3' value=""  /> -
                             <input type="text" class="input-text f_moblie" style="width:50px" name="f_mobile_1" id="f_mobile_1" maxlength='4' value=""  /> -
                             <input type="text" class="input-text f_moblie" style="width:50px" name="f_mobile_2" id="f_mobile_2" maxlength='4' value=""  />
@@ -313,7 +313,7 @@ $_SESSION['verification_number'] = 123456;
                     <tr id="E">
                         <th scope="col">이메일주소</th>
                         <td>
-                            <input type="text" class="input-text" style="width:100px" name="f_email" id="f_email"/>
+                            <input type="hidden" class="input-text" style="width:100px" name="f_email" id="f_email"/>
                             <input type="text" class="input-text" style="width:138px" name="f_email_0" id="f_email_0"/> @ <input type="text" class="input-text" style="width:138px" name="f_email_1" id="f_email_1"/>
                             <select class="input-sel email_sel" style="width:160px" name="email_sel" id="email_sel">
                                 <option value="1">직접입력</option>
@@ -340,7 +340,7 @@ $_SESSION['verification_number'] = 123456;
 		</div>
 	</div>
 </div>
-    <?php include 'footer.php'; ?>
+    <?php include '../include/footer.php'; ?>
 </div>
 </body>
 </html>

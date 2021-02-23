@@ -55,6 +55,24 @@ session_start();
         });
     });
     function edit_password() {
+        if ($("#f_password_0").val() == "" || $("#f_password_1").val() == "") {
+            alert("비밀번호를 입력해주세요.");
+            return false;
+        } else if ($("#f_password_0").val() != "" || $("#f_password_0").val() != "") {
+            if ($("#f_password_0").val() != $("#f_password_1").val()) {
+                alert("비밀번호가 일치하지 않습니다.");
+                return false;
+            }
+        }
+
+        if ($("#f_password_0").val() != "") {
+            var passwordCheck = /^[a-zA-Z0-9]{8,15}$/;
+            if(!passwordCheck.test($('#f_password_0').val())){
+                alert("비밀번호는 8-15자의 영문자/숫자 혼합만 가능합니다.");
+                return false;
+            }
+        }
+
         const f_password = document.getElementById("f_password_0").value
 
         $.ajax({
@@ -83,7 +101,7 @@ session_start();
 <!-- //skip nav -->
 
 <div id="wrap">
-    <?php include 'header.php'; ?>
+    <?php include '../include/header.php'; ?>
 <div id="container" class="container-full">
 	<div id="content" class="content">
 		<div class="inner">
@@ -96,8 +114,8 @@ session_start();
 			</div>
 
 			<ul class="tab-list">
-				<li><a href="#">아이디 찾기</a></li>
-				<li class="on"><a href="#">비밀번호 찾기</a></li>
+                <li><a href="/member/index.php?mode=id">아이디 찾기</a></li>
+                <li class="on"><a href="/member/index.php?mode=find_pass">비밀번호 찾기</a></li>
 			</ul>
 
 			<div class="tit-box-h4">
@@ -130,7 +148,7 @@ session_start();
 		</div>
 	</div>
 </div>
-    <?php include 'footer.php'; ?>
+    <?php include '../include/footer.php'; ?>
 </div>
 </body>
 </html>

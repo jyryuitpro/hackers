@@ -45,7 +45,7 @@ $_SESSION['HACKERS'] = $_SERVER['HTTP_REFERER'];
 <!-- //skip nav -->
 
 <div id="wrap">
-    <?php include 'header.php'; ?>
+    <?php include '../include/header.php'; ?>
 <div id="container" class="container-full">
 	<div id="content" class="content">
 		<div class="inner">
@@ -71,7 +71,7 @@ $_SESSION['HACKERS'] = $_SERVER['HTTP_REFERER'];
 		</div>
 	</div>
 </div>
-    <?php include 'footer.php'; ?>
+    <?php include '../include/footer.php'; ?>
 </div>
 </body>
 </html>

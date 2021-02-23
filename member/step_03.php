@@ -1,11 +1,9 @@
 <?php
     session_start();
     $f_mobile = $_SESSION['f_mobile'];
-//    var_dump($f_mobile);
-    // 01012345678
-    $f_mobile_0 = substr($f_mobile, 0, 3);
-    $f_mobile_1 = substr($f_mobile, 3, 4);
-    $f_mobile_2 = substr($f_mobile, 7);
+    $f_mobile_0 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$1", $f_mobile);
+    $f_mobile_1 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$2", $f_mobile);
+    $f_mobile_2 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$3", $f_mobile);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -126,7 +124,7 @@
     }
 
     function regist_submit() {
-        // 이름 유효성 검사
+        // 이름
         if ($("#f_name").val() == "") {
             alert("이름을 입력해주세요.");
             $("#f_name").focus();
@@ -139,7 +137,14 @@
             }
         }
 
-        // 아이디 유효성 검사
+        // 생년월일
+        if ($("#f_birthday").val().length != 8) {
+            alert("생년월일을 입력해주세요.");
+            $("#f_birthday").focus();
+            return false;
+        }
+
+        // 아이디
         if ($("#f_id_new").val() == "") {
             alert("아이디를 입력해주세요.");
             $("#f_id_new").focus();
@@ -148,9 +153,20 @@
 
         if ($("#f_id_old").val() != $("#f_id_new").val()) {
             alert("아이디 중복체크를 해주세요.");
+            return false;
         }
 
-        // 비밀번호 유효성 검사
+        // 비밀번호
+        if ($("#f_password_0").val() == "" || $("#f_password_1").val() == "") {
+            alert("비밀번호를 입력해주세요.");
+            return false;
+        } else if ($("#f_password_0").val() != "" || $("#f_password_0").val() != "") {
+            if ($("#f_password_0").val() != $("#f_password_1").val()) {
+                alert("비밀번호가 일치하지 않습니다.");
+                return false;
+            }
+        }
+
         if ($("#f_password_0").val() != "") {
             var passwordCheck = /^[a-zA-Z0-9]{8,15}$/;
             if(!passwordCheck.test($('#f_password_0').val())){
@@ -159,21 +175,26 @@
             }
         }
 
-        // 이메일 유효성 검사
+        // 이메일
+        if ($("#f_email_0").val() == "" || $("#f_email_1").val() == "") {
+            alert("이메일 주소를 입력해주세요.");
+            return false;
+        }
+
         if ($("#f_email_0").val() != "" && $("#f_email_1").val() != "") {
             $("#f_email").val($("#f_email_0").val() + '@' + $("#f_email_1").val());
             var emailCheck = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
             if(!emailCheck.test($("#f_email").val())) {
-                alert("이메일 주소가 유효하지 않습니다");
+                alert("이메일 주소가 유효하지 않습니다.");
                 $("#f_email_0").focus();
                 return false;
             }
         }
 
-        // 상세주소 유효성 검사
+        // 주소
         if ($("#f_zipcode").val() == "" || $("#f_address").val() == "" || $("#f_address_detail").val() == "") {
-            alert("상세주소를 입력해주세요.");
+            alert("주소를 입력해주세요.");
             $("#f_address_detail").focus();
             return false;
         }
@@ -183,17 +204,18 @@
         regist.submit();
     }
 
+    // 생년월일 셀렉트박스 옵션 생성
     function setDateBox(){
         var dt = new Date();
         var year = "";
         var com_year = dt.getFullYear();
-        // 발행 뿌려주기
+
         $("#f_year").append("<option value=''>선택</option>");
-        // 올해 기준으로 -1년부터 +5년을 보여준다.
+
         for(var y = 1950; y <= com_year; y++){
             $("#f_year").append("<option value='"+ y +"'>"+ y +"</option>");
         }
-        // 월 뿌려주기
+
         var month;
         $("#f_month").append("<option value=''>선택</option>");
         for(var m = 1; m <= 12; m++){
@@ -203,7 +225,7 @@
                 $("#f_month").append("<option value='"+ m +"'>"+ m +"</option>");
             }
         }
-        // 일 뿌려주기
+
         var day;
         $("#f_day").append("<option value=''>선택</option>");
         for(var d = 1; d <= 31; d++){
@@ -262,7 +284,7 @@
                             <tr>
                                 <th scope="col"><span class="icons">*</span>생년월일</th>
                                 <td>
-                                    <input type="text" class="input-text" style="width:100px" name="f_birthday" id="f_birthday"/>
+                                    <input type="hidden" class="input-text" style="width:100px" name="f_birthday" id="f_birthday"/>
                                     <select class="input-sel birthday_sel" style="width:100px" name="f_year" id="f_year">
                                         <!--									<option value="">선택</option>-->
                                     </select>
@@ -280,7 +302,7 @@
                             <tr>
                                 <th scope="col"><span class="icons">*</span>아이디</th>
                                 <td>
-                                    <input type="text" class="input-text" style="width:302px" name="f_id_old" id="f_id_old"/>
+                                    <input type="hidden" class="input-text" style="width:302px" name="f_id_old" id="f_id_old"/>
                                     <input type="text" class="input-text" style="width:302px" name="f_id_new" id="f_id_new" placeholder="영문자로 시작하는 4~15자의 영문소문자, 숫자"/>
                                     <a href="javascript:void(0);" onclick="idDuplicationCheck();" class="btn-s-tin ml10">중복확인</a>
                                 </td>
@@ -296,10 +318,11 @@
                             <tr>
                                 <th scope="col"><span class="icons">*</span>이메일주소</th>
                                 <td>
-                                    <input type="text" class="input-text" style="width:302px" name="f_email" id="f_email"/>
+                                    <input type="hidden" class="input-text" style="width:302px" name="f_email" id="f_email"/>
                                     <input type="text" class="input-text" style="width:138px" name="f_email_0" id="f_email_0"/> @ <input type="text" class="input-text" style="width:138px" name="f_email_1" id="f_email_1"/>
                                     <select class="input-sel email_sel" style="width:160px" name="email_sel" id="email_sel">
                                         <option value="1">직접입력</option>
+                                        <option value="gmail.com">hackers.com</option>
                                         <option value="gmail.com">gmail.com</option>
                                         <option value="naver.com">naver.com</option>
                                         <option value="daum.net">daum.net</option>
@@ -311,7 +334,7 @@
                             <tr>
                                 <th scope="col"><span class="icons">*</span>휴대폰 번호</th>
                                 <td>
-                                    <input type="text" class="input-text" style="width:50px" name="f_mobile" id="f_mobile" value="<?php echo $f_mobile ?>" readonly />
+                                    <input type="hidden" class="input-text" style="width:50px" name="f_mobile" id="f_mobile" value="<?php echo $f_mobile ?>" readonly />
                                     <input type="text" class="input-text" style="width:50px" name="f_mobile_0" id="f_mobile_0" value="<?php echo $f_mobile_0 ?>" readonly /> -
                                     <input type="text" class="input-text" style="width:50px" name="f_mobile_1" id="f_mobile_1" value="<?php echo $f_mobile_1 ?>" readonly /> -
                                     <input type="text" class="input-text" style="width:50px" name="f_mobile_2" id="f_mobile_2" value="<?php echo $f_mobile_2 ?>" readonly />
@@ -319,13 +342,13 @@
                             </tr>
                             <tr>
                                 <th scope="col"><span class="icons"></span>일반전화 번호</th>
-                                <td><input type="text" class="input-text" style="width:88px" name="f_tel" id="f_tel" /><input type="text" class="input-text" style="width:88px" name="f_tel_0" id="f_tel_0" /> - <input type="text" class="input-text" style="width:88px" name="f_tel_1" id="f_tel_1" /> - <input type="text" class="input-text" style="width:88px" name="f_tel_2" id="f_tel_2" /></td>
+                                <td><input type="hidden" class="input-text" style="width:88px" name="f_tel" id="f_tel" /><input type="text" class="input-text" style="width:88px" name="f_tel_0" id="f_tel_0" /> - <input type="text" class="input-text" style="width:88px" name="f_tel_1" id="f_tel_1" /> - <input type="text" class="input-text" style="width:88px" name="f_tel_2" id="f_tel_2" /></td>
                             </tr>
                             <tr>
                                 <th scope="col"><span class="icons">*</span>주소</th>
                                 <td>
                                     <p >
-                                        <label>우편번호 <input type="text" class="input-text ml5" style="width:242px" name="f_zipcode" id="f_zipcode" readonly /></label><a href="#" onclick="open_zipcode_popup();" class="btn-s-tin ml10">주소찾기</a>
+                                        <label>우편번호 <input type="text" class="input-text ml5" style="width:242px" name="f_zipcode" id="f_zipcode" readonly /></label><a href="javascript:void(0);" onclick="open_zipcode_popup();" class="btn-s-tin ml10">주소찾기</a>
                                     </p>
                                     <p class="mt10">
                                         <label>기본주소 <input type="text" class="input-text ml5" style="width:719px" name="f_address" id="f_address" readonly /></label>

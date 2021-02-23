@@ -43,7 +43,7 @@ session_start();
 <!-- //skip nav -->
 
 <div id="wrap">
-    <?php include 'header.php'; ?>
+    <?php include '../include/header.php'; ?>
 <div id="container" class="container-full">
 	<div id="content" class="content">
 		<div class="inner">
@@ -56,8 +56,8 @@ session_start();
 			</div>
 
 			<ul class="tab-list">
-				<li class="on"><a href="#">아이디 찾기</a></li>
-				<li><a href="#">비밀번호 찾기</a></li>
+				<li class="on"><a href="/member/index.php?mode=id">아이디 찾기</a></li>
+				<li><a href="/member/index.php?mode=find_pass">비밀번호 찾기</a></li>
 			</ul>
 
 			<div class="tit-box-h4">
@@ -77,7 +77,7 @@ session_start();
 		</div>
 	</div>
 </div>
-    <?php include 'footer.php'; ?>
+    <?php include '../include/footer.php'; ?>
 </div>
 </body>
 </html>

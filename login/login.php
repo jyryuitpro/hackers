@@ -17,6 +17,7 @@ $exist = mysqli_num_rows($result);
 //var_dump($_SESSION['HACKERS_MAIN']);
 //var_dump($_SESSION['HACKERS_SIGNUP']);
 
+// 로그인 성공시 리퍼러를 활용한 페이지 리다이렉트 처리
 if ($_SESSION['HACKERS'] == "http://test.hackers.com/"
     || $_SESSION['HACKERS'] == "http://test.hackers.com/index.php"
     || $_SESSION['HACKERS'] == "http://test.hackers.com/login/find_id_completed.php"

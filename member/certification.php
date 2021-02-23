@@ -18,7 +18,7 @@ if(!$_POST['f_gubun']) {
     $f_birthday = $_POST['f_birthday'];
     $f_mobile = $_POST['f_mobile'];
 
-    $sql = "SELECT F_NAME, F_ID FROM MEMBER WHERE F_NAME='{$f_name}' and F_BIRTHDAY='{$f_birthday}' and F_MOBILE='{$f_mobile}'";
+    $sql = "SELECT F_NAME, F_ID FROM MEMBER WHERE F_NAME='$f_name' and F_BIRTHDAY='$f_birthday' and F_MOBILE='$f_mobile'";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
 
@@ -34,7 +34,7 @@ if(!$_POST['f_gubun']) {
     $f_birthday = $_POST['f_birthday'];
     $f_email = $_POST['f_email'];
 
-    $sql = "SELECT F_NAME, F_ID FROM MEMBER WHERE F_NAME='{$f_name}' and F_BIRTHDAY='{$f_birthday}' and F_EMAIL='{$f_email}'";
+    $sql = "SELECT F_NAME, F_ID FROM MEMBER WHERE F_NAME='$f_name' and F_BIRTHDAY='$f_birthday' and F_EMAIL='$f_email'";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
 

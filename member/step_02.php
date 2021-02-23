@@ -1,5 +1,6 @@
 <?php
     session_start();
+    // SESSION 에 인증번호 고정[123456] 지정하여 매칭후 본인확인 패스
     $_SESSION['verification_number'] = 123456;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -66,7 +67,7 @@
         const f_mobile = document.getElementById("f_mobile").value
 
         $.ajax({
-            url: "/member/session.php",
+            url: "/member/certification.php",
             dataType: "json",
             data: {"verification_number": verification_number, "f_mobile": f_mobile},
             type: "POST",
@@ -120,7 +121,7 @@
 						<p id="parent">주민번호 없이 메시지 수신가능한 휴대폰으로 1개 아이디만 회원가입이 가능합니다. </p>
 
 						<br />
-                        <input type="text" class="input-text" style="width:50px" name="f_mobile" id="f_mobile"/>
+                        <input type="hidden" class="input-text" style="width:50px" name="f_mobile" id="f_mobile"/>
 						<input type="text" class="input-text f_moblie" style="width:50px" name="f_mobile_0" id="f_mobile_0" maxlength='3' /> -
 						<input type="text" class="input-text f_moblie" style="width:50px" name="f_mobile_1" id="f_mobile_1" maxlength='4' /> -
 						<input type="text" class="input-text f_moblie" style="width:50px" name="f_mobile_2" id="f_mobile_2" maxlength='4' />

@@ -69,7 +69,7 @@ $_SESSION['HACKERS'] = $_SERVER['HTTP_REFERER'];
                 } else if (data.res == "fail") {
                     alert("아이디와 비밀번호를 확인해주세요.");
                 } else if (data.res == "wrong_path") { // 로그인 성공시 리퍼러를 활용한 페이지 리다이렉트 처리
-                    alert("잘못된 경로 접근입니다. 확인해주세요.");
+                    alert("잘못된 경로 접근입니다.");
                 }
             },
             error:function () {
