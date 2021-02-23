@@ -14,8 +14,8 @@ CREATE TABLE BOARD
     F_BEST varchar(128) null,
     F_ID varchar(128) null,
     F_NAME varchar(128) null,
-    F_ATTACH_IMAGE varchar(128) null,
-    F_ATTACH_FILE varchar(128) null,
+    F_ATTACH_FILE_ORI varchar(128) null,
+    F_ATTACH_FILE_CRYPTO varchar(128) null,
     F_REG_TIME datetime null
 );
 

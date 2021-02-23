@@ -217,7 +217,7 @@ $result_normal = $conn->query($sql);
                         <option value="f_lecture" <? if(isset($_GET['f_lecture'])) { echo "selected"; } ?>>강의명</option>
                         <option value="f_name" <? if(isset($_GET['f_name'])) { echo "selected"; } ?>>작성자</option>
                     </select>
-                    <input type="text" class="input-text" placeholder="상세조건 입력하세요." style="width:158px" name="f_search_content" id="f_search_content"\
+                    <input type="text" class="input-text" placeholder="상세조건 입력하세요." style="width:345px" name="f_search_content" id="f_search_content"\
                            value="<?php if (isset($_GET['f_lecture'])) echo $_GET['f_lecture']; if (isset($_GET['f_name'])) echo $_GET['f_name'];?>"/>
                     <button type="submit" class="btn-s-dark">검색</button>
                 </div>

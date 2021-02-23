@@ -105,13 +105,13 @@ $result_normal = $conn->query($sql);
 		<table border="0" cellpadding="0" cellspacing="0" class="tbl-bbs-view">
 			<caption class="hidden">수강후기</caption>
 			<colgroup>
+				<col style="width:70%"/>
 				<col style="*"/>
-				<col style="width:20%"/>
 			</colgroup>
 			<tbody>
 				 <tr>
 					<th scope="col" name="f_title" id="f_title"><?php echo $row['F_TITLE'] ?></th>
-                    <th scope="col" class="user-id">작성자 | <?php echo $row['F_ID'] ?><br>조회수 | <?php echo $row['F_COUNT'] ?><br>등록일 | <?php echo $row['F_REG_TIME'] ?></th>
+                    <th scope="col" class="user-id" style="text-align: left;">조회수 | <?php echo $row['F_COUNT'] ?><br>작성자 | <?php echo $row['F_ID'] ?><br>등록일 | <?php echo $row['F_REG_TIME'] ?></th>
 				 </tr>
 				<tr>
 					<td colspan="2">
@@ -156,7 +156,7 @@ $result_normal = $conn->query($sql);
 			</tbody>
 		</table>
 		<?php
-        $sql = "SELECT a.F_LECTURE as F_LECTURE,  a.F_INSTRUCTOR as F_INSTRUCTOR, a.F_LEARNING_TIME as F_LEARNING_TIME, a.F_LECTURE_COUNT as F_LECTURE_COUNT, a.F_GRADE as F_GRADE, b.F_THUMBNAIL_NAME_CRYPTO as F_THUMBNAIL_NAME_CRYPTO";
+        $sql = "SELECT a.F_CATEGORY as F_CATEGORY, a.F_LECTURE as F_LECTURE,  a.F_INSTRUCTOR as F_INSTRUCTOR, a.F_LEARNING_TIME as F_LEARNING_TIME, a.F_LECTURE_COUNT as F_LECTURE_COUNT, a.F_GRADE as F_GRADE, b.F_THUMBNAIL_NAME_CRYPTO as F_THUMBNAIL_NAME_CRYPTO";
         $sql = $sql .= " FROM LECTURE a join THUMBNAIL b on a.F_THUMBNAIL_ID = b.F_THUMBNAIL_ID where a.F_LECTURE = (SELECT F_LECTURE FROM BOARD WHERE F_NUM = '$f_num')";
         $result_lecture = $conn->query($sql);
         $row_lecture = $result_lecture->fetch_assoc();
@@ -211,7 +211,7 @@ $result_normal = $conn->query($sql);
                             </span> |
                             교육시간: <?php echo $row_lecture['F_LEARNING_TIME'] ?>시간 (<?php echo $row_lecture['F_LECTURE_COUNT'] ?>강)</p>
 					</td>
-					<td class="t-r"><a href="#" class="btn-square-line">강의<br />상세</a></td>
+					<td class="t-r"><a href="javascript:void(0);" class="btn-square-line"><?php echo $row_lecture['F_CATEGORY'] ?></a></td>
 				</tr>
 			</tbody>
 		</table>

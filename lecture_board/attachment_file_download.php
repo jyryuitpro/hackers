@@ -26,7 +26,7 @@ $attachment_file_path = $attachment_file_dir.$f_attach_file_crypto;
 $attachment_file_length = filesize($attachment_file_path);
 
 header("Content-Type: application/octet-stream");
-header("Content-Length: $f_attach_file_length");
+header("Content-Length: $attachment_file_length");
 header("Content-Disposition: attachment; filename=".iconv('utf-8','euc-kr',$f_attach_file_ori));
 header("Content-Transfer-Encoding: binary");
 

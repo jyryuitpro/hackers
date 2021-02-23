@@ -3,8 +3,8 @@ require_once("../database/dbconfig.php");
 //error_reporting(E_ALL);
 //ini_set("display_errors", 1);
 
-var_dump($_POST);
-exit;
+//var_dump($_POST);
+//exit;
 
 // 예시
 //array(10) {
@@ -48,18 +48,29 @@ $f_id = $_POST['f_id'];
 // 수강후기 작성자 이름
 $f_name = $_POST['f_name'];
 
-// 수강후기 첨부파일
-$array = explode("|", $_POST['attach_file']);
-// 원본 파일명
-$f_attach_file_ori = $array[0];
-// 변환 파일명
-$f_attach_file_crypto = $array[1];
+$f_attach_file_ori = "";
+$f_attach_file_crypto = "";
+
+if (isset($_POST['attach_file'])) {
+    // 수강후기 첨부파일
+    $array = explode("|", $_POST['attach_file']);
+    // 원본 파일명
+    $f_attach_file_ori = $array[0];
+    // 변환 파일명
+    $f_attach_file_crypto = $array[1];
+
+    // 수강후기 등록 시, 임시파일에 있는 첨부파일을 이동 시키고 삭제
+    // tmp_attachment_file
+    $tmp_attachment_file = "./tmp_attachment_file/".$f_attach_file_crypto;
+    // attachment_file
+    $attachment_file = "./attachment_file/".$f_attach_file_crypto;
+
+    copy($tmp_attachment_file, $attachment_file);
+    unlink($tmp_attachment_file);
+}
 
 $sql = "INSERT INTO BOARD (F_CATEGORY_ID, F_CATEGORY, F_LECTURE, F_TITLE, F_GRADE, F_CONTENTS, F_ID, F_NAME, F_ATTACH_FILE_ORI, F_ATTACH_FILE_CRYPTO, F_REG_TIME)";
 $sql = $sql." VALUES('$f_category_id','$f_category','$f_lecture','$f_title','$f_grade','$f_contents','$f_id','$f_name','$f_attach_file_ori', '$f_attach_file_crypto', now())";
-
-//var_dump($sql);
-//exit;
 
 $result = $conn->query($sql);
 $conn->close();
@@ -69,3 +80,4 @@ if($result){
 }else{
     echo "<script> alert('실패'); history.back();</script>";
 }
+

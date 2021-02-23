@@ -838,7 +838,8 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
 
         var files = editor.getAttachments('file', true);
 
-        if (files.length != 1) {
+        if (files.length > 1) {
+            alert(files.length);
             alert("첨부파일은 1개만 업로드 가능합니다.");
             return false;
         }
@@ -865,8 +866,6 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
                 form.createField(input);
             }
         }
-
-
 
         for (i = 0; i < files.length; i++) {
             input = document.createElement('input');

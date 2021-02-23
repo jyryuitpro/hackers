@@ -29,7 +29,7 @@ $filetype = $_FILES['upload_file']['type'];
 // 파일 사이즈
 $filesize = $_FILES['upload_file']['size'];
 // 저장될 디렉토리 경로
-$destination = "./attachment_file/" . $filename;
+$destination = "./tmp_attachment_file/" . $filename;
 // 수강후기 등록 시, 전달되는 $_POST['attach_file'] 값
 $fileurl = $file_name_ori . "|" . $filename;
 // 변환 파일명으로 저장

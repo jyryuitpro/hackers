@@ -105,7 +105,7 @@ $_SESSION['HACKERS'] = $_SERVER['HTTP_REFERER'];
                     <?php
                     if ($_SESSION['f_authority'] != '0') {
                     ?>
-                        <a><?php echo '안녕하세요. '.$f_name.'님'?></a>
+                        <a><?php echo '안녕하세요. '.$f_name.' 회원님'?></a>
                     <?php
                     } else {
                     ?>

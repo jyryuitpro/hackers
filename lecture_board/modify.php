@@ -21,37 +21,37 @@ session_start();
 //    ["attach_file"]=> string(54) "./attachment_file/608fa20a0363a5f6bfb4bf6c9358cf1f.txt"
 //}
 
-// 분류 아이디
-$f_category_id = $_POST['f_category_id'];
+if (isset($_POST['f_gubun']) && $_POST['f_gubun'] == 'modify') {
+    // 분류 아이디
+    $f_category_id = $_POST['f_category_id'];
 
-// 분류명
-$f_category = $_POST['f_category'];
+    // 분류명
+    $f_category = $_POST['f_category'];
 
-// 강의명
-$f_lecture = $_POST['f_lecture'];
+    // 강의명
+    $f_lecture = $_POST['f_lecture'];
 
-// 수강후기 제목
-$f_title = $_POST['f_title'];
+    // 수강후기 제목
+    $f_title = $_POST['f_title'];
 
-// 강의 만족도
-$f_grade = $_POST['radio'];
+    // 강의 만족도
+    $f_grade = $_POST['radio'];
 
-// 수강후기 내용
-$f_contents = addslashes(trim($_POST['content']));
+    // 수강후기 내용
+    $f_contents = addslashes(trim($_POST['content']));
 
-// 수강후기 내용
-$f_name = $_POST['f_name'];
+    // 수강후기 내용
+    $f_name = $_POST['f_name'];
 
-// 수강후기 작성자 아이디
-$f_id = $_POST['f_id'];
+    // 수강후기 작성자 아이디
+    $f_id = $_POST['f_id'];
 
-// 수강후기 작성자 이름
-$f_num = $_POST['f_num'];
+    // 수강후기 작성자 이름
+    $f_num = $_POST['f_num'];
 
-// 수강후기 첨부파일
-$f_attach_file = $_POST['attach_file'];
+    // 수강후기 첨부파일
+    $f_attach_file = $_POST['attach_file'];
 
-if ($_POST['f_gubun'] == 'modify') {
     if (isset($_POST['attach_file'])) { // 첨부파일을 새로 업로드한 경우
         // 등록된 첨부파일 파일 삭제를 위한 기존 정보 가져오기
         $sql = 'SELECT F_ATTACH_FILE FROM BOARD WHERE F_NUM = ' . $f_num;
@@ -105,16 +105,15 @@ if ($_POST['f_gubun'] == 'modify') {
     $f_num = $_GET['f_num'];
 
     // 등록된 첨부파일 파일 삭제를 위한 기존 정보 가져오기
-    $sql = 'SELECT F_ATTACH_FILE FROM BOARD WHERE F_NUM = ' . $f_num;
+    $sql = 'SELECT F_ATTACH_FILE_CRYPTO FROM BOARD WHERE F_NUM = ' . $f_num;
     $result = $conn->query($sql);
     $result = $result->fetch_assoc();
 
-    $f_attach_file_path = $result['F_ATTACH_FILE'];
-    $array = explode("/", $f_attach_file_path);
-    // 등록된 첨부파일명
-    $f_attach_file_name = $array[2];
+    $f_attach_file_crypto = $result['F_ATTACH_FILE_CRYPTO'];
+    $attachment_file_dir = "./attachment_file/";
+    $attachment_file_path = $attachment_file_dir.$f_attach_file_crypto;
 
-    $result_unlink = unlink($f_attach_file_path);
+    $result_unlink = unlink($attachment_file_path);
 
     // 첨부파일 삭제 실패
     if(!$result_unlink){
