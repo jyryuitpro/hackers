@@ -12,7 +12,7 @@
   + step_02.php
   + thumbnail_download.php
 * [database]
-  + dbconfig.php
+  + dbconfig.php > DB
 * [include]
   + footer.php
   + header.php
@@ -52,7 +52,7 @@
   + step_03.php
   + step_04.php
 * [sql]
-  + hackers.sql
+  + hackers.sql > 샘플데이터
 * index.php > 메인페이지
 
 ### 1. 회원가입 및 로그인 기능구현
