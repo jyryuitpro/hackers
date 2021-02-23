@@ -319,8 +319,12 @@ $result_normal = $conn->query($sql);
             $lastPage = $currentSection * $oneSection; //현재 섹션의 마지막 페이지
         }
 
-        $prevPage = (($currentSection - 1) * $oneSection); //이전 페이지, 11~20일 때 이전을 누르면 10 페이지로 이동.
-        $nextPage = (($currentSection + 1) * $oneSection) - ($oneSection - 1); //다음 페이지, 11~20일 때 다음을 누르면 21 페이지로 이동.
+//        $prevPage = (($currentSection - 1) * $oneSection); //이전 페이지, 11~20일 때 이전을 누르면 10 페이지로 이동.
+//        $nextPage = (($currentSection + 1) * $oneSection) - ($oneSection - 1); //다음 페이지, 11~20일 때 다음을 누르면 21 페이지로 이동.
+
+        // 섹션 단위가 아닌 페이지 단위로 변경
+        $prevPage = $page - 1; // 이전 섹션으로 이동
+        $nextPage = $page + 1; // 다음 섹션으로 이동
 
         $paging = '<ul>'; // 페이징을 저장할 변수
         //첫 페이지가 아니라면 처음 버튼을 생성
@@ -330,7 +334,11 @@ $result_normal = $conn->query($sql);
 
         //첫 섹션이 아니라면 이전 버튼을 생성
         //var_dump($currentSection);
-        if($currentSection != 1) {
+//        if($currentSection != 1) {
+//            $paging .= '<a href="/lecture_board/step_03.php?page=' . $prevPage . $query_string_add. '"><i class="icon-prev"><span class="hidden">이전페이지</span></i></a>';
+//        }
+
+        if($page != 1) {
             $paging .= '<a href="/lecture_board/step_03.php?page=' . $prevPage . $query_string_add. '"><i class="icon-prev"><span class="hidden">이전페이지</span></i></a>';
         }
 
@@ -343,7 +351,11 @@ $result_normal = $conn->query($sql);
         }
 
         //마지막 섹션이 아니라면 다음 버튼을 생성
-        if($currentSection != $allSection) {
+//        if($currentSection != $allSection) {
+//            $paging .= '<a href="/lecture_board/step_03.php?page=' . $nextPage . $query_string_add. '"><i class="icon-next"><span class="hidden">다음페이지</span></i></a>';
+//        }
+
+        if($page != 1) {
             $paging .= '<a href="/lecture_board/step_03.php?page=' . $nextPage . $query_string_add. '"><i class="icon-next"><span class="hidden">다음페이지</span></i></a>';
         }
 

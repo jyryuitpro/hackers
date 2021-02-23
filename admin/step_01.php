@@ -101,8 +101,12 @@ if ($currentSection == $allSection) {
 }
 
 // 전체 섹션의 수 : [1,2,3] [4,5,6] [7,8,9]
-$prevPage = (($currentSection - 1) * $oneSection); // 이전 섹션으로 이동
-$nextPage = (($currentSection + 1) * $oneSection) - ($oneSection - 1); // 다음 섹션으로 이동
+//$prevPage = (($currentSection - 1) * $oneSection); // 이전 섹션으로 이동
+//$nextPage = (($currentSection + 1) * $oneSection) - ($oneSection - 1); // 다음 섹션으로 이동
+
+// 섹션 단위가 아닌 페이지 단위로 변경
+$prevPage = $page - 1; // 이전 섹션으로 이동
+$nextPage = $page + 1; // 다음 섹션으로 이동
 
 // 페이징을 저장할 변수
 $paging = '<ul>';
@@ -112,7 +116,11 @@ if($page != 1) {
 }
 
 //첫 섹션이 아니라면 이전 버튼을 생성
-if($currentSection != 1) {
+//if($currentSection != 1) {
+//    $paging .= '<a href="/admin/step_01.php?page=' . $prevPage . $query_string_add. '"><i class="icon-prev"><span class="hidden">이전 섹션</span></i></a>';
+//}
+
+if($page != 1) {
     $paging .= '<a href="/admin/step_01.php?page=' . $prevPage . $query_string_add. '"><i class="icon-prev"><span class="hidden">이전 섹션</span></i></a>';
 }
 
@@ -127,7 +135,11 @@ for($i = $firstPage; $i <= $lastPage; $i++) {
 }
 
 //마지막 섹션이 아니라면 다음 섹션 버튼을 생성
-if($currentSection != $allSection) {
+//if($currentSection != $allSection) {
+//    $paging .= '<a href="/admin/step_01.php?page=' . $nextPage . $query_string_add. '"><i class="icon-next"><span class="hidden">다음 섹션</span></i></a>';
+//}
+
+if($page != $allPage) {
     $paging .= '<a href="/admin/step_01.php?page=' . $nextPage . $query_string_add. '"><i class="icon-next"><span class="hidden">다음 섹션</span></i></a>';
 }
 

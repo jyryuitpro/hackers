@@ -1,7 +1,7 @@
 <?php
 require_once("../database/dbconfig.php");
-//error_reporting(E_ALL);
-//ini_set("display_errors", 1);
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
 
 //var_dump($_POST);
 //exit;
@@ -59,7 +59,6 @@ if (isset($_POST['attach_file'])) {
     // 변환 파일명
     $f_attach_file_crypto = $array[1];
 
-    // 수강후기 등록 시, 임시파일에 있는 첨부파일을 이동 시키고 삭제
     // tmp_attachment_file
     $tmp_attachment_file = "./tmp_attachment_file/".$f_attach_file_crypto;
     // attachment_file
@@ -67,6 +66,16 @@ if (isset($_POST['attach_file'])) {
 
     copy($tmp_attachment_file, $attachment_file);
     unlink($tmp_attachment_file);
+
+//    첨부파일 파일 이동 후, 임시 디렉토리에 남아있는 파일 전체 삭제
+//    임시 디렉토리 경로
+//    $tmp_attachment_path = './tmp_attachment_file/';
+
+//    $tmp_attachments = scandir($tmp_attachment_path);
+//    foreach ($tmp_attachments as $tmp_attachment) {
+//        if($tmp_attachment == "." || $tmp_attachment == "..") continue;
+//        unlink($tmp_attachment_path.$tmp_attachment);
+//    }
 }
 
 $sql = "INSERT INTO BOARD (F_CATEGORY_ID, F_CATEGORY, F_LECTURE, F_TITLE, F_GRADE, F_CONTENTS, F_ID, F_NAME, F_ATTACH_FILE_ORI, F_ATTACH_FILE_CRYPTO, F_REG_TIME)";

@@ -53,17 +53,30 @@ if (isset($_POST['f_gubun']) && $_POST['f_gubun'] == 'modify') {
     $f_attach_file = $_POST['attach_file'];
 
     if (isset($_POST['attach_file'])) { // 첨부파일을 새로 업로드한 경우
-        // 등록된 첨부파일 파일 삭제를 위한 기존 정보 가져오기
-        $sql = 'SELECT F_ATTACH_FILE FROM BOARD WHERE F_NUM = ' . $f_num;
+        // 수강후기 첨부파일
+        $array = explode("|", $_POST['attach_file']);
+        // 원본 파일명
+        $f_attach_file_ori = $array[0];
+        // 변환 파일명
+        $f_attach_file_crypto = $array[1];
+
+        // tmp_attachment_file
+        $tmp_attachment_file = "./tmp_attachment_file/".$f_attach_file_crypto;
+        // attachment_file
+        $attachment_file = "./attachment_file/".$f_attach_file_crypto;
+
+        copy($tmp_attachment_file, $attachment_file);
+
+        // 기 등록된 첨부파일 파일 삭제를 위한 기존 정보 가져오기
+        $sql = 'SELECT F_ATTACH_FILE_CRYPTO FROM BOARD WHERE F_NUM = ' . $f_num;
         $result = $conn->query($sql);
         $result = $result->fetch_assoc();
 
-        $f_attach_file_path = $result['F_ATTACH_FILE'];
-        $array = explode("/", $f_attach_file_path);
-        // 등록된 첨부파일명
-        $f_attach_file_name = $array[2];
+        $f_attach_file_crypto = $result['F_ATTACH_FILE_CRYPTO'];
+        $attachment_file_dir = "./attachment_file/";
+        $attachment_file_path = $attachment_file_dir.$f_attach_file_crypto;
 
-        $result_unlink = unlink($f_attach_file_path);
+        $result_unlink = unlink($attachment_file_path);
 
         // 첨부파일 삭제 실패
         if(!$result_unlink){
@@ -109,16 +122,18 @@ if (isset($_POST['f_gubun']) && $_POST['f_gubun'] == 'modify') {
     $result = $conn->query($sql);
     $result = $result->fetch_assoc();
 
-    $f_attach_file_crypto = $result['F_ATTACH_FILE_CRYPTO'];
-    $attachment_file_dir = "./attachment_file/";
-    $attachment_file_path = $attachment_file_dir.$f_attach_file_crypto;
+    if ($result['F_ATTACH_FILE_CRYPTO'] != "") {
+        $f_attach_file_crypto = $result['F_ATTACH_FILE_CRYPTO'];
+        $attachment_file_dir = "./attachment_file/";
+        $attachment_file_path = $attachment_file_dir.$f_attach_file_crypto;
 
-    $result_unlink = unlink($attachment_file_path);
+        $result_unlink = unlink($attachment_file_path);
 
-    // 첨부파일 삭제 실패
-    if(!$result_unlink){
-        echo '<script>alert("썸네일 파일 삭제 실패했습니다."); history.back(); </script>';
-        return false;
+        // 첨부파일 삭제 실패
+        if(!$result_unlink){
+            echo '<script>alert("썸네일 파일 삭제 실패했습니다."); history.back(); </script>';
+            return false;
+        }
     }
 
     $sql = "DELETE FROM BOARD WHERE F_NAME = '$f_name' AND F_ID = '$f_id' AND F_NUM = '$f_num'";

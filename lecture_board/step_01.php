@@ -204,7 +204,22 @@ $result_normal = $conn->query($sql);
 			<div class="sub-depth">
 				<span><i class="icon-home"><span>홈</span></i></span>
 				<span>직무교육 안내</span>
-				<strong>수강후기</strong>
+				<span>수강후기</span>
+                <strong>
+                    <?php
+                    if ($_GET['f_category_id'] == 1) {
+                        echo '어학 및 자격증';
+                    } else if ($_GET['f_category_id'] == 2) {
+                        echo '공통역량';
+                    } else if ($_GET['f_category_id'] == 3) {
+                        echo '일반직무';
+                    } else if ($_GET['f_category_id'] == 4) {
+                        echo '산업직무';
+                    } else {
+                        echo '전체';
+                    }
+                    ?>
+                </strong>
 			</div>
 		</div>
 
@@ -361,7 +376,7 @@ $result_normal = $conn->query($sql);
             if ($allPost != 0) {
                 echo $paging;
             } else {
-                echo '검색된 수강후기가 없습니다. 다른 검색조건으로 검색해주세요.';
+                echo '검색된 수강후기가 없습니다.';
             }
             ?>
         </div>
