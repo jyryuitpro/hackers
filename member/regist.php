@@ -1,6 +1,7 @@
 <?php
 require_once("../database/dbconfig.php");
 
+// 여기서 검증하세요
 // 이름
 $f_name = $_POST['f_name'];
 // 아이디

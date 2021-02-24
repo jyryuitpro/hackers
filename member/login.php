@@ -59,12 +59,16 @@
                     window.location.href='/index.php';
                 } else if (data.res == "fail_f_id") {
                     alert("아이디를 확인해주세요.");
+                    return false;
                 } else if (data.res == "fail_f_password") {
                     alert("비밀번호를 확인해주세요.");
+                    return false;
                 } else if (data.res == "fail") {
                     alert("아이디와 비밀번호를 확인해주세요.");
+                    return false;
                 } else if (data.res == "wrong_path") { // 로그인 성공시 리퍼러를 활용한 페이지 리다이렉트 처리
                     alert("잘못된 경로 접근입니다.");
+                    return false;
                 }
             },
             error:function () {

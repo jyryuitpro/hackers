@@ -1,6 +1,6 @@
 <?php
     session_start();
-    $f_mobile = $_SESSION['f_mobile'];
+    $f_mobile = $_SESSION['f_mobile']; //휴대폰번호, 이메일, 주민등록번호
     $f_mobile_0 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$1", $f_mobile);
     $f_mobile_1 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$2", $f_mobile);
     $f_mobile_2 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$3", $f_mobile);
@@ -204,6 +204,7 @@
         regist.submit();
     }
 
+    // 보통은 php로 만든다. 스크립트는 조작이 될 수가 있다. 실행이 안될 수도 있다. 되도록이면 기본적인 베이스는 무조건 php(화면에 그리는 부분)
     // 생년월일 셀렉트박스 옵션 생성
     function setDateBox(){
         var dt = new Date();

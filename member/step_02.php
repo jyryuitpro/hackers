@@ -1,6 +1,8 @@
 <?php
     session_start();
+    // 데이터베이스 저장하고 인증번호 비교
     // SESSION 에 인증번호 고정[123456] 지정하여 매칭후 본인확인 패스
+    // ajax, xhr ?
     $_SESSION['verification_number'] = 123456;
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

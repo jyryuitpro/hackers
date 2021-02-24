@@ -11,6 +11,8 @@ ini_set("display_errors", 1);
 //    ["f_attach_file_crypto"]=> string(36) "60a3f1b21986c3acec2ce89050f3bc1b.txt"
 //}
 
+// 다운로드횟수 카운트 ?!
+// 게시물번호를 보내서 여기서 뚝딱뚝딱
 // 원본 파일명
 $f_attach_file_ori = $_GET['f_attach_file_ori'];
 // 변환 파일명

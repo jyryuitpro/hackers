@@ -1,4 +1,5 @@
 <?php
+
 require_once("../database/dbconfig.php");
 //error_reporting(E_ALL);
 //ini_set("display_errors", 1);
@@ -32,7 +33,7 @@ if ($query_string != "") {
 
 //var_dump($query_string_add);
 
-// 페이징 시작
+// 페이징 시작 : 함수로 만들어야됩니다.
 if (isset($_GET['page'])) { // $_GET['page']가 있는 경우
     $page = $_GET['page'];
 } else { // $_GET['page']가 없는 경우

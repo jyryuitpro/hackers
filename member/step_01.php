@@ -42,6 +42,7 @@
             }
         });
 
+        // 클래스 사용하자 .***
         $("#check_all").click(function(){
             if ($("#check_all").is(":checked")) {
                 $("#check_1").prop("checked", true);
