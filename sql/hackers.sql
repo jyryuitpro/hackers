@@ -4,70 +4,75 @@ USE hackers;
 -- 관리자 > 아이디 : hackers | 비밀번호 : 해커스12 | 권한구분 : 0
 -- 일반회원 > 아이디 : test01 | 비밀번호 : 해커스12 | 권한구분 : 1
 
+-- 수강후기 테이블
 create table BOARD
 (
     F_NUM bigint auto_increment primary key,
-    F_CATEGORY_ID varchar(128) null,
-    F_CATEGORY varchar(128) null,
-    F_LECTURE varchar(128) null,
-    F_TITLE varchar(128) null,
-    F_GRADE varchar(128) null,
-    F_CONTENTS longtext null,
-    F_COUNT bigint default 0 null,
-    F_BEST varchar(128) null,
-    F_ID varchar(128) null,
-    F_NAME varchar(128) null,
-    F_ATTACH_FILE_ORI varchar(128) null,
-    F_ATTACH_FILE_CRYPTO varchar(128) null,
-    F_REG_TIME datetime null
+    F_CATEGORY_ID varchar(128) null, -- 강의 분류 아이디
+    F_CATEGORY varchar(128) null, -- 강의 분류명
+    F_LECTURE varchar(128) null, -- 강의명
+    F_TITLE varchar(128) null, -- 제목
+    F_GRADE varchar(128) null, -- 강의만족도
+    F_CONTENTS longtext null, -- 수강후기 내용
+    F_COUNT bigint default 0 null, -- 조회수
+    F_BEST varchar(128) null, -- 베스트 유무(미사용)
+    F_ID varchar(128) null, -- 작성자 아이디
+    F_NAME varchar(128) null, -- 작성자 이름
+    F_ATTACH_FILE_ORI varchar(128) null, -- 첨부파일 원본파일명
+    F_ATTACH_FILE_CRYPTO varchar(128) null, -- 첨부파일 변환파일명
+    F_REG_TIME datetime null -- 등록일
 );
 
+-- 강의 분류 테이블
 CREATE TABLE CATEGORY
 (
-    F_CATEGORY_ID varchar(128) null,
-    F_CATEGORY varchar(128) null
+    F_CATEGORY_ID varchar(128) null, -- 강의 분류 아이디
+    F_CATEGORY varchar(128) null -- 강의 분류명
 );
 
+-- 강의 테이블
 CREATE TABLE LECTURE
 (
-    F_NUM int(10) auto_increment primary key,
-    F_CATEGORY_ID varchar(128) null,
-    F_CATEGORY varchar(128) null,
-    F_LECTURE varchar(128) null,
-    F_INSTRUCTOR varchar(128) null,
-    F_LEARNING_TIME int(10) null,
-    F_LECTURE_COUNT int(10) null,
-    F_GRADE varchar(128) null,
-    F_ADMIN_ID varchar(128) null,
-    F_ADMIN_NAME varchar(128) null,
-    F_THUMBNAIL_ID varchar(128) null,
-    F_REG_TIME datetime null
+    F_NUM int(10) auto_increment primary key, -- 강의등록 번호
+    F_CATEGORY_ID varchar(128) null, -- 강의 분류 아이디
+    F_CATEGORY varchar(128) null, -- 강의 분류명
+    F_LECTURE varchar(128) null, -- 강의명
+    F_INSTRUCTOR varchar(128) null, -- 강사명
+    F_LEARNING_TIME int(10) null, -- 학습시간
+    F_LECTURE_COUNT int(10) null, -- 강의수
+    F_GRADE varchar(128) null, -- 학습난이도
+    F_ADMIN_ID varchar(128) null, -- 관리자 아이디
+    F_ADMIN_NAME varchar(128) null, -- 관리자 이름
+    F_THUMBNAIL_ID varchar(128) null, -- 썸네일 아이디
+    F_REG_TIME datetime null -- 등록일
 );
 
+-- 회원 테이블
 CREATE TABLE MEMBER
 (
-    F_NUM bigint auto_increment primary key,
-    F_NAME varchar(128) null,
-    F_ID varchar(128) null,
-    F_PASSWORD varchar(128) null,
-    F_EMAIL varchar(128) null,
-    F_MOBILE varchar(128) null,
-    F_TEL varchar(128) null,
-    F_ZIPCODE varchar(50) null,
-    F_ADDRESS varchar(128) null,
-    F_ADDRESS_DETAIL varchar(256) null,
-    F_MOBILE_AGREE varchar(128) null,
-    F_EMAIL_AGREE varchar(128) null,
-    F_BIRTHDAY varchar(50) null,
-    F_AUTHORITY varchar(50) null
+    F_NUM bigint auto_increment primary key, -- 회원등록 번호
+    F_NAME varchar(128) null, -- 이름
+    F_ID varchar(128) null, -- 아이디
+    F_PASSWORD varchar(128) null, -- 비밀번호
+    F_EMAIL varchar(128) null, -- 이메일
+    F_MOBILE varchar(128) null, -- 휴대폰번호
+    F_TEL varchar(128) null, -- 일반번호
+    F_ZIPCODE varchar(50) null, -- 우편번호
+    F_ADDRESS varchar(128) null, -- 주소
+    F_ADDRESS_DETAIL varchar(256) null, -- 상세주소
+    F_MOBILE_AGREE varchar(128) null, -- SMS 수신동의
+    F_EMAIL_AGREE varchar(128) null, -- 이메일 수신동의
+    F_BIRTHDAY varchar(50) null, -- 생년월일
+    F_AUTHORITY varchar(50) null -- 권한
 );
 
+-- 썸네일 테이블
 CREATE TABLE THUMBNAIL
 (
-    F_THUMBNAIL_ID varchar(128) not null primary key,
-    F_THUMBNAIL_NAME_ORI varchar(255) null,
-    F_THUMBNAIL_NAME_CRYPTO varchar(255) null,
-    F_REG_TIME timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP
+    F_THUMBNAIL_ID varchar(128) not null primary key, -- 썸네일 아이디
+    F_THUMBNAIL_NAME_ORI varchar(255) null, -- 썸네일 원본파일명
+    F_THUMBNAIL_NAME_CRYPTO varchar(255) null, -- 썸네일 변환파일명
+    F_REG_TIME timestamp default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP -- 등록일
 );
 
 INSERT INTO BOARD (F_CATEGORY_ID, F_CATEGORY, F_LECTURE, F_TITLE, F_GRADE, F_CONTENTS, F_COUNT, F_BEST, F_ID, F_NAME, F_ATTACH_FILE_ORI, F_ATTACH_FILE_CRYPTO, F_REG_TIME) VALUES ('1', '어학 및 자격증', '그래머 게이트웨이 인터미디엇', '언제, 어디서나 업무의 효율을 높이는 Word 2016', '5', '<p style="color: rgb(85, 85, 85); font-family: &quot;Malgun Gothic&quot;, 맑은고딕, 돋움, Dotum, sans-serif; font-size: 14px; letter-spacing: -1px;">구성이 완전 알차네요!</p><p style="color: rgb(85, 85, 85); font-family: &quot;Malgun Gothic&quot;, 맑은고딕, 돋움, Dotum, sans-serif; font-size: 14px; letter-spacing: -1px;">최신 버전 워드 기능이 다 나와있고</p><p style="color: rgb(85, 85, 85); font-family: &quot;Malgun Gothic&quot;, 맑은고딕, 돋움, Dotum, sans-serif; font-size: 14px; letter-spacing: -1px;">설명도 따라하기 쉽도록 매우 친절하게 해주십니다</p><p style="color: rgb(85, 85, 85); font-family: &quot;Malgun Gothic&quot;, 맑은고딕, 돋움, Dotum, sans-serif; font-size: 14px; letter-spacing: -1px;">강의 잘 들었습니다.</p><p style="color: rgb(85, 85, 85); font-family: &quot;Malgun Gothic&quot;, 맑은고딕, 돋움, Dotum, sans-serif; font-size: 14px; letter-spacing: -1px;">다음달부터 엑셀도 신청해볼께요!</p>                            <p><br></p>', 0, null, 'hackers', '해커스', '', '', '2021-02-23 23:37:49');
