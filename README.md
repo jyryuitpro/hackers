@@ -2,58 +2,58 @@
 
 ### 프로젝트 구조
 
-* [admin]
-  + [image]
-  + [thumbnail]
-  + index.php
-  + modify.php
-  + regist.php
-  + step_01.php
-  + step_02.php
-  + thumbnail_download.php
-* [database]
-  + dbconfig.php > DB연결
+* [admin] > 관리자
+  + [image] > 이미지 폴더
+  + [thumbnail] > 썸네일 폴더
+  + index.php > 페이지 이동 프로세스
+  + modify.php > 강의 수정 프로세스
+  + regist.php > 강의 등록 프로세스
+  + step_01.php > 강의 리스트 페이지
+  + step_02.php > 강의 등록 페이지
+  + thumbnail_download.php > 썸네일 다운로드 프로세스
+* [database] > 데이터베이스
+  + dbconfig.php > DB Connection
 * [include]
   + footer.php
   + header.php
   + left.php
-* [lecture_board]
-  + [attachment_file]
-  + [daumeditor]
-  + [tmp_attachment_file]
-  + attachment_file_download.php
-  + attachment_file_upload.php
-  + index.php
-  + modify.php
-  + regist.php
-  + search.php
-  + step_01.php
-  + step_02.php
-  + step_03.php
-* [login]
-  + find_id.php
-  + find_id_completed.php
-  + find_password.php
-  + find_password_completed.php
-  + login.php
-  + logout.php
-  + modify_password.php
-* [member]
-  + certification.php
-  + duplication_check.php
-  + identification.php
-  + index.php
-  + login.php
-  + modify.php
-  + modify_myinfo.php
-  + regist.php
-  + step_01.php
-  + step_02.php
-  + step_03.php
-  + step_04.php
+* [lecture_board] > 수강후기
+  + [attachment_file] > 첨부파일 폴더
+  + [daumeditor] > 다음 웹 에디터 폴더
+  + [tmp_attachment_file] > 첨부파일 임시 폴더
+  + attachment_file_download.php > 첨부파일 다운로드 프로세스
+  + attachment_file_upload.php > 첨부파일 업로드 프로세스
+  + index.php > 페이지 이동 프로세스
+  + modify.php > 수강후기 수정 프로세스
+  + regist.php > 수강후기 등록 프로세스
+  + search.php > 검색조건 URI 설정 프로세스
+  + step_01.php > 수강후기 리스트 페이지
+  + step_02.php > 수강후기 등록, 수정 페이지
+  + step_03.php > 수강후기 상세 페이지
+* [login] > 로그인
+  + find_id.php > 아이디 찾기 페이지
+  + find_id_completed.php > 아이디 조회결과 페이지
+  + find_password.php > 비밀번호 재설정(찾기) 페이지
+  + find_password_completed.php > 비밀번호 재설정 페이지
+  + login.php > 로그인 프로세스
+  + logout.php > 로그아웃 프로세스
+  + modify_password.php > 비밀번호 재설정 프로세스
+* [member] > 회원
+  + certification.php > 본인확인, 휴대폰 및 이메일 인증 프로세스
+  + duplication_check.php > 아이디 중복체크 프로세스
+  + identification.php > 샘플파일
+  + index.php > 페이지 이동 프로세스
+  + login.php > 로그인 페이지
+  + modify.php > 정보수정 프로세스
+  + modify_myinfo.php > 내정보수정 페이지
+  + regist.php > 회원가입 프로세스
+  + step_01.php > 약관동의 페이지
+  + step_02.php > 본인확인 페이지
+  + step_03.php > 정보입력 페이지
+  + step_04.php > 회원가입 완료 페이지
 * [sql]
   + hackers.sql > 샘플데이터
-* index.php > 메인페이지
+* index.php > 메인 페이지
 
 ### 1. 회원가입 및 로그인 기능구현
 
