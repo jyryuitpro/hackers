@@ -1,5 +1,5 @@
-CREATE DATABASE HACKERS;
-USE HACKERS;
+CREATE DATABASE hackers;
+USE hackers;
 
 -- 관리자 > 아이디 : hackers | 비밀번호 : 해커스12 | 권한구분 : 0
 -- 일반회원 > 아이디 : test01 | 비밀번호 : 해커스12 | 권한구분 : 1
