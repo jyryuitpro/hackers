@@ -1,18 +1,19 @@
 CREATE DATABASE HACKERS;
 USE HACKERS;
 
--- 관리자 > 아이디 : hackers | 비밀번호 : 해커스12
--- 일반회원 > 아이디 : test01 | 비밀번호 : 해커스12
-CREATE TABLE BOARD
+-- 관리자 > 아이디 : hackers | 비밀번호 : 해커스12 | 권한구분 : 0
+-- 일반회원 > 아이디 : test01 | 비밀번호 : 해커스12 | 권한구분 : 1
+
+create table BOARD
 (
-    F_NUM int(10) auto_increment primary key,
+    F_NUM bigint auto_increment primary key,
     F_CATEGORY_ID varchar(128) null,
     F_CATEGORY varchar(128) null,
     F_LECTURE varchar(128) null,
     F_TITLE varchar(128) null,
     F_GRADE varchar(128) null,
     F_CONTENTS longtext null,
-    F_COUNT int(10) default 0 null,
+    F_COUNT bigint default 0 null,
     F_BEST varchar(128) null,
     F_ID varchar(128) null,
     F_NAME varchar(128) null,
@@ -45,20 +46,20 @@ CREATE TABLE LECTURE
 
 CREATE TABLE MEMBER
 (
-    F_NUM int(10) auto_increment primary key,
+    F_NUM bigint auto_increment primary key,
     F_NAME varchar(128) null,
     F_ID varchar(128) null,
     F_PASSWORD varchar(128) null,
     F_EMAIL varchar(128) null,
     F_MOBILE varchar(128) null,
     F_TEL varchar(128) null,
-    F_ZIPCODE varchar(128) null,
+    F_ZIPCODE varchar(50) null,
     F_ADDRESS varchar(128) null,
-    F_ADDRESS_DETAIL varchar(128) null,
+    F_ADDRESS_DETAIL varchar(256) null,
     F_MOBILE_AGREE varchar(128) null,
     F_EMAIL_AGREE varchar(128) null,
-    F_BIRTHDAY varchar(128) null,
-    F_AUTHORITY varchar(128) null
+    F_BIRTHDAY varchar(50) null,
+    F_AUTHORITY varchar(50) null
 );
 
 CREATE TABLE THUMBNAIL
@@ -170,8 +171,8 @@ INSERT INTO LECTURE (F_CATEGORY_ID, F_CATEGORY, F_LECTURE, F_INSTRUCTOR, F_LEARN
 INSERT INTO LECTURE (F_CATEGORY_ID, F_CATEGORY, F_LECTURE, F_INSTRUCTOR, F_LEARNING_TIME, F_LECTURE_COUNT, F_GRADE, F_ADMIN_ID, F_ADMIN_NAME, F_THUMBNAIL_ID, F_REG_TIME) VALUES ('1', '어학 및 자격증', '그래머 게이트웨이 인터미디엇', '배준일', 12, 12, '5', 'jyryujiyoung', '류지영', '8c63cb40fc224efc30bb9822ab080c76', '2021-02-21 14:54:43');
 INSERT INTO LECTURE (F_CATEGORY_ID, F_CATEGORY, F_LECTURE, F_INSTRUCTOR, F_LEARNING_TIME, F_LECTURE_COUNT, F_GRADE, F_ADMIN_ID, F_ADMIN_NAME, F_THUMBNAIL_ID, F_REG_TIME) VALUES ('1', '어학 및 자격증', '해커스 Talk! Medical English 고급', '해커스', 30, 30, '5', 'hackers', '해커스', '5698a4f7344fc1492a3de680d3b129d2', '2021-02-23 23:33:01');
 
-INSERT INTO MEMBER (F_NAME, F_ID, F_PASSWORD, F_EMAIL, F_MOBILE, F_TEL, F_ZIPCODE, F_ADDRESS, F_ADDRESS_DETAIL, F_MOBILE_AGREE, F_EMAIL_AGREE, F_BIRTHDAY, F_AUTHORITY) VALUES (3, '해커스', 'hackers', 'XWH+WS1dX6dLi05kgAc7r6RShvZGT9PlhHF3fRTEW7M=', 'hackers@hackers.com', '01093789025', '025697467', '06616', '서울 서초구 강남대로61길 23 (현대성우주상복합아파트)', '해커스 교육그룹 본사', 'Y', 'Y', '20001130', '0');
-INSERT INTO MEMBER (F_NAME, F_ID, F_PASSWORD, F_EMAIL, F_MOBILE, F_TEL, F_ZIPCODE, F_ADDRESS, F_ADDRESS_DETAIL, F_MOBILE_AGREE, F_EMAIL_AGREE, F_BIRTHDAY, F_AUTHORITY) VALUES (12, '테스트', 'test01', 'XWH+WS1dX6dLi05kgAc7r6RShvZGT9PlhHF3fRTEW7M=', '', '01093789025', '0312623227', '16873', '서울 서초구 강남대로61길 23 (현대성우주상복합아파트)', '해커스 교육그룹 본사', 'Y', 'Y', '19500101', '1');
+INSERT INTO MEMBER (F_NAME, F_ID, F_PASSWORD, F_EMAIL, F_MOBILE, F_TEL, F_ZIPCODE, F_ADDRESS, F_ADDRESS_DETAIL, F_MOBILE_AGREE, F_EMAIL_AGREE, F_BIRTHDAY, F_AUTHORITY) VALUES ('해커스', 'hackers', 'IWQ9mtRqKrW8sH237F9pPuf8X+yFCwy/lSj+f/GIwnI=', 'hackers@hackers.com', '01093789025', '025663700', '06616', '서울 서초구 강남대로61길 23 (현대성우주상복합아파트)', '해커스 교육그룹 본사', 'Y', 'Y', '20001130', '0');
+INSERT INTO MEMBER (F_NAME, F_ID, F_PASSWORD, F_EMAIL, F_MOBILE, F_TEL, F_ZIPCODE, F_ADDRESS, F_ADDRESS_DETAIL, F_MOBILE_AGREE, F_EMAIL_AGREE, F_BIRTHDAY, F_AUTHORITY) VALUES ('테스트', 'test01', 'IWQ9mtRqKrW8sH237F9pPuf8X+yFCwy/lSj+f/GIwnI=', 'test01@hackers.com', '01093789025', '025663700', '06616', '서울 서초구 강남대로61길 23 (현대성우주상복합아파트)', '해커스 교육그룹 본사', 'Y', 'Y', '19500101', '1');
 
 INSERT INTO THUMBNAIL (F_THUMBNAIL_ID, F_THUMBNAIL_NAME_ORI, F_THUMBNAIL_NAME_CRYPTO, F_REG_TIME) VALUES ('000491c52a39467568eb4a5b616dd016', '168431621_pjEmKSbn_eng.jfif', 'b6da11f22e73414060913d036b7c8c71.jfif', '2021-02-20 09:02:07');
 INSERT INTO THUMBNAIL (F_THUMBNAIL_ID, F_THUMBNAIL_NAME_ORI, F_THUMBNAIL_NAME_CRYPTO, F_REG_TIME) VALUES ('0823e5d5b355c3ad72285ccb1d8cc2dc', '168431688_cGQX4Ap3_5BEABF88EABEB8EB8A94_ECB185EBB0A95D_EAB7B8EBA6BCECB185EC9DB4_EB93A4EBA0A4ECA3BCEB8A94_ECA781EC9EA5EC9DB8_ED9E90EBA781_EB9DBCEC9DB4ED9484_EC98A4ED8380EC8898ECA095.jpg', '10ca083c5d9aaae4b49225312ab9e751.jpg', '2021-02-20 18:18:05');

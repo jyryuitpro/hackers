@@ -208,12 +208,13 @@
             return false;
         }
 
+        // 일반번호
         $("#f_tel").val($("#f_tel_0").val() + $("#f_tel_1").val() + $("#f_tel_2").val());
 
         var allData = {
             "f_name": $("#f_name").val(), "f_birthday": $("#f_birthday").val(),
             "f_id_new": $("#f_id_new").val(), "f_password_0": $("#f_password_0").val(),
-            "f_email": $("#f_name").val(), "f_mobile": $("#f_mobile").val(),
+            "f_email": $("#f_email").val(), "f_mobile": $("#f_mobile").val(),
             "f_tel": $("#f_tel").val(), "f_zipcode": $("#f_zipcode").val(),
             "f_address": $("#f_address").val(), "f_address_detail": $("#f_address_detail").val(),
             "radio": $('input[name="radio"]:checked').val(), "radio2": $('input[name="radio2"]:checked').val(),
