@@ -57,13 +57,8 @@
                 if (data.res == "success") {
                     alert("로그인이 되었습니다. 메인 페이지로 이동합니다.");
                     window.location.href='/index.php';
-                } else if (data.res == "fail_f_id") {
-                    alert("아이디를 확인해주세요.");
-                    return false;
-                } else if (data.res == "fail_f_password") {
-                    alert("비밀번호를 확인해주세요.");
-                    return false;
                 } else if (data.res == "fail") {
+                    // 로그인 실패 사유 통합
                     alert("아이디와 비밀번호를 확인해주세요.");
                     return false;
                 } else if (data.res == "wrong_path") { // 로그인 성공시 리퍼러를 활용한 페이지 리다이렉트 처리

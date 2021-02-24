@@ -35,26 +35,12 @@ if (substr($_SESSION['HACKERS'],0, 23) == "http://test.hackers.com"){
         echo json_encode(array('res'=>'success'));
     } else {
 
-        $sql = "SELECT * FROM MEMBER WHERE F_ID='$f_id'";
+        $sql = "SELECT * FROM MEMBER WHERE F_ID='$f_id' AND F_PASSWORD='$f_password'";
         $result = $conn->query($sql);
-        $exist_f_id = mysqli_num_rows($result); // 아이디
-        $row = $result->fetch_assoc();
+        $exist_f_id = mysqli_num_rows($result);
 
-        $sql = "SELECT * FROM MEMBER WHERE F_PASSWORD='$f_password'";
-        $result = $conn->query($sql);
-        $exist_f_password = mysqli_num_rows($result);
-//        var_dump($exist_f_id);
-//        var_dump($exist_f_password);
-//        exit;
-        if ($exist_f_id == 0 && $exist_f_password == 0) {
+        if ($exist_f_id == 0) {
             echo json_encode(array('res'=>'fail'));
-            exit;
-        } else if ($exist_f_id == 0 && $exist_f_password != 0) {
-            echo json_encode(array('res'=>'fail_f_password'));
-            exit;
-        } else if ($exist_f_id != 0 && $exist_f_password == 0) {
-            echo json_encode(array('res'=>'fail_f_id'));
-            exit;
         }
     }
 } else {
