@@ -1,38 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
-<!--[if (IE 7)]><html class="no-js ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko"><![endif]-->
-<!--[if (IE 8)]><html class="no-js ie8" xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko"><![endif]-->
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="X-UA-Compatible" id="X-UA-Compatible" content="IE=EmulateIE8" />
-<title>해커스 HRD</title>
-<meta name="description" content="해커스 HRD" />
-<meta name="keywords" content="해커스, HRD" />
-
-<!-- 파비콘설정 -->
-<link rel="shortcut icon" type="image/x-icon" href="http://img.hackershrd.com/common/favicon.ico" />
-
-<!-- xhtml property속성 벨리데이션 오류/확인필요 -->
-<meta property="og:title" content="해커스 HRD" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.hackershrd.com/" />
-<meta property="og:image" content="http://img.hackershrd.com/common/og_logo.png" />
-
-<link type="text/css" rel="stylesheet" href="http://q.hackershrd.com/worksheet/css/common.css" />
-<link type="text/css" rel="stylesheet" href="http://q.hackershrd.com/worksheet/css/bxslider.css" />
-<link type="text/css" rel="stylesheet" href="http://q.hackershrd.com/worksheet/css/main.css" /><!-- main페이지에만 호출 -->
-<link type="text/css" rel="stylesheet" href="http://q.hackershrd.com/worksheet/css/sub.css" /><!-- sub페이지에만 호출 -->
-<link type="text/css" rel="stylesheet" href="http://q.hackershrd.com/worksheet/css/login.css" /><!-- login페이지에만 호출 -->
-
-<script type="text/javascript" src="http://q.hackershrd.com/worksheet/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="http://q.hackershrd.com/worksheet/js/plugins/bxslider/jquery.bxslider.min.js"></script>
-<script type="text/javascript" src="http://q.hackershrd.com/worksheet/js/plugins/bxslider/bxslider.js"></script>
-<script type="text/javascript" src="http://q.hackershrd.com/worksheet/js/ui.js"></script>
-<!--[if lte IE 9]> <script src="/js/common/place_holder.js"></script> <![endif]-->
+<?php include '../include/header.php'; ?>
 <script type="text/javascript">
     $(document).ready(function(){
-        // 이용약관, 개인정보 취급방침 동의 여부 확인
-        $("#step_02").click(function(){
+        // 다음단계(휴대폰인증) 이동 전, 이용약관, 개인정보 취급방침 동의 여부 확인
+        $(".nextstep").click(function(){
             if ($("#check_1").is(":checked") == false) {
                 alert("이용약관에 동의하셔야 다음 단계로 진행 가능합니다.");
                 return false;
@@ -42,36 +12,25 @@
             }
         });
 
-        // 클래스 사용하자 .***
-        $("#check_all").click(function(){
-            if ($("#check_all").is(":checked")) {
-                $("#check_1").prop("checked", true);
-                $("#check_2").prop("checked", true);
+        // 모두 동의 했을 경우, 이용약관, 개인정보취급방침 전부 체크
+        $(".check_all").click(function(){
+            if ($(this).is(":checked")) {
+                $(".check").prop("checked", true);
             } else {
-                $("#check_1").prop("checked", false);
-                $("#check_2").prop("checked", false);
+                $(".check").prop("checked", false);
             }
         });
 
-        $("input[name='check']").click(function(){
-            if ($("input[name='check']:checked").length == 2) {
-                $("#check_all").prop("checked", true);
+        // 이용약관, 개인정보취급방침 모두 동의 했을 경우, 모두 동의에 체크
+        $("input[class='check']").click(function(){
+            if ($("input[class='check']:checked").length == 2) {
+                $(".check_all").prop("checked", true);
             } else {
-                $("#check_all").prop("checked", false);
+                $(".check_all").prop("checked", false);
             }
         });
     });
 </script>
-
-</head><body>
-<!-- skip nav -->
-<div id="skip-nav">
-<a href="#content">본문 바로가기</a>
-</div>
-<!-- //skip nav -->
-
-<div id="wrap">
-    <?php include '../include/header.php'; ?>
 <div id="container" class="container-full">
 	<div id="content" class="content">
 		<div class="inner">
@@ -371,7 +330,7 @@ Aqua Auth 컨텐츠의 녹화차단 - Aqua Director 컨텐츠의 다운로드 DR
 					<button type="button" class="js_agree_open"><em>펼치기 ▼</em></button>
 					<div class="mt10">
 						<label class="input-sp">
-							<input type="checkbox" name="check" id="check_1"/>
+							<input type="checkbox" name="check" id="check_1" class="check"/>
 							<span class="input-txt">이용약관에 동의합니다.(필수)</span>
 						</label>
 					</div>
@@ -538,7 +497,7 @@ Aqua Auth 컨텐츠의 녹화차단 - Aqua Director 컨텐츠의 다운로드 DR
 					<button type="button" class="js_agree_open"><em>펼치기 ▼</em></button>
 					<div class="mt10">
 						<label class="input-sp">
-                            <input type="checkbox" name="check" id="check_2"/>
+                            <input type="checkbox" name="check" id="check_2" class="check"/>
 							<span class="input-txt">개인정보 취급방침에 동의합니다.(필수)</span>
 						</label>
 					</div>
@@ -547,19 +506,16 @@ Aqua Auth 컨텐츠의 녹화차단 - Aqua Director 컨텐츠의 다운로드 DR
 
 			<div class="all-agree-box">
 				<label class="input-sp">
-                    <input type="checkbox" name="check_all" id="check_all"/>
+                    <input type="checkbox" name="check_all" id="check_all" class="check_all"/>
 					<span class="input-txt">상위 이용약관 및 개인정보 취급방침에 모두 동의합니다.</span>
 				</label>
 			</div>
 
 			<div class="box-btn">
-				<a href="/member/index.php?mode=step_02" class="btn-l" name="step_02" id="step_02">다음단계 (휴대폰인증)</a>
+				<a href="/member/index.php?mode=step_02" class="btn-l nextstep" name="step_02" id="step_02">다음단계 (휴대폰인증)</a>
 			</div>
 
 		</div>
 	</div>
 </div>
-    <?php include '../include/footer.php'; ?>
-</div>
-</body>
-</html>
+<?php include '../include/footer.php'; ?>

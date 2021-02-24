@@ -722,8 +722,6 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
         </form>
         </div>
     </div>
-    <?php include '../include/footer.php'; ?>
-</div>
 <script type="text/javascript">
     var config = {
         txHost: '', /* 런타임 시 리소스들을 로딩할 때 필요한 부분으로, 경로가 변경되면 이 부분 수정이 필요. ex) http://xxx.xxx.com */
@@ -866,5 +864,4 @@ if (isset($_GET['f_num']) && isset($_GET['f_gubun'])) {
         return true;
     }
 </script>
-</body>
-</html>
+<?php include '../include/footer.php'; ?>

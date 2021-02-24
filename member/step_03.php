@@ -1,42 +1,13 @@
 <?php
     session_start();
+    // 2단계에 입력받은 휴대폰 번호는 재입력 하지 않도록 디폴트 세팅할것(인증용으로 사용된 정보는 수정불가임을 확인)
     $f_mobile = $_SESSION['f_mobile']; //휴대폰번호, 이메일, 주민등록번호
     $f_mobile_0 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$1", $f_mobile);
     $f_mobile_1 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$2", $f_mobile);
     $f_mobile_2 = preg_replace("/(^02.{0}|^01.{1}|[0-9]{3})([0-9]+)([0-9]{4})/","$3", $f_mobile);
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
-<!--[if (IE 7)]><html class="no-js ie7" xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko"><![endif]-->
-<!--[if (IE 8)]><html class="no-js ie8" xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko"><![endif]-->
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="X-UA-Compatible" id="X-UA-Compatible" content="IE=EmulateIE8" />
-<title>해커스 HRD</title>
-<meta name="description" content="해커스 HRD" />
-<meta name="keywords" content="해커스, HRD" />
-
-<!-- 파비콘설정 -->
-<link rel="shortcut icon" type="image/x-icon" href="http://img.hackershrd.com/common/favicon.ico" />
-
-<!-- xhtml property속성 벨리데이션 오류/확인필요 -->
-<meta property="og:title" content="해커스 HRD" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://www.hackershrd.com/" />
-<meta property="og:image" content="http://img.hackershrd.com/common/og_logo.png" />
-
-<link type="text/css" rel="stylesheet" href="http://q.hackershrd.com/worksheet/css/common.css" />
-<link type="text/css" rel="stylesheet" href="http://q.hackershrd.com/worksheet/css/bxslider.css" />
-<link type="text/css" rel="stylesheet" href="http://q.hackershrd.com/worksheet/css/main.css" /><!-- main페이지에만 호출 -->
-<link type="text/css" rel="stylesheet" href="http://q.hackershrd.com/worksheet/css/sub.css" /><!-- sub페이지에만 호출 -->
-<link type="text/css" rel="stylesheet" href="http://q.hackershrd.com/worksheet/css/login.css" /><!-- login페이지에만 호출 -->
-
-<script type="text/javascript" src="http://q.hackershrd.com/worksheet/js/jquery-1.12.4.min.js"></script>
-<script type="text/javascript" src="http://q.hackershrd.com/worksheet/js/plugins/bxslider/jquery.bxslider.min.js"></script>
-<script type="text/javascript" src="http://q.hackershrd.com/worksheet/js/plugins/bxslider/bxslider.js"></script>
-<script type="text/javascript" src="http://q.hackershrd.com/worksheet/js/ui.js"></script>
-<!--[if lte IE 9]> <script src="/js/common/place_holder.js"></script> <![endif]-->
+<?php include '../include/header.php'; ?>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
@@ -80,18 +51,55 @@
         });
     });
 
+    // 생년월일 셀렉트박스 옵션 생성
+    function setDateBox(){
+        var dt = new Date();
+        var year = "";
+        var com_year = dt.getFullYear();
 
+        $("#f_year").append("<option value=''>선택</option>");
+
+        for(var y = 1950; y <= com_year; y++){
+            $("#f_year").append("<option value='"+ y +"'>"+ y +"</option>");
+        }
+
+        var month;
+        $("#f_month").append("<option value=''>선택</option>");
+        for(var m = 1; m <= 12; m++){
+            if (m < 10) {
+                $("#f_month").append("<option value='0"+ m +"'>"+ "0" + m +"</option>");
+            } else {
+                $("#f_month").append("<option value='"+ m +"'>"+ m +"</option>");
+            }
+        }
+
+        var day;
+        $("#f_day").append("<option value=''>선택</option>");
+        for(var d = 1; d <= 31; d++){
+            if (d < 10) {
+                $("#f_day").append("<option value='0"+ d +"'>"+ "0" + d +"</option>");
+            } else {
+                $("#f_day").append("<option value='"+ d +"'>"+ d +"</option>");
+            }
+        }
+    }
 
     // 아이디 유효성 검사 및 중복체크
     function idDuplicationCheck() {
-        var idCheck = /^[a-z]+[a-z0-9]{3,14}$/g;
-        if(!idCheck.test($('#f_id_new').val())){
+        var idCheck = /^[a-z]+[a-z0-9]{3,14}/g;
+        if(!idCheck.test($('#f_id_new').val())) {
             alert("아이디는 영문자로 시작하는 4~15자의 영문소문자,숫자만 가능합니다.");
             $("#f_id_old").val('');
             return false;
-        } else {
-            $("#f_id_old").val($("#f_id_new").val());
         }
+
+        if($('#f_id_new').val().length < 4 || $('#f_id_new').val().length > 16) {
+            alert("아이디는 영문자로 시작하는 4~15자의 영문소문자,숫자만 가능합니다.");
+            $("#f_id_old").val('');
+            return false;
+        }
+
+        $("#f_id_old").val($("#f_id_new").val());
 
         $.ajax({
             url: "/member/duplication_check.php",
@@ -123,6 +131,7 @@
         }).open();
     }
 
+    // 회원가입
     function regist_submit() {
         // 이름
         if ($("#f_name").val() == "") {
@@ -201,58 +210,57 @@
 
         $("#f_tel").val($("#f_tel_0").val() + $("#f_tel_1").val() + $("#f_tel_2").val());
 
-        regist.submit();
-    }
+        var allData = {
+            "f_name": $("#f_name").val(), "f_birthday": $("#f_birthday").val(),
+            "f_id_new": $("#f_id_new").val(), "f_password_0": $("#f_password_0").val(),
+            "f_email": $("#f_name").val(), "f_mobile": $("#f_mobile").val(),
+            "f_tel": $("#f_tel").val(), "f_zipcode": $("#f_zipcode").val(),
+            "f_address": $("#f_address").val(), "f_address_detail": $("#f_address_detail").val(),
+            "radio": $('input[name="radio"]:checked').val(), "radio2": $('input[name="radio2"]:checked').val(),
+            "f_authority": $("#f_authority").val()
+        };
 
-    // 보통은 php로 만든다. 스크립트는 조작이 될 수가 있다. 실행이 안될 수도 있다. 되도록이면 기본적인 베이스는 무조건 php(화면에 그리는 부분)
-    // 생년월일 셀렉트박스 옵션 생성
-    function setDateBox(){
-        var dt = new Date();
-        var year = "";
-        var com_year = dt.getFullYear();
+        $.ajax({
+            url: "/member/regist.php",
+            dataType: "json",
+            data: allData,
+            type: "POST",
+            success:function(data){
+                if (data.res == "success") {
+                    alert("회원가입이 완료되었습니다.");
+                    window.location.href='/member/index.php?mode=complete';
+                }
 
-        $("#f_year").append("<option value=''>선택</option>");
+                if (data.res == "f_id_fail") {
+                    alert("아이디는 영문자로 시작하는 4~15자의 영문소문자,숫자만 가능합니다.");
+                    return false;
+                }
 
-        for(var y = 1950; y <= com_year; y++){
-            $("#f_year").append("<option value='"+ y +"'>"+ y +"</option>");
-        }
+                if (data.res == "f_password_fail") {
+                    alert("비밀번호는 8-15자의 영문자/숫자 혼합만 가능합니다.");
+                    return false;
+                }
+            },
+            error:function (){
 
-        var month;
-        $("#f_month").append("<option value=''>선택</option>");
-        for(var m = 1; m <= 12; m++){
-            if (m < 10) {
-                $("#f_month").append("<option value='0"+ m +"'>"+ "0" + m +"</option>");
-            } else {
-                $("#f_month").append("<option value='"+ m +"'>"+ m +"</option>");
+            },
+            complete:function () {
+
             }
-        }
+        });
 
-        var day;
-        $("#f_day").append("<option value=''>선택</option>");
-        for(var d = 1; d <= 31; d++){
-            if (d < 10) {
-                $("#f_day").append("<option value='0"+ d +"'>"+ "0" + d +"</option>");
-            } else {
-                $("#f_day").append("<option value='"+ d +"'>"+ d +"</option>");
-            }
-        }
+        // regist.submit();
     }
-    window.onpageshow = function (event) {
-        if (event.persisted || (window.performance && window.performance.navigation.type == 2)) {
-            alert("회원가입이 완료되었습니다. 메인페이지로 이동합니다.");
-            window.location.href = 'http://test.hackers.com/';
-        }
-    }
+
+    // 주석처리리
+   // 회원가입 완료 후, 뒤로가는 경우 메인페이지로 이동
+    // window.onpageshow = function (event) {
+    //     if (event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+    //         alert("회원가입이 완료되었습니다. 메인페이지로 이동합니다.");
+    //         window.location.href = 'http://test.hackers.com/';
+    //     }
+    // }
 </script>
-</head><body>
-<!-- skip nav -->
-<div id="skip-nav">
-<a href="#content">본문 바로가기</a>
-</div>
-<!-- //skip nav -->
-
-<div id="wrap">
-    <?php include '../include/header.php'; ?>
 <div id="container" class="container-full">
 	<div id="content" class="content">
 		<div class="inner">
@@ -273,7 +281,8 @@
 			</div>
 
 			<div class="section-content">
-                <form name="regist" id="regist" method="post" action="/member/regist.php">
+<!--                ajax로 변경    -->
+<!--                <form name="regist" id="regist" method="post" action="/member/regist.php">-->
                     <!-- 회원가입 기본권한 1-->
                     <input type="hidden" class="input-text" style="width:302px" name="f_authority" id="f_authority" value="1"/>
                     <table border="0" cellpadding="0" cellspacing="0" class="tbl-col-join">
@@ -399,7 +408,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </form>
+<!--                </form>-->
 				<div class="box-btn">
 					<a href="javascript:void(0);" class="btn-l" onclick="regist_submit();">회원가입</a>
                     <a href="#" class="btn-l-line ml5">취소</a>
@@ -408,7 +417,4 @@
 		</div>
 	</div>
 </div>
-    <?php include '../include/footer.php'; ?>
-</div>
-</body>
-</html>
+<?php include '../include/footer.php'; ?>

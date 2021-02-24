@@ -9,7 +9,7 @@ CREATE TABLE BOARD
     F_LECTURE varchar(128) null,
     F_TITLE varchar(128) null,
     F_GRADE varchar(128) null,
-    F_CONTENTS varchar(12800) null,
+    F_CONTENTS longtext null,
     F_COUNT int(10) default 0 null,
     F_BEST varchar(128) null,
     F_ID varchar(128) null,
